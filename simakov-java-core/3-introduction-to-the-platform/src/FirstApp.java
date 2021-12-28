@@ -27,5 +27,11 @@ public class FirstApp {
         int x, y, z;
         x = y = z = 10; // присвоить значение 10 переменным x, y и z
         float h = 2.2f, j = 7.2f;
+
+        //Арифмитические операции
+        b = a / 2;
+        System.out.println("b = a / 2 = " + b);
+        c = (a + b - 5) * 2;
+        System.out.println("c = " + c);
     }
 }
