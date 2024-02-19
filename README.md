@@ -81,6 +81,7 @@ Hibernate - это мощная библиотека ORM (Object-Relational Mapp
     - Продвинутые запросы
 - Hibernate Criteria API
     - Динамические запросы
+    - 
 
 ## Spring Framework
 
