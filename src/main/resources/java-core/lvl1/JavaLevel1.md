@@ -767,19 +767,32 @@ public class JavaApp {
 
 # Подсказки по домашнему заданию
 
-1) Объявление метода main():\
-   > public static void main(String\[\] args) { }
+1)
 
-2) Создать переменные типов: byte, short, int, long, float, double,
-   > char, boolean;
+```java
+// Объявление метода main():
+public static void main(String[] args) {
 
-3) public static int calculate(int a, int b, int c, int d) {\
-   > ...\
-   > }
+}
+```
 
-4) public static boolean task10and20(int x1, int x2) {\
-   > ...\
-   > }
+2) Создать переменные типов: `byte`, `short`, `int`, `long`, `float`, `double`, `char`, `boolean`;
+
+3)
+
+```java
+public static int calculate(int a, int b, int c, int d) {\
+    ...
+}
+```
+
+4)
+
+```java
+public static boolean task10and20(int x1, int x2) {\
+    ...
+}
+```
 
 5)
 
