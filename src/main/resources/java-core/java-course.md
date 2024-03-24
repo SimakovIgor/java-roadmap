@@ -1,3 +1,5 @@
+# Курс: Java-разработчик
+
 ## Java Fundamentals
 
 + [Введение в платформу Java](1-java-fundamentals/lvl1/1-java-fundamentals-level-1.md)
@@ -18,3 +20,24 @@
 + [Работа с сетью](2-java-core/lvl6/2-java-core-level-6.md)
 
 ## Hibernate
+
++ [Hibernate] (other/hibernate.md)
++ [Hibernate Criteria] (other/hibernate-criteria.md)
+
+## Spring / Spring Boot
+
++ [Spring] (other/spring.md)
++ [Spring Boot] (other/spring-boot.md)
++ [Spring Data] (other/spring-data.md)
++ [Spring Security] (other/spring-security.md)
++ [Spring Cloud] (other/spring-cloud.md)
+
+## Other
+
++ [GIT] (other/git.md)
++ [Maven] (other/maven.md)
++ [REST] (other/rest.md)
++ [Docker] (other/docker.md)
++ [Kubernetes] (other/kubernetes.md)
++ [Agile] (other/agile.md)
++ [Scrum] (other/scrum.md)
