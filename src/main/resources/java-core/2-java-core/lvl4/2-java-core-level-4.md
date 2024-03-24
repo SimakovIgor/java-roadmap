@@ -1,24 +1,26 @@
 # Java Уровень 11
 
-[Коллекции](#коллекции)
-
-> [Класс ArrayList](#класс-arraylist)
 >
-> [Класс LinkedList](#класс-linkedlist)
+>[Коллекции](#коллекции)
 >
-> [Классы HashМap, LinkedHashMap, TreeMap](#классы-hashмap-linkedhashmap-treemap)
+>> [Класс ArrayList](#класс-arraylist)
+>>
+>> [Класс LinkedList](#класс-linkedlist)
+>>
+>> [Классы HashМap, LinkedHashMap, TreeMap](#классы-hashмap-linkedhashmap-treemap)
+>>
+>> [Классы HashSet, LinkedHashSet, TreeSet](#классы-hashset-linkedhashset-treeset)
+>>
+>> [Итераторы](#итераторы)
+>>
+>> [Интерфейс Comparable](#интерфейс-comparable)
 >
-> [Классы HashSet, LinkedHashSet, TreeSet](#классы-hashset-linkedhashset-treeset)
+>[Практическое задание](#практическое-задание)
 >
-> [Итераторы](#итераторы)
+>[Дополнительные материалы](#дополнительные-материалы)
 >
-> [Интерфейс Comparable](#интерфейс-comparable)
-
-[Практическое задание](#практическое-задание)
-
-[Дополнительные материалы](#дополнительные-материалы)
-
-[Используемая литература](#используемая-литература)
+>[Используемая литература](#используемая-литература)
+>
 
 # Виды коллекций
 
