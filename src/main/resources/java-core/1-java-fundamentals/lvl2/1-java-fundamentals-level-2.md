@@ -1,4 +1,4 @@
-# Java Уровень 2
+# Java Fundamentals 2
 
 >
 >[Оператор switch](#оператор-switch)
