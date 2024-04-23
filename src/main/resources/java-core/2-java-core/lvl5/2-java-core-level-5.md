@@ -1,42 +1,44 @@
-# Java Уровень 12
+# Java Core 5
 
-[Общие сведения](#общие-сведения)
-
-[Класс File](#класс-file)
-
-[Байтовые и символьные потоки](#байтовые-и-символьные-потоки)
-
-> [Работа с байтовыми потоками ввода-вывода](#работа-с-байтовыми-потоками-ввода-вывода)
 >
-> [InputStream и OutputStream](#inputstream-и-outputstream)
+>[Общие сведения](#общие-сведения)
 >
-> [ByteArrayInputStream и ByteArrayOutputStream](#bytearrayinputstream-и-bytearrayoutputstream)
+>[Класс File](#класс-file)
 >
-> [FileInputStream и FileOutputStream](#fileinputstream-и-fileoutputstream)
+>[Байтовые и символьные потоки](#байтовые-и-символьные-потоки)
 >
-> [PipedInputStream и PipedOutputStream](#pipedinputstream-и-pipedoutputstream)
+>> [Работа с байтовыми потоками ввода-вывода](#работа-с-байтовыми-потоками-ввода-вывода)
+>>
+>> [InputStream и OutputStream](#inputstream-и-outputstream)
+>>
+>> [ByteArrayInputStream и ByteArrayOutputStream](#bytearrayinputstream-и-bytearrayoutputstream)
+>>
+>> [FileInputStream и FileOutputStream](#fileinputstream-и-fileoutputstream)
+>>
+>> [PipedInputStream и PipedOutputStream](#pipedinputstream-и-pipedoutputstream)
+>>
+>> [SequenceInputStream](#sequenceinputstream)
+>>
+>> [BufferedInputStream и BufferedOutputStream](#bufferedinputstream-и-bufferedoutputstream)
+>>
+>> [DataInputStream и DataOutputStream](#datainputstream-и-dataoutputstream)
+>>
+>> [Сериализация](#сериализация)
+>>
+>> [Версии классов](#версии-классов)
 >
-> [SequenceInputStream](#sequenceinputstream)
+>[Работа с символьными потоками ввода-вывода](#работа-с-символьными-потоками-ввода-вывода)
 >
-> [BufferedInputStream и BufferedOutputStream](#bufferedinputstream-и-bufferedoutputstream)
+>> [Классы Reader и Writer](#классы-reader-и-writer)
+>>
+>> [RandomAccessFile](#randomaccessfile)
 >
-> [DataInputStream и DataOutputStream](#datainputstream-и-dataoutputstream)
+>[Практическое задание](#практическое-задание)
 >
-> [Сериализация](#сериализация)
+>[Дополнительные материалы](#дополнительные-материалы)
 >
-> [Версии классов](#версии-классов)
-
-[Работа с символьными потоками ввода-вывода](#работа-с-символьными-потоками-ввода-вывода)
-
-> [Классы Reader и Writer](#классы-reader-и-writer)
+>[Используемая литература](#используемая-литература)
 >
-> [RandomAccessFile](#randomaccessfile)
-
-[Практическое задание](#практическое-задание)
-
-[Дополнительные материалы](#дополнительные-материалы)
-
-[Используемая литература](#используемая-литература)
 
 # Средства ввода-вывода
 
