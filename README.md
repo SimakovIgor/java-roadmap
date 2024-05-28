@@ -45,8 +45,8 @@
 
 ## Other
 
-+ [Порождающие шаблоны](src/main/resources/patterns/Creational-Patterns)
-+ [Структурные паттерны](src/main/resources/patterns/Structural-Patterns)
++ [Порождающие шаблоны](src/main/resources/patterns/Creational-Patterns.md)
++ [Структурные паттерны](src/main/resources/patterns/Structural-Patterns.md)
 + [GIT] (other/git.md)
 + [Maven] (other/maven.md)
 + [REST] (other/rest.md)
