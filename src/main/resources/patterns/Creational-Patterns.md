@@ -1,3 +1,5 @@
+### [Назад к оглавлению](../../../../README.md)
+
 # Creational Patterns
 
 Порождающие шаблоны (creational patterns) — шаблоны проектирования, которые позволяют сделать систему независимой от
@@ -664,3 +666,5 @@ class ProductB2 implements AbstractProductB {
 
 }
 ```
+
+### [Назад к оглавлению](../../../../README.md)
