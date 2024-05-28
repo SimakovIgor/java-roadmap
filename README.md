@@ -1,98 +1,59 @@
 # Java Roadmap
 
 Добро пожаловать в репозиторий Java Roadmap!
+
 Этот репозиторий служит руководством для изучения Java с нуля до овладения библиотеками Hibernate и Spring.
 Независимо от того, являетесь ли вы новичком или имеете опыт программирования,
 этот план поможет вам пройти через различные этапы изучения разработки на Java.
 
 Визуальный Road map для этого репозитория расположен на https://roadmap.sh/r?id=65c9ad4bd789a518cf2f4cde
 
-## Содержание
+## Java Fundamentals
 
-- [Начало работы с Java](#начало-работы-с-java)
-- [Продвинутые концепции Java](#продвинутые-концепции-java)
-- [Hibernate](#hibernate)
-- [Spring Framework](#spring-framework)
-- [Содействие](#содействие)
-- [Лицензия](#лицензия)
++ [Введение в платформу Java](src/main/resources/java-core/1-java-fundamentals/lvl1/1-java-fundamentals-level-1.md)
++ [Основные конструкции](src/main/resources/java-core/1-java-fundamentals/lvl2/1-java-fundamentals-level-2.md)
++ [Практика](src/main/resources/java-core/1-java-fundamentals/lvl3/1-java-fundamentals-level-3.md)
++ [Крестики-нолики в процедурном стиле](src/main/resources/java-core/1-java-fundamentals/lvl4/1-java-fundamentals-level-4.md)
++ [Введение в ООП](src/main/resources/java-core/1-java-fundamentals/lvl5/1-java-fundamentals-level-5.md)
++ [Продвинутое ООП](src/main/resources/java-core/1-java-fundamentals/lvl6/1-java-fundamentals-level-6.md)
++ [Практика ООП и работа со строками](src/main/resources/java-core/1-java-fundamentals/lvl7/1-java-fundamentals-level-7.md)
 
-## Начало работы с Java
+## Java Core
 
-Если вы новичок в Java, начните с этого раздела, чтобы изучить основы языка.
-
-- Основы Java
-    - Переменные, типы данных и операторы
-    - Циклы, Массивы
-    - Управляющие операторы
-    - Концепции объектно-ориентированного программирования
-    - Наследование, Инкапсуляция, Полиморфизм
-    - Композиция
-
-## Продвинутые концепции Java
-
-Овладейте продвинутыми темами Java, чтобы стать опытным разработчиком.
-
-- Обработка исключений
-    - Блоки try-catch
-    - Ключевые слова throw и throws
-    - Пользовательские исключения
-- Коллекции Java
-    - Массивы, ArrayList, LinkedList
-    - Карты, наборы
-    - Итераторы и перечисления
-- Обобщения
-    - Обобщенные классы и методы
-    - Маски
-- Сетевое взаимодействие Java
-    - Программирование сокетов
-    - HTTP клиент/сервер
-- Обработка ввода/вывода
-    - Работа с файлами
-    - Сериализация и десериализация
-- Подключение к базе данных
-    - Основы JDBC
-    -
-- Паттерны проектирования
-    - Создание, структурные, поведенческие
-
-
-- Параллелизм (Опционально)
-    - Потоки и многопоточность
-    - Синхронизация
-    - Исполнители и пулы потоков
++ [Объектно-ориентированное программирование Java](src/main/resources/java-core/2-java-core/lvl1/2-java-core-level-1.md)
++ [Концепция обработки исключений](src/main/resources/java-core/2-java-core/lvl2/2-java-core-level-2.md)
++ [Обобщения](src/main/resources/java-core/2-java-core/lvl3/2-java-core-level-3.md)
++ [Виды коллекций](src/main/resources/java-core/2-java-core/lvl4/2-java-core-level-4.md)
++ [Средства ввода-вывода](src/main/resources/java-core/2-java-core/lvl5/2-java-core-level-5.md)
++ [Работа с сетью](src/main/resources/java-core/2-java-core/lvl6/2-java-core-level-6.md)
++ [Работа с JSON](src/main/resources/java-core/2-java-core/lvl7/2-java-core-level-7.md)
++ [JDBC](src/main/resources/java-core/2-java-core/lvl8/2-java-core-level-8.md)
++ [Java Stream API](src/main/resources/java-core/2-java-core/lvl9/2-java-core-level-9.md)
 
 ## Hibernate
 
-Hibernate - это мощная библиотека ORM (Object-Relational Mapping) для Java. Узнайте, как интегрировать Hibernate в ваши проекты на Java.
++ [Hibernate] (other/hibernate.md)
++ [Hibernate Criteria] (other/hibernate-criteria.md)
 
-- Введение в Hibernate
-- Основные понятия ORM
-- Конфигурация
-- Сопоставление сущностей
-    - Аннотации
-    - XML-сопоставление
-- Hibernate Query Language (HQL)
-    - Операции CRUD
-    - Продвинутые запросы
-- Hibernate Criteria API
-    - Динамические запросы
-    -
+## Spring / Spring Boot
 
-## Spring Framework
++ [Spring] (other/spring.md)
++ [Spring Boot] (other/spring-boot.md)
++ [Spring Data] (other/spring-data.md)
++ [Spring Security] (other/spring-security.md)
++ [Spring Cloud] (other/spring-cloud.md)
 
-Spring - это комплексный фреймворк для создания приложений на Java. Узнайте, как использовать различные модули Spring.
+## Other
 
-- Основы Spring
-    - Внедрение зависимостей
-    - Контейнер IoC
-- Spring MVC
-    - Шаблон Модель-Представление-Контроллер
-- Spring Data
-    - Интеграция с Hibernate
-    - JPA
-- Spring Boot
-    - Автоконфигурация
-    - Начальные проекты
++ [Порождающие шаблоны](src/main/resources/patterns/Creational Patterns.md)
++ [Структурные паттерны](src/main/resources/patterns/Structural Patterns.md)
++ [GIT] (other/git.md)
++ [Maven] (other/maven.md)
++ [REST] (other/rest.md)
++ [Docker] (other/docker.md)
++ [Kubernetes] (other/kubernetes.md)
++ [Agile] (other/agile.md)
++ [Scrum] (other/scrum.md)
 
 ## Содействие
 

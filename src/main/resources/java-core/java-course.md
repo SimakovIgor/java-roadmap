@@ -24,6 +24,9 @@ Java — один из самых популярных языков програ
 + [Виды коллекций](2-java-core/lvl4/2-java-core-level-4.md)
 + [Средства ввода-вывода](2-java-core/lvl5/2-java-core-level-5.md)
 + [Работа с сетью](2-java-core/lvl6/2-java-core-level-6.md)
++ [Работа с JSON](2-java-core/lvl7/2-java-core-level-7.md)
++ [JDBC](2-java-core/lvl8/2-java-core-level-8.md)
++ [Java Stream API](2-java-core/lvl9/2-java-core-level-9.md)
 
 ## Hibernate
 
