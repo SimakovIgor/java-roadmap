@@ -1,3 +1,5 @@
+### [Назад к оглавлению](../../../../../../README.md)
+
 # Виды коллекций
 
 Виды контейнеров в Java: List, Map, Set. Основные реализации и приемы использования, проход по элементам коллекции, сравнение и сортировка элементов коллекции."
@@ -859,3 +861,5 @@ SizeBasedComparator
 
 1. [https://docs.oracle.com/javase/tutorial/collections/TOC.html](https://docs.oracle.com/javase/tutorial/collections/TOC.html)
 2. Г. Шилдт. Java 8. Полное руководство // 9-е изд.: Пер. с англ. - М.: Вильямс, 2015. - 1 376 с.
+
+### [Назад к оглавлению](../../../../../../README.md)

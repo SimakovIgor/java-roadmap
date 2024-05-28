@@ -1,3 +1,5 @@
+### [Назад к оглавлению](../../../../../../README.md)
+
 # Java Stream API
 
 Функциональное программирование на Java
@@ -678,3 +680,5 @@ interface Course {
 1. [Шпаргалка Java-программиста](https://habrahabr.ru/company/luxoft/blog/270383/);
 2. [Stream API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html);
 3. [Java 8 Stream Tutorial - Benjamin Winterberg.](https://www.google.ru/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&ved=0ahUKEwiZrIu7re3SAhWBVywKHeb7D9QQFghDMAQ&url=http%3A%2F%2Fwinterbe.com%2Fposts%2F2014%2F07%2F31%2Fjava8-stream-tutorial-examples%2F&usg=AFQjCNFxNAkEiZZHksFHlhA4bHXsJYWNOQ&sig2=KkgcjA_hgIZ67XKzhbfeDQ)
+
+### [Назад к оглавлению](../../../../../../README.md)
