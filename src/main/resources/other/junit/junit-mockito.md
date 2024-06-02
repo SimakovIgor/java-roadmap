@@ -1,4 +1,4 @@
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)
 
 # Инъекции зависимостей
 
@@ -857,7 +857,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.yandex.praktikum</groupId>
+    <groupId>ru.example</groupId>
     <artifactId>coverage</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -950,7 +950,7 @@ id выбираешь
 
 Найди в папке `target/site/jacoco/` файл index.html, нажми на него правой кнопкой мыши и выбери Open In — Browser — твой браузер.
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_15.png
+![mock-1.png](img/mock-1.png)
 
 В отчёте отображается процент покрытых строк кода — столбец Missed Instructions. В примере покрыто 90% строк.
 
@@ -958,17 +958,17 @@ id выбираешь
 
 Чтобы увидеть подробнее, какие именно строки и ветви не покрыты, зайди в пакет, класс и метод внутри него:
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_16.png
+![mock-2.png](img/mock-2.png)
 
 Цвета строк означают, насколько полно тест покрыт. Зелёный — покрыто тестами, жёлтый — покрыто частично, красный — не покрыто совсем.
 
 Отчёт можно посмотреть и прямо в IDEA: для этого открой Run — Show Coverage Data. Нажми + (Add) и выбери файл jacoco.exec.
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_17.png
+![mock-3.png](img/mock-3.png)
 
 После этого нажми Show Selected. У цветов слева те же значения:
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_18.png
+![mock-4.png](img/mock-4.png)
 
 Чтобы жёлтые и красные строки стали зелёными, достаточно добавить всего один тест. Он проверит случай с зарплатой, которая превышает лимит:
 
@@ -1000,9 +1000,9 @@ public class SalaryServiceTest {
 
 Теперь отчёт о покрытии сообщает о 100%:
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_19.png
+![mock-5.png](img/mock-5.png)
 
-!https://code.s3.yandex.net/qa-automation-engineer/java/schemes/paid-track/sprint2/unitTests/S2_05_20.png
+![mock-6.png](img/mock-6.png)
 
 ### Какой процент покрытия нужен
 
@@ -1034,4 +1034,4 @@ public class SalaryService {
 В код закралась ошибка, а тесты всё ещё проходят и покрытие равно 100%. Кроме количественного покрытия должно быть и качественное. Поэтому когда пишешь тесты и
 подбираешь тестовые данные, важно использовать техники тест-дизайна.
 
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)

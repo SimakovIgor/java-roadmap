@@ -1,4 +1,4 @@
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)
 
 # JUnit
 
@@ -469,7 +469,7 @@ public class Example {
 **Пример**. Представь, что тебе нужно написать юнит-тесты для метода, который возвращает сумму двух целых чисел:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 public class Calculator {
 
@@ -482,7 +482,7 @@ public class Calculator {
 Его нужно протестировать на разных данных. Например, тест на сложение двух положительных чисел получится таким:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.Test;
 
@@ -505,7 +505,7 @@ public class CalculatorTest {
 Можно добавить ещё один тест — на сложение положительного числа и нуля:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.Test;
 
@@ -554,7 +554,7 @@ public class CalculatorTest {
 аннотация `@RunWith(Parameterized.class)`:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 // импорт класса Parameterized и аннотации RunWith
 
@@ -606,7 +606,7 @@ public class CalculatorTest {
 Такие поля нужно создать в классе `CalculatorTest`:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -623,7 +623,7 @@ public class CalculatorTest {
 класса:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -649,7 +649,7 @@ public class CalculatorTest {
 Чтобы получать конкретные тестовые значения, нужен метод с аннотацией `@Parameterized.Parameters`. Он должен быть публичным и статическим:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -690,7 +690,7 @@ public class CalculatorTest {
 фактическим:
 
 ```java
-package ru.yandex.praktikum;
+package ru.example;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -729,4 +729,4 @@ public class CalculatorTest {
 
 Чтобы запустить этот тест с другими данными, достаточно дописать ещё одну строку в метод `getSumData()`.
 
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)
