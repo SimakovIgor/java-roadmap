@@ -47,6 +47,7 @@
 
 + [Порождающие шаблоны](src/main/resources/other/patterns/Creational-Patterns.md)
 + [Структурные паттерны](src/main/resources/other/patterns/Structural-Patterns.md)
++ [Поведенческие паттерны](src/main/resources/other/patterns/Behavioral-Patterns.md)
 + [GIT](src/main/resources/other/git/git.md)
 + [JUnit](src/main/resources/other/junit/junit.md)
 + [JUnit Mockito](src/main/resources/other/junit/junit-mockito.md)

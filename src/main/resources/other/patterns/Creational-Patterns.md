@@ -1,4 +1,4 @@
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)
 
 # Creational Patterns
 
@@ -667,4 +667,4 @@ class ProductB2 implements AbstractProductB {
 }
 ```
 
-### [Назад к оглавлению](../../../../README.md)
+### [Назад к оглавлению](../../../../../README.md)
