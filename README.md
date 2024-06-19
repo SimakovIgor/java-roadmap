@@ -53,7 +53,16 @@
 + [JUnit Mockito](src/main/resources/other/junit/junit-mockito.md)
 + [Maven](src/main/resources/other/maven/Maven.md)
 + [Инфраструктура](src/main/resources/other/infrastructure/infrastructure.md)
-+ [Архитектура]()
+    + СI/СD
+    + Docker
+    + Kubernetes
+    + Jenkins
++ [Архитектура](src/main/resources/other/architecture/architecture.md)
+    + Монолитная архитектура
+    + Микросервисная архитектура
+    + Виды межсервисного взаимодействия
+    + Архитектурные паттерны
+    + Как покрывать тестами разные уровни программы
 + [REST] (other/rest.md)
 + [Agile] (other/agile.md)
 + [Scrum] (other/scrum.md)
