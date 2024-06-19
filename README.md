@@ -51,7 +51,7 @@
 + [GIT](src/main/resources/other/git/git.md)
 + [JUnit](src/main/resources/other/junit/junit.md)
 + [JUnit Mockito](src/main/resources/other/junit/junit-mockito.md)
-+ [Maven] (other/maven.md)
++ [Maven](src/main/resources/other/maven/Maven.md)
 + [REST] (other/rest.md)
 + [Docker] (other/docker.md)
 + [Kubernetes] (other/kubernetes.md)
