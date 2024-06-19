@@ -52,9 +52,9 @@
 + [JUnit](src/main/resources/other/junit/junit.md)
 + [JUnit Mockito](src/main/resources/other/junit/junit-mockito.md)
 + [Maven](src/main/resources/other/maven/Maven.md)
++ [Инфраструктура](src/main/resources/other/infrastructure/infrastructure.md)
++ [Архитектура]()
 + [REST] (other/rest.md)
-+ [Docker] (other/docker.md)
-+ [Kubernetes] (other/kubernetes.md)
 + [Agile] (other/agile.md)
 + [Scrum] (other/scrum.md)
 
