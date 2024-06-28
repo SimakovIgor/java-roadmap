@@ -95,6 +95,7 @@
 10. [Презентация: Карьерные уровни софт-скиллов](https://sandark7.github.io/RndTechConf2021/#93)
 11. [5 Levels Of Problem Solving: A Framework For (First-Time) Managers](https://www.corporate-rebels.com/blog/5-levels-of-problem-solving)
 12. [Командные роли по Р. Белбину: как сформировать эффективную рабочую команду](https://ht-lab.ru/blog/komandnye-roli-po-r-belbinu/)
+13. [Net Promoter Score (NPS)](https://leadstartup.ru/product-manager/net-promoter-score)
 
 ### Что посмотреть
 
