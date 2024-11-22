@@ -79,8 +79,7 @@
 
 ## Interview
 
-1. [Подготовка к собеседованию Java Dev](src/main/resources/interview/java-interview.md)
-2. [Подготовка к собеседованию Team Lead](src/main/resources/interview/team-lead-interview.md)
+[Подготовка к собеседованию Java Dev](src/main/resources/interview/java-interview.md)
 
 ## Содействие
 
