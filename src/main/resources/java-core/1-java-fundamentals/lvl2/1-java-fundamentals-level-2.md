@@ -6,6 +6,8 @@
 
 >
 >[Оператор switch](#оператор-switch)
+>>
+>> [Современная Java: switch expression](#современная-java-1721-switch-expression)
 >
 > [Циклы for](#циклы-for)
 >>
@@ -36,6 +38,8 @@
 >> [Альтернативный синтаксис объявления массивов](#альтернативный-синтаксис-объявления-массивов)
 >>
 >> [Получение длины массива](#получение-длины-массива)
+>>
+>> [Современная Java: дополнительные методы Arrays](#современная-java-дополнительные-методы-arrays)
 >
 >[Домашнее задание](#домашнее-задание)
 >
@@ -101,6 +105,52 @@ public static void main(String[] args) {
 }
 ```
 
+## Современная Java (17/21): switch expression
+
+Начиная с Java 14 (и как постоянная часть языка, начиная с Java 17/21) у
+switch появилась альтернативная форма — **switch expression**. Она
+компактнее классического switch, не требует `break` (нет «проваливания»
+между ветками, оно же fallthrough) и может сразу возвращать значение.
+
+```java
+public static void main(String[] args) {
+    int a = 3;
+    String result = switch (a) {
+        case 1 -> "a = 1";
+        case 3 -> "a = 3";
+        default -> "Ни один из case не сработал";
+    };
+    System.out.println(result);
+}
+```
+
+Если в одной ветке нужно выполнить несколько операторов, а не одно
+выражение — используем блок `{ ... }` и явно возвращаем значение через
+`yield`.
+
+```java
+public static void main(String[] args) {
+    int a = 3;
+    String result = switch (a) {
+        case 1 -> "a = 1";
+        case 3 -> {
+            System.out.println("Совпадение с 3");
+            yield "a = 3"; // yield — аналог return, но для ветки switch expression
+        }
+        default -> "Ни один из case не сработал";
+    };
+    System.out.println(result);
+}
+```
+
+Забегая вперёд: в Java 21 switch научился ещё и сопоставлять тип и
+структуру объекта (**pattern matching for switch**), например
+`case Integer i -> ...` вместо ручного `instanceof` с приведением типа —
+подробно разберём в одном из следующих уроков.
+
+**Задание.** Перепишите классический switch с `case 1 / case 3 / default`
+из примера выше в switch expression с arrow-синтаксисом — без единого `break`.
+
 # Циклы for
 
 Циклы позволяют многократно выполнять последовательность кода.
@@ -147,6 +197,19 @@ public static void main(String[] args) {
 метод System.out.println(...)), затем выполняется итерационная часть
 цикла. Как только условное выражение примет значение false, цикл
 закончит свою работу.
+
+**Современный способ: var (Java 10+).** Если тип переменной очевиден из
+правой части выражения, писать его явно не обязательно — компилятор
+выведет тип сам на этапе компиляции (это не динамическая типизация, тип
+фиксируется один раз и не меняется). Работает и для счётчика цикла.
+
+```java
+public static void main(String[] args) {
+    for (var i = 0; i < 5; i++) { // var вместо int — тип выведется из литерала 0
+        System.out.println("i = " + i);
+    }
+}
+```
 
 ## Пример цикла с отрицательным приращением счётчика
 
@@ -259,6 +322,18 @@ public static void main(String[] args) {
     Результат:
     A B C D
 */
+```
+
+**Современный способ:** var хорошо ложится и на foreach — особенно когда
+тип элемента длинный или очевиден из контекста:
+
+```java
+public static void main(String[] args) {
+    String[] sm = {"A", "B", "C", "D"};
+    for (var o : sm) { // var вместо String
+        System.out.print(o + " ");
+    }
+}
 ```
 
 ## Вложенные циклы
@@ -633,6 +708,37 @@ public static void main(String[] args) {
     2 4 5 1 2 3 4 5
 */
 ```
+
+## Современная Java: дополнительные методы Arrays
+
+Кроме `Arrays.toString()` в классе `java.util.Arrays` есть ещё несколько
+методов, которые убирают ручные циклы при типовых операциях над массивами.
+
+```java
+import java.util.Arrays;
+
+public static void main(String[] args) {
+    int[] arr = new int[5];
+    Arrays.fill(arr, 7);                       // заполнить все элементы значением 7
+    System.out.println(Arrays.toString(arr));  // [7, 7, 7, 7, 7]
+
+    int[] copy = Arrays.copyOf(arr, 8);        // копия длиной 8, новые элементы = 0
+    System.out.println(Arrays.toString(copy)); // [7, 7, 7, 7, 7, 0, 0, 0]
+
+    int sum = Arrays.stream(arr).sum();        // Stream API поверх массива примитивов
+    System.out.println("sum = " + sum);        // sum = 35
+}
+```
+
+`Arrays.fill` заменяет ручной цикл инициализации массива одинаковым
+значением, `Arrays.copyOf` — ручное создание нового массива с копированием
+элементов, `Arrays.stream(...)` открывает доступ к Stream API (`sum`,
+`max`, `sorted` и т.д.) без написания цикла руками.
+
+**Задание.** Перепишите домашнее задание №2 (заполнение массива значениями
+0, 3, 6, ..., 21) так, чтобы результат печатался через `Arrays.toString`, а
+сумма элементов считалась через `Arrays.stream(arr).sum()` — без ручного
+цикла суммирования.
 
 # Домашнее задание
 

@@ -9,6 +9,8 @@
 >
 >[Класс File](#класс-file)
 >
+>> [Современная Java: Path и Files (NIO.2)](#современная-java-path-и-files-nio2)
+>
 >[Байтовые и символьные потоки](#байтовые-и-символьные-потоки)
 >
 >> [Работа с байтовыми потоками ввода-вывода](#работа-с-байтовыми-потоками-ввода-вывода)
@@ -30,10 +32,14 @@
 >> [Сериализация](#сериализация)
 >>
 >> [Версии классов](#версии-классов)
+>>
+>>> [Современная Java: осторожно с нативной сериализацией](#современная-java-осторожно-с-нативной-сериализацией)
 >
 >[Работа с символьными потоками ввода-вывода](#работа-с-символьными-потоками-ввода-вывода)
 >
 >> [Классы Reader и Writer](#классы-reader-и-writer)
+>>
+>>> [Современная Java: Files.readString/writeString и Files.lines()](#современная-java-filesreadstringwritestring-и-fileslines)
 >>
 >> [RandomAccessFile](#randomaccessfile)
 >
@@ -104,6 +110,33 @@ File.
 **Важно!** В операционной системе и файл, и директория является файлом
 (попробуйте в файловом менеджере создать файл без расширения, допустим
 с именем "1", и рядом создать каталог с таким же именем).
+
+## Современная Java: Path и Files (NIO.2)
+
+Начиная с Java 7 в JDK появился пакет `java.nio.file` (так называемый
+"NIO.2") с интерфейсом `Path` и утилитным классом `Files`. Для
+большинства повседневных задач (проверить существование файла, узнать
+размер, создать каталог, прочитать/записать содержимое) это более
+современная и удобная замена классу `File`: методы `Files` не
+бросают "тихие" `boolean false` при ошибке, а кидают понятное
+`IOException`, а `Path` умеет удобно комбинировать пути через
+`resolve()`.
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path path = Path.of("demo.txt"); // современный аналог new File("demo.txt")
+
+boolean exists = Files.exists(path);
+long size = Files.exists(path) ? Files.size(path) : 0;
+Path parent = path.toAbsolutePath().getParent();
+```
+
+Методы `Files` для чтения и записи содержимого файлов (без ручного
+создания байтовых/символьных потоков) рассмотрим чуть позже — они
+особенно полезны в разделах про `FileInputStream`/`FileOutputStream` и
+`Reader`/`Writer` ниже.
 
 # Байтовые и символьные потоки
 
@@ -305,6 +338,33 @@ public class StreamDemoApp {
 }
 ```
 
+**Заметка.** Здесь и далее в примерах для простоты используется
+`e.printStackTrace()` — это приемлемо в учебном коде, но в реальном
+проекте так делать не стоит: исключение просто печатается в консоль и
+теряется на проде, где никто не смотрит в stdout. В боевом коде
+исключение либо логируют (`log.error("не удалось записать файл", e)`),
+либо пробрасывают дальше (`throw new RuntimeException(..., e)`), чтобы
+вызывающий код тоже узнал о проблеме.
+
+**Современный способ:** для большинства задач вместо ручной работы с
+`FileOutputStream`/`FileInputStream` удобнее `java.nio.file.Files` — он
+сам открывает и закрывает поток:
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path path = Path.of("demo.txt");
+byte[] outData = "Java".getBytes();
+
+Files.write(path, outData);          // записать массив байт в файл одной строкой
+byte[] inData = Files.readAllBytes(path); // прочитать весь файл в массив байт
+```
+
+Это не отменяет пользы от понимания того, что происходит "под
+капотом" (именно об этом весь дальнейший материал раздела), но для
+прикладного кода `Files` почти всегда предпочтительнее.
+
 Рассмотрим пример побайтовой записи данных в файл.
 
 ```java
@@ -466,6 +526,24 @@ public class StreamDemoApp {
 ```
 
 ### При таком подходе, скорость побайтового чтения/записи будет не сильно отличаться от тех же операций с применением массивов.
+
+**Современный способ:** начиная с Java 10 в `try-with-resources` можно
+использовать `var` — компилятор сам выведет тип из конструктора, а имя
+класса не нужно писать дважды:
+
+```java
+try (var out = new BufferedOutputStream(new FileOutputStream("demo.txt"))) {
+    for (int i = 0; i < 1_000_000; i++) {
+        out.write(i);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+Тип ресурса при этом определяется на этапе компиляции точно так же,
+как если бы мы написали его явно — `var` не делает переменную
+"динамической".
 
 ### DataInputStream и DataOutputStream
 
@@ -733,6 +811,32 @@ public class Person implements Serializable {
 Важно сохранять возможность восстановить именно те поля, которые были
 записаны в поток при сериализации.
 
+#### Современная Java: осторожно с нативной сериализацией
+
+Десериализация данных из недоверенного источника (файл, сеть,
+пользовательский ввод) через `ObjectInputStream.readObject()` — одна
+из известных категорий уязвимостей в Java (произвольный код может
+выполниться при конструировании "чужого" объекта). Начиная с Java 9 в
+JDK есть `ObjectInputFilter` — механизм, позволяющий явно ограничить,
+какие классы разрешено десериализовывать:
+
+```java
+import java.io.ObjectInputFilter;
+import java.io.ObjectInputStream;
+
+ObjectInputStream objIn = new ObjectInputStream(inputStream);
+// разрешаем десериализовывать только свои классы, всё остальное - REJECT
+objIn.setObjectInputFilter(ObjectInputFilter.Config.createFilter("com.example.*;!*"));
+```
+
+**Важно!** В новых проектах нативную Java-сериализацию
+(`Serializable`/`ObjectOutputStream`) на практике стараются вообще не
+использовать для обмена данными между сервисами или хранения — вместо
+неё берут явные форматы (JSON через Jackson, Protobuf и т.п.), которые
+проще версионировать и безопаснее в отношении untrusted-данных. Материал
+этого раздела остаётся важным, чтобы понимать, как объекты
+сериализуются "под капотом", и уметь читать legacy-код.
+
 ### PipedInputStream и PipedOutputStream
 
 Объекты классов **PipedInputStream** и **PipedOutputStream** всегда
@@ -834,6 +938,40 @@ public class WriterAndReaderDemoApp {
 преобразование символов, используя различные кодировки, которые
 задаются при конструировании потока.
 
+### Современная Java: Files.readString/writeString и Files.lines()
+
+Для чтения/записи текстовых файлов, начиная с Java 11, часто достаточно
+`Files.writeString`/`Files.readString`, а для построчной обработки —
+`Files.readAllLines()` (весь файл в память) или ленивый `Files.lines()`
+(Stream API, Java 8) — без ручного создания `BufferedReader`/`BufferedWriter`:
+
+```java
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Stream;
+
+Path path = Path.of("demo.txt");
+
+Files.writeString(path, "Java\n".repeat(20)); // записать всё содержимое одной строкой
+
+String content = Files.readString(path);      // прочитать весь файл в String
+List<String> lines = Files.readAllLines(path); // прочитать построчно в список
+
+// построчная обработка большого файла без загрузки всего в память
+try (Stream<String> stream = Files.lines(path)) {
+    stream.forEach(System.out::println);
+}
+```
+
+**Важно!** `Files.lines()` — ленивый Stream, читающий файл по мере
+обхода, поэтому его обязательно нужно закрывать (`try-with-resources`) —
+он держит открытым файловый дескриптор.
+
+**Задание.** Перепишите пример метода `main` выше (запись 20 строк
+"Java" и последующее построчное чтение) с использованием
+`Files.writeString` и `Files.lines()` вместо `BufferedWriter`/`BufferedReader`.
+
 ## RandomAccessFile
 
 Мы рассмотрели работу с последовательными файлами, содержимое которых
@@ -905,6 +1043,11 @@ public class AppData {
 
 Если выполняется save(AppData data), то старые данные в файле полностью
 перезаписываются.
+
+**Дополнительно (по желанию).** Реализуйте `save`/`load` вторым способом
+— на `java.nio.file.Files` (`Files.writeString`/`Files.readAllLines`)
+вместо `FileOutputStream`/`FileInputStream` или `BufferedWriter`/`BufferedReader`,
+и сравните получившийся код по краткости и читаемости.
 
 # Дополнительные материалы
 
