@@ -11,7 +11,7 @@
 >>
 >> [Класс LinkedList](#класс-linkedlist)
 >>
->> [Классы HashМap, LinkedHashMap, TreeMap](#классы-hashмap-linkedhashmap-treemap)
+>> [Классы HashMap, LinkedHashMap, TreeMap](#классы-hashmap-linkedhashmap-treemap)
 >>
 >> [Классы HashSet, LinkedHashSet, TreeSet](#классы-hashset-linkedhashset-treeset)
 >>
@@ -40,7 +40,7 @@
 При работе с коллекциями в Java используется следующий набор
 интерфейсов: Collection, Set, SortedSet, List, Queue, Deque, Map,
 SortedMap. Иерархия этих интерфейсов представлена на рисунке ниже
-([[https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html]{.underline}](https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html)).
+([Иерархия коллекций](https://docs.oracle.com/javase/tutorial/collections/interfaces/index.html)).
 
 ![](img/image2.png)
 
@@ -157,13 +157,13 @@ null, при попытке обратиться к элементу с инде
 ArrayList есть набор элементов {1, 1, 1}, и мы попытаемся обратиться к
 элементу с индексом 3).
 
-Класс ArrayList<E> является обобщенным, где Е обозначает тип объектов,
+Класс ArrayList<E> является обобщенным, где E обозначает тип объектов,
 хранимых в списке. В классе ArrayList определены следующие конструкторы:
 
 | Конструктор                            | Описание                                                                   |
 |----------------------------------------|----------------------------------------------------------------------------|
 | `ArrayList()`                          | Создает пустой ArrayList с начальной ёмкостью 10                           |
-| `ArrayList(Collection<? extends Е> c)` | Создает ArrayList, инициализируемый элементами заданной коллекции `c`      |
+| `ArrayList(Collection<? extends E> c)` | Создает ArrayList, инициализируемый элементами заданной коллекции `c`      |
 | `ArrayList(int initialCapacity)`       | Создает ArrayList, имеющий указанную начальную емкость (`initialCapacity`) |
 
 Основные методы для работы с ArrayList:
@@ -204,7 +204,7 @@ public static void main(String[] args) {
 ```
 
 **Заметка.**
-Начиная с версии Java 1.8, при объявлении коллекций допустимо
+Начиная с версии Java 7, при объявлении коллекций допустимо
 использовать запись:
 
 ```
@@ -297,21 +297,21 @@ public static void main(String[] args) {
 
 ## Класс LinkedList
 
-LinkedList<E> предоставляет структуру данных связного списка, где Е
+LinkedList<E> предоставляет структуру данных связного списка, где E
 обозначает ссылочный тип хранимых объектов. У класса LinkedList имеется
 два конструктора: LinkedList() - создает пустой LinkedList; и
-LinkedList(Collection<? extends Е> сollection), позволяющий создать
+LinkedList(Collection<? extends E> collection), позволяющий создать
 LinkedList, который будет содержать элементы другой коллекции.
 
 Структура LinkedList значительно отличается от ArrayList. Каждый элемент
 в связном списке имеет ссылку на предыдущий и на следующий элементы. Сам
 же LinkedList имеет ссылку на свой первый и последний элемент.
-[**Важно!** В отличие от ArrayList, LinkedList не использует массивов в
-своей внутренней структуре.]{.underline}
+**Важно!** В отличие от ArrayList, LinkedList не использует массивов в
+своей внутренней структуре.
 
 Структура LinkedList схематично показана на рисунке 3.
 
-![](img//image7.png)
+![](img/image7.png)
 
 Рисунок 3 --- Структура LinkedList
 
@@ -363,7 +363,7 @@ public static void main(String[] args) {
     linkedList.add("F");
     linkedList.add("B");
     linkedList.add("D");
-    linkedList.add("Е");
+    linkedList.add("E");
     linkedList.add("C");
     linkedList.addLast("Z");
     linkedList.addFirst("A");
@@ -381,10 +381,10 @@ public static void main(String[] args) {
 }
 
 // Результат:
-// 1. linkedList: [A, А2, F, B, D, Е, C, Z]
-// 2. linkedList: [A, А2, D, Е, C, Z]
-// 3. linkedList: [А2, D, Е, C]
-// 4. linkedList: [А2, D, Е изменено, C]
+// 1. linkedList: [A, А2, F, B, D, E, C, Z]
+// 2. linkedList: [A, А2, D, E, C, Z]
+// 3. linkedList: [А2, D, E, C]
+// 4. linkedList: [А2, D, E изменено, C]
 ```
 
 Обратите внимание, как третий элемент связного списка linkedList
@@ -396,7 +396,7 @@ public static void main(String[] args) {
 **Best practice:**
 Не используйте LinkedList. Единственное применение этой коллекции вопросы на интервью.
 
-## Классы HashМap, LinkedHashMap, TreeMap
+## Классы HashMap, LinkedHashMap, TreeMap
 
 Класс HashMap<K, V> представляет собой хеш-таблицу для хранения пар
 ключ-значение (Key(K) - ключ, Value(V) - значение), и обеспечивает
@@ -553,7 +553,7 @@ Germany/Berlin. Метод put() автоматически заменяет р�
 | Конструктор                                      | Описание                                                                          |
 |--------------------------------------------------|-----------------------------------------------------------------------------------|
 | `HashSet()`                                      | Создает пустой `HashSet` с начальной ёмкостью 16                                  |
-| `HashSet(Collection<? extends Е> collection)`    | Создает `HashSet`, инициализируемый элементами из заданной коллекции `collection` |
+| `HashSet(Collection<? extends E> collection)`    | Создает `HashSet`, инициализируемый элементами из заданной коллекции `collection` |
 | `HashSet(int initialCapacity)`                   | Создает `HashSet`, имеющий указанную начальную емкость                            |
 | `HashSet(int initialCapacity, float loadFactor)` | Создает `HashSet`, имеющий указанную начальную емкость и коэффициент заполнения   |
 
@@ -568,19 +568,19 @@ Germany/Berlin. Метод put() автоматически заменяет р�
 ```java
 public static void main(String[] args) {
     Set<String> set = new HashSet<>();
-    set.add("Aльфa");
+    set.add("Альфа");
     set.add("Бета");
-    set.add("Aльфa");
-    set.add("Этa");
-    set.add("Гaммa");
+    set.add("Альфа");
+    set.add("Эта");
+    set.add("Гамма");
     set.add("Эпсилон");
-    set.add("Oмeгa");
-    set.add("Гaммa");
+    set.add("Омега");
+    set.add("Гамма");
     System.out.println(set);
 }
 
 // Результат:
-// [Гaммa, Эпсилон, Бета, Этa, Oмeгa, Aльфa]
+// [Гамма, Эпсилон, Бета, Эта, Омега, Альфа]
 ```
 
 Как видите, в коде объекты "Альфа" и "Гамма" были добавлены дважды,
@@ -597,11 +597,11 @@ public static void main(String[] args) {
 public static void main(String[] args) {
     Set<String> set = new LinkedHashSet<>();
     set.add("Бета");
-    set.add("Aльфa");
-    set.add("Этa");
-    set.add("Гaммa");
+    set.add("Альфа");
+    set.add("Эта");
+    set.add("Гамма");
     set.add("Эпсилон");
-    set.add("Oмeгa");
+    set.add("Омега");
     System.out.println(set);
 }
 
@@ -618,8 +618,8 @@ public static void main(String[] args) {
 В классе TreeSet определены следующие конструкторы:
 
 - TreeSet ().
-- TreeSet (Collection<? extends Е> сollection).
-- TreeSet (Comparator<? super Е> comparator).
+- TreeSet (Collection<? extends E> collection).
+- TreeSet (Comparator<? super E> comparator).
 - TreeSet (SortedSet<E> s).
 
 В первой форме конструктора создаётся пустое древовидное множество. Во
@@ -792,7 +792,7 @@ public class Cat implements Comparable {
     // ...
     @Override
     public int compareTo(Object o) {
-        return this.age - ((Cat) o).age;
+        return Integer.compare(this.age, ((Cat) o).age);
     }
     // ...
 }

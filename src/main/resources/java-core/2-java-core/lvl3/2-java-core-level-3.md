@@ -143,8 +143,8 @@ ClassCastException.
 public class GenericBox<T> { //создаем класс Дженерик Коробка
     private T obj; // в нем объявляем переменную obj типа Т
 
-    public GenericBox(T оbj) { // пишем конструктор
-        this.obj = оbj;
+    public GenericBox(T obj) { // пишем конструктор
+        this.obj = obj;
     }
 
     public T getObj() { // пишем геттер
@@ -173,8 +173,8 @@ public class GenericsDemoApp {
 
 // создаем переменную int a и в нее записываем значение genInt
         int a = genInt.getObj();
-// создаем переменную String b и в нее записываем значение getStr
-        String b = getStr.getObj();
+// создаем переменную String b и в нее записываем значение genStr
+        String b = genStr.getObj();
 
 // пробуем передать в переменную genInt строку - ОШИБКА
         // genInt.setObj("Java"); // Ошибка компиляции !!!
@@ -273,8 +273,8 @@ public class SimpleGenApp {
 
         int a = twoGenObj.getObj1();
         String b = twoGenObj.getObj2();
-        System.out.println(intValue);
-        System.out.println(strValue);
+        System.out.println(a);
+        System.out.println(b);
     }
 }
 ```
@@ -483,7 +483,7 @@ BoxWithNumbers<?> соответствует любому объекту кла�
 public class BoxWithNumbers<T extends Number> { //пишем класс
     private T[] nums;
 
-    public BoxWithNumbers(T[] nums) { // конструктор
+    public BoxWithNumbers(T... nums) { // конструктор
         this.nums = nums;
     }
 

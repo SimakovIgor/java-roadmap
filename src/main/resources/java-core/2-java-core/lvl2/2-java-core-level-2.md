@@ -227,8 +227,8 @@ public static void main(String[] args) {
 public static void main(String[] args) {
     System.out.println("Начало");
     try {
-        int а = 0;
-        int b = 42 / а;
+        int a = 0;
+        int b = 42 / a;
     } catch (ArithmeticException e) {
         e.printStackTrace();
     }
@@ -263,14 +263,14 @@ public static void main(String[] args) {
         int a = 10;
         a -= 10;
         int b = 42 / a;
-        int[] с = {1, 2, 3};
-        с[42] = 99;
+        int[] c = {1, 2, 3};
+        c[42] = 99;
     } catch (ArithmeticException e) {
-        System.out.println("Дeлeниe на ноль: " + e);
+        System.out.println("Деление на ноль: " + e);
     } catch (ArrayIndexOutOfBoundsException e) {
         System.out.println("Ошибка индексации массива: " + e);
     }
-    System.out.println("Пocлe блока операторов try/catch");
+    System.out.println("После блока операторов try/catch");
 }
 ```
 
@@ -287,11 +287,11 @@ public static void main(String[] args) {
 ```java
 public static void main(String[] args) {
     try {
-        int а = 0;
-        int b = 42 / а;
-    } catch (Exception е) {
+        int a = 0;
+        int b = 42 / a;
+    } catch (Exception e) {
         System.out.println("Exception");
-    } catch (ArithmeticException е) { // ошибка компиляции: недостижимый код !
+    } catch (ArithmeticException e) { // ошибка компиляции: недостижимый код !
         System.out.println("Этот код недостижим");
     }
 }
@@ -331,7 +331,7 @@ throw генерируемый_экземпляр;
 public static void main(String[] args) {
     try {
         throw new NullPointerException("NPE Test");
-    } catch (NullPointerException е) {
+    } catch (NullPointerException e) {
         System.out.println("Catch block");
     }
 }
@@ -422,7 +422,7 @@ RuntimeException, IOException, NullPointerException и др.), его "груп�
 
 ### Многократный перехват исключений
 
-Начиная с версии Java 1.8, появилась возможность перехвата и обработки
+Начиная с версии Java 7, появилась возможность перехвата и обработки
 сразу нескольких исключений в одном и том же операторе catch при
 условии, что для этого используется одинаковый код. Для организации
 такого перехвата достаточно объединить типы исключений в операторе catch
@@ -431,7 +431,7 @@ RuntimeException, IOException, NullPointerException и др.), его "груп�
 ```
 try {
    …
-} catch (ArithmeticException | ArrayIndexOutOfBoundsException е) {
+} catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
    …
 }
 ```

@@ -11,7 +11,7 @@
 >
 >[Порядок обработки](#порядок-обработки)
 >
->> [Почему порядок работы имеет значение?](  #почему-порядок-работы-имеет-значение)
+>> [Почему порядок работы имеет значение?](#почему-порядок-работы-имеет-значение)
 >>
 >> [Параллельные стримы](#параллельные-стримы)
 >
@@ -66,7 +66,7 @@ public class StreamApp {
 
         List<String> engineersNames = persons.stream()
                 .filter(person -> person.position == Person.Position.ENGINEER)
-                .sorted((o1, o2) -> o1.age - o2.age)
+                .sorted(Comparator.comparingInt(o -> o.age))
                 .map((Function<Person, String>) person -> person.name)
                 .collect(Collectors.toList());
         System.out.println(engineersNames);
