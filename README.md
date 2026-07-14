@@ -32,16 +32,16 @@
 
 ## Hibernate
 
-1. Hibernate _(в разработке)_
-2. Hibernate Criteria _(в разработке)_
+1. [Hibernate](src/main/resources/other/hibernate/hibernate.md)
+2. [Hibernate Criteria](src/main/resources/other/hibernate/hibernate-criteria.md)
 
 ## Spring / Spring Boot
 
-1. Spring _(в разработке)_
-2. Spring Boot _(в разработке)_
-3. Spring Data _(в разработке)_
-4. Spring Security _(в разработке)_
-5. Spring Cloud _(в разработке)_
+1. [Spring (Core, IoC/DI)](src/main/resources/other/spring/spring-core.md)
+2. [Spring Boot 3](src/main/resources/other/spring/spring-boot.md)
+3. [Spring Data JPA](src/main/resources/other/spring/spring-data.md)
+4. [Spring Security](src/main/resources/other/spring/spring-security.md)
+5. [Spring Cloud](src/main/resources/other/spring/spring-cloud.md)
 
 ## Other
 
@@ -63,7 +63,7 @@
     + Виды межсервисного взаимодействия
     + Архитектурные паттерны
     + Как покрывать тестами разные уровни программы
-10. REST _(в разработке)_
+10. [REST API](src/main/resources/other/rest/rest.md)
 11. Agile _(в разработке)_
 12. Scrum _(в разработке)_
 
