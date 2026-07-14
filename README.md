@@ -67,6 +67,24 @@
 11. Agile _(в разработке)_
 12. Scrum _(в разработке)_
 
+## Надёжность и архитектура
+
+Приёмы, которые отличают инженера от джуна: продакшн ломается не на алгоритмах, а на сети, дублях, гонках и отказах. Каждый урок — проблема из реального продакшна → теория → механика → пример на Java → грабли → практическая задача под этот приём. [Обзор раздела](src/main/resources/other/reliability/README.md).
+
+1. [Идемпотентность](src/main/resources/other/reliability/01-idempotency.md) — повтор запроса не должен списывать деньги дважды
+2. [Ретраи](src/main/resources/other/reliability/02-retries.md) — безопасно повторять при временных сбоях
+3. [Backoff и jitter](src/main/resources/other/reliability/03-backoff-jitter.md) — не превратить ретраи в retry storm
+4. [Rate limiting](src/main/resources/other/reliability/04-rate-limiting.md) — ограничить частоту, защитить от перегрузки
+5. [Таймауты](src/main/resources/other/reliability/05-timeouts.md) — зависший вызов не должен держать поток вечно
+6. [Circuit Breaker](src/main/resources/other/reliability/06-circuit-breaker.md) — fail fast вместо каскадного отказа
+7. [Bulkhead](src/main/resources/other/reliability/07-bulkhead.md) — изолировать ресурсы по секциям
+8. [Dead Letter Queue](src/main/resources/other/reliability/08-dead-letter-queue.md) — ядовитое сообщение не блокирует очередь
+9. [Дедупликация](src/main/resources/other/reliability/09-deduplication.md) — at-least-once без двойной обработки
+10. [Transactional Outbox](src/main/resources/other/reliability/10-transactional-outbox.md) — решение проблемы dual-write
+11. [Реконциляция](src/main/resources/other/reliability/11-reconciliation.md) — фоновая сверка и починка расхождений
+12. [Saga](src/main/resources/other/reliability/12-saga.md) — распределённые транзакции через компенсации
+13. [Кэширование и инвалидация](src/main/resources/other/reliability/13-caching.md) — быстро, без stale и cache stampede
+
 ## Database
 
 1. https://habr.com/p/794839/
