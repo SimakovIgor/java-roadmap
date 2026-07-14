@@ -137,6 +137,69 @@ DataOutputStream.
 Блок try-with-resources предназначен для гарантированного закрытия всех
 сетевых соединений и освобождения ресурсов.
 
+> В реальном коде вместо `e.printStackTrace()` стоит использовать логгер
+> (SLF4J/Log4j) и осмысленную обработку исключения — здесь `printStackTrace()`
+> оставлен только ради простоты примера.
+
+## Современная Java (17/21): var, try-with-resources для accept() и виртуальные потоки
+
+Обратите внимание: в примере выше `Socket socket` объявлен **до** блока
+try-with-resources и никогда явно не закрывается — это утечка ресурса.
+Перепишем сервер так, чтобы закрывались оба сокета — и серверный, и
+клиентский, а заодно уберём избыточное указание типов через `var`
+(Java 10):
+
+```java
+public class EchoServer {
+    public static void main(String[] args) {
+        try (var serverSocket = new ServerSocket(8189)) {
+            System.out.println("Сервер запущен, ожидаем подключения...");
+            // accept() и создание потоков — тоже внутри try-with-resources,
+            // поэтому socket/in/out гарантированно закроются, даже если
+            // readUTF()/writeUTF() бросят исключение
+            try (var socket = serverSocket.accept();
+                 var in = new DataInputStream(socket.getInputStream());
+                 var out = new DataOutputStream(socket.getOutputStream())) {
+                System.out.println("Клиент подключился");
+                while (true) {
+                    String str = in.readUTF();
+                    if (str.equals("/end")) {
+                        break;
+                    }
+                    out.writeUTF("Эхо: " + str);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Наш EchoServer умеет обслуживать только одного клиента за раз — после
+`accept()` сервер «застревает» в цикле общения с ним. Раньше, чтобы
+обслуживать много клиентов одновременно, заводили пул потоков и следили
+за его размером — создание тысяч ОС-потоков дорого. В Java 21 появились
+**виртуальные потоки** (JEP 444): они дешёвые, их можно создавать по
+одному на клиента, не думая о размере пула:
+
+```java
+try (var serverSocket = new ServerSocket(8189);
+     var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    while (true) {
+        var socket = serverSocket.accept();
+        // каждый клиент обслуживается в отдельном виртуальном потоке —
+        // модель thread-per-connection снова дёшева
+        executor.submit(() -> handleClient(socket));
+    }
+}
+```
+
+**Задание**: вынесите обработку одного клиента (чтение/эхо-ответ/закрытие
+сокета) в приватный метод `handleClient(Socket socket)` и перепишите
+`main()` так, чтобы сервер принимал соединения в цикле и обслуживал каждое
+в отдельном виртуальном потоке, как показано выше.
+
 ## Написание клиентской части
 
 Ниже представлен полный код клиентской части для эхо-сервера. Пока
@@ -373,6 +436,54 @@ writeUTF() отправляет его серверу, после чего оч�
 переводит на него фокус. Если вдруг не удалось отправить сообщение, то
 будет показано всплывающее окно с ошибкой.
 
+## Современная Java: лямбды вместо анонимных классов
+
+`Runnable` и `ActionListener` — функциональные интерфейсы (по одному
+абстрактному методу), поэтому вместо громоздких анонимных классов их можно
+записать лямбдами — короче и без шаблонного `new X() { @Override ... }`:
+
+```java
+public void openConnection() throws IOException {
+    socket = new Socket(SERVER_ADDR, SERVER_PORT);
+    in = new DataInputStream(socket.getInputStream());
+    out = new DataOutputStream(socket.getOutputStream());
+    new Thread(() -> {
+        try {
+            while (true) {
+                String strFromServer = in.readUTF();
+                if (strFromServer.equalsIgnoreCase("/end")) {
+                    break;
+                }
+                chatArea.append(strFromServer);
+                chatArea.append("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }).start();
+}
+```
+
+```java
+btnSendMsg.addActionListener(e -> sendMessage());
+msgInputField.addActionListener(e -> sendMessage());
+```
+
+```java
+public static void main(String[] args) {
+    SwingUtilities.invokeLater(EchoClient::new); // method reference вместо Runnable
+}
+```
+
+Обратите внимание: `WindowAdapter` в примере выше — не функциональный
+интерфейс (у `WindowListener` несколько абстрактных методов), поэтому
+лямбдой его не заменить — это как раз тот случай, когда паттерн
+«адаптер с пустыми методами» остаётся уместным.
+
+**Задание**: перепишите класс `EchoClient`, заменив анонимные `Runnable` и
+`ActionListener` на лямбды/method references, как показано выше. Проверьте,
+что клиент по-прежнему подключается к серверу и обменивается сообщениями.
+
 # Отправка HTTP-запросов
 
 Описанная выше работа с сокетами является низкоуровневой - передача
@@ -557,6 +668,53 @@ public class HttpURLDemo {
 Ключ: Content-Length, значение: [49708]
 Ключ: Content-Type, значение: [text/html; charset=utf-8]
 ```
+
+## Современная Java (11+): java.net.http.HttpClient
+
+`HttpURLConnection` из примера выше — низкоуровневый и многословный API,
+появившийся ещё в Java 1.1: приведение типов, отдельные методы для каждого
+заголовка, никакой поддержки HTTP/2 и асинхронности «из коробки». В Java 11
+(JEP 321) появился современный `java.net.http.HttpClient`, который умеет
+то же самое (и больше) заметно компактнее:
+
+```java
+public class HttpClientDemo {
+
+    public static void main(String[] args) throws Exception {
+        var client = HttpClient.newHttpClient();
+
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create("https://geekbrains.ru"))
+                .GET()
+                .build();
+
+        // send() — синхронный вызов, аналог client.newCall(request).execute() из OkHttp
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("Код ответа: " + response.statusCode());
+        System.out.println("Заголовки: " + response.headers().map());
+        System.out.println("Тело: " + response.body());
+    }
+}
+```
+
+У `HttpClient` есть и асинхронный вариант — `sendAsync()` возвращает
+`CompletableFuture` и не блокирует вызывающий поток:
+
+```java
+client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+        .thenApply(HttpResponse::body)
+        .thenAccept(System.out::println);
+```
+
+На практике с виртуальными потоками (Java 21) необходимость в
+`sendAsync()` часто отпадает: можно писать обычный блокирующий `send()`,
+а дешёвый виртуальный поток возьмёт на себя ожидание ответа — код проще,
+а масштабируется так же хорошо, как асинхронный.
+
+**Задание (дополнительно к практическому)**: перепишите запрос погоды из
+задания ниже с помощью `HttpClient` вместо `HttpURLConnection`/OkHttp —
+сравните, насколько короче получился код.
 
 ## Другие классы пакета java.net
 

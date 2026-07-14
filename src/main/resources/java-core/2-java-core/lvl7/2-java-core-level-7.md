@@ -54,6 +54,33 @@ class Car {
 }
 ```
 
+## Современная Java (16+): Car как record
+
+Для DTO-классов вроде `Car`, которые описывают только данные без изменяемого
+состояния, вместо класса с полями, геттерами/сеттерами и написанными вручную
+`equals`/`hashCode`/`toString` можно использовать `record` (Java 16+):
+
+```java
+record Car(String color, String type) {
+}
+```
+
+Компилятор сам генерирует канонический конструктор, аксессоры (`color()`,
+`type()` — без префикса `get`), корректные `equals`/`hashCode` и читаемый
+`toString()` (`Car[color=red, type=BMW]`).
+
+**Важно для Jackson:** начиная с jackson-databind 2.12, `ObjectMapper` умеет
+сериализовать и десериализовать record'ы "из коробки" — имена компонентов
+Jackson читает через `java.lang.reflect.RecordComponent`, поэтому (в отличие
+от обычных классов) флаг компилятора `-parameters` для этого не требуется.
+Если нужно переименовать поле в JSON — аннотация ставится прямо на компонент
+записи:
+
+```java
+record Person(int age, @JsonProperty("firstName") String name) {
+}
+```
+
 ## Экземпляры классов в JSON
 
 Давайте посмотрим на первый пример сериализации объектов Java в JSON,
@@ -67,6 +94,18 @@ public static void main(String[] args) throws IOException {
 }
 
 // {"color":"red","type":"BMW"}
+```
+
+**Современный способ:** тип `ObjectMapper` и `Car` очевиден из правой части
+присваивания — начиная с Java 10 для таких локальных переменных идиоматично
+использовать `var` вместо явного типа:
+
+```java
+public static void main(String[] args) throws IOException {
+    var objectMapper = new ObjectMapper();
+    var car = new Car("red", "BMW");
+    objectMapper.writeValue(new File("car.json"), car);
+}
 ```
 
 Методы **writeValueAsString** и **writeValueAsBytes** вернут
@@ -129,6 +168,33 @@ public static void main(String[] args) throws IOException {
 // [{"color":"red", "type":"BMW"}, {"color":"black", "type":"lada priora"}]
 ```
 
+### Современный способ: text blocks (Java 15+)
+
+Собирать многострочный JSON через конкатенацию экранированных строк
+неудобно и легко ошибиться в кавычках. Начиная с Java 15 для этого
+используются text blocks (`"""`) — кавычки внутри не экранируются,
+компилятор сам разбирается с отступами и переносами строк:
+
+```java
+public static void main(String[] args) throws IOException {
+    var carsList = """
+            [
+              {"color":"red", "type":"BMW"},
+              {"color":"black", "type":"lada priora"}
+            ]
+            """;
+    var objectMapper = new ObjectMapper();
+    List<Car> carList =
+            objectMapper.readValue(carsList, new TypeReference<List<Car>>() {
+            });
+    System.out.println(carList);
+}
+```
+
+**Задание:** перепишите пример выше (тот, что с ручной конкатенацией строк
+`"[{\"color\":\"red\"..."`) на text block и проверьте, что список
+десериализуется так же.
+
 ## Конфигурирование сериализации-десериализации
 
 ### Игнорирование неизвестных полей
@@ -170,6 +236,18 @@ public static void main(String[] args) throws IOException {
 }
 
 // Car{color='white', type='Volga'}
+```
+
+**Современный способ конфигурирования:** вместо создания `ObjectMapper`
+через `new` и последующей мутации через `configure()`, актуальные версии
+Jackson предлагают неизменяемый builder-стиль — `JsonMapper.builder()`,
+который сразу возвращает полностью настроенный (и потокобезопасный)
+маппер:
+
+```java
+ObjectMapper objectMapper = JsonMapper.builder()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .build();
 ```
 
 Есть и другой способ - с помощью аннотации **@JsonIgnoreProperties**
@@ -371,6 +449,46 @@ System.out.println(jsonStudent);
 // {"name":"Ivan","averageMark":4.87}
 ```
 
+## Современная Java: даты в JSON (`java.time` + `jackson-datatype-jsr310`)
+
+В практическом задании ниже нужно вывести дату (`DATE`) для прогноза на
+5 дней. Для работы с датами в современном Java-коде используется не
+`Date`/`Calendar`, а пакет `java.time` (`LocalDate`, `LocalDateTime`,
+`OffsetDateTime` и т.д.) — он неизменяем, потокобезопасен и удобнее в
+использовании.
+
+"Из коробки" `ObjectMapper` не умеет (де)сериализовать типы `java.time` —
+нужно подключить модуль:
+
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.datatype</groupId>
+    <artifactId>jackson-datatype-jsr310</artifactId>
+    <version>2.17.2</version>
+</dependency>
+```
+
+и зарегистрировать его в мэппере:
+
+```java
+record WeatherDay(LocalDate date, String weatherText, double temperature) {
+}
+
+ObjectMapper objectMapper = JsonMapper.builder()
+        .addModule(new JavaTimeModule())
+        .build();
+
+var day = new WeatherDay(LocalDate.of(2026, 7, 16), "ясно", 24.5);
+String json = objectMapper.writeValueAsString(day);
+System.out.println(json);
+
+// {"date":"2026-07-16","weatherText":"ясно","temperature":24.5}
+```
+
+Без модуля `JavaTimeModule` попытка сериализовать/десериализовать
+`LocalDate` бросит `InvalidDefinitionException` — модуль как раз и
+регистрирует нужные сериализаторы/десериализаторы для типов `java.time`.
+
 # Практическое задание
 
 Задание необходимо сдать через Git. [Инструкция](https://docs.google.com/document/d/1tD_AjQss1Qe_qEQ199Mu3sK_jrDt_ADLhxiG9BC7xeM/edit?usp=sharing)
@@ -382,6 +500,13 @@ System.out.println(jsonStudent);
    > В городе CITY на дату DATE ожидается WEATHER_TEXT, температура - TEMPERATURE
 
 где CITY, DATE, WEATHER_TEXT и TEMPERATURE - уникальные значения для каждого дня.
+
+### Дополнительное задание (опционально)
+
+Перепишите `WeatherResponse` (и вложенные классы) в виде `record`-ов,
+даты храните как `LocalDate`/`LocalDateTime` (с подключённым
+`JavaTimeModule`), а многострочные тестовые JSON-строки для проверки
+десериализации оформите через text block вместо конкатенации строк.
 
 # Используемая литература
 

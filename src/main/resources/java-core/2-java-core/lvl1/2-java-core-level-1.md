@@ -268,6 +268,29 @@ public static void main(String[] args) {
 объект создается в одну строку (*Cat cat1 = new Cat()*), вместо двух
 строк из листинга выше.
 
+## Современная Java (10+): var
+
+С Java 10 для локальных переменных тип можно не указывать явно --- компилятор
+сам выведет его из правой части выражения (local variable type inference).
+Работает только для локальных переменных с инициализацией, не для полей
+класса и не для параметров метода.
+
+```java
+public static void main(String[] args) {
+    var cat1 = new Cat(); // компилятор сам поймёт, что cat1 имеет тип Cat
+    cat1.name = "Барсик";
+    System.out.println(cat1.name);
+}
+```
+
+`var` не делает Java динамически типизированным языком --- тип переменной
+cat1 по-прежнему Cat, он просто не написан явно. Используйте `var`, когда тип
+и так понятен из контекста (особенно справа от `new`), и избегайте там, где
+это ухудшает читаемость кода.
+
+**Задание.** Перепишите пример метода main() из раздела «Первый класс» (с
+cat1 и cat2), заменив явные типы Cat на var.
+
 ### Подробное рассмотрение оператора new
 
 Оператор new динамически выделяет память для нового объекта, общая форма
@@ -1018,6 +1041,32 @@ casting, в русском языке прижился глагол "закас�
 ошибки можно воспользоваться оператором instanceof, который проверяет
 принадлежность объекта к какому-либо классу.
 
+## Современная Java (16+): pattern matching for instanceof
+
+Начиная с Java 16 не нужно отдельно проверять instanceof, а затем вручную
+кастовать переменную --- можно сразу привязать переменную нужного типа прямо
+в условии:
+
+```java
+public class DemoApp {
+    public static void main(String[] args) {
+        Animal animal = new Cat();
+        animal.voice();
+        if (animal instanceof Cat cat) { // cat уже имеет тип Cat внутри if
+            cat.methodFromCatClass();
+            System.out.println("В animal действительно лежит кот");
+        }
+    }
+}
+```
+
+Если `animal instanceof Cat cat` истинно, переменная `cat` автоматически
+получает тип Cat и доступна в теле if --- не нужен ни явный каст `(Cat)
+animal`, ни отдельная переменная для результата приведения типа.
+
+**Задание.** Перепишите пример через классический `((Cat) animal)` (чуть
+выше) с использованием pattern matching for instanceof.
+
 # Класс Object
 
 Абсолютно все классы в Java наследуются от класса **java.lang.Object**.
@@ -1214,6 +1263,48 @@ public class Cat {
 - Если объекты не равны по equals(), то **желательно** чтобы их
   hashCode() отличались, но этого не всегда удается достичь (так
   как hashCode() возвращает не уникальное число)
+
+## Современная Java: Objects.equals() и Objects.hash()
+
+Обратите внимание, что реализация выше не null-safe: если бы поле name было
+равно null, вызов `name.hashCode()` внутри hashCode() и
+`this.name.equals(another.name)` внутри equals() упали бы с
+NullPointerException. Стандартный класс `java.util.Objects` даёт готовые
+null-safe помощники именно для этого случая:
+
+```java
+import java.util.Objects;
+
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+        return false;
+    }
+    Cat another = (Cat) obj;
+    return this.age == another.age
+        && Objects.equals(this.name, another.name); // не упадёт, даже если name == null
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(name, age); // корректно обрабатывает null-поля
+}
+```
+
+`Objects.equals(a, b)` возвращает true, если оба аргумента null, false ---
+если только один из них null, а иначе делегирует в `a.equals(b)`.
+`Objects.hash(...)` под капотом собирает поля в массив и считает хэш так же,
+как `Arrays.hashCode`, --- писать вручную "магические" множители вроде `* 71`
+не нужно.
+
+**Забегая вперёд.** Для простых неизменяемых носителей данных (вроде Cat с
+полями name/age без сложного поведения) в Java 16+ есть `record` ---
+компилятор сам генерирует конструктор, геттеры, equals(), hashCode() и
+toString() по полям. Мы вернёмся к record отдельно, когда будем изучать
+классы для хранения данных.
 
 # Абстрактные классы и методы
 
@@ -1419,6 +1510,63 @@ public class TestClass {
 Вызываемый вариант метода callback() выбирается в зависимости от класса
 объекта, на который переменные с1, c2 ссылаются во время выполнения.
 
+## Современная Java (8/9): default, static и private методы интерфейса
+
+До Java 8 все методы интерфейса были неявно abstract --- реализация обязана
+была появляться в каждом классе-наследнике. Начиная с Java 8 в интерфейсе
+можно объявить **default**-метод с готовым телом --- реализующие классы
+получают его "бесплатно" и могут (но не обязаны) переопределить:
+
+```java
+public interface Callback {
+    void callback(int param); // обычный abstract-метод, как раньше
+
+    default void logCallback(int param) { // готовая реализация "из коробки"
+        System.out.println("Вызван callback с параметром: " + param);
+    }
+}
+
+public class ClientOne implements Callback {
+    public void callback(int param) {
+        System.out.println("ClientOne param: " + param);
+    }
+    // logCallback() не переопределён — используется реализация по умолчанию
+}
+```
+
+Также в интерфейсе можно объявлять **static**-методы (вызываются через имя
+интерфейса, как обычные static-методы класса, и не наследуются
+классами-реализациями), а начиная с Java 9 --- **private**-методы,
+вспомогательные и видимые только внутри интерфейса, чтобы не дублировать код
+между несколькими default-методами:
+
+```java
+public interface Callback {
+    void callback(int param);
+
+    static Callback noop() { // фабричный static-метод интерфейса
+        return param -> { };
+    }
+
+    default void logCallback(int param) {
+        log("callback: " + param); // используем private-метод
+    }
+
+    default void logError(String message) {
+        log("error: " + message);
+    }
+
+    private void log(String message) { // приватный helper, не часть контракта интерфейса
+        System.out.println("[Callback] " + message);
+    }
+}
+```
+
+Зачем это нужно: default-методы позволяют добавлять новую функциональность в
+уже существующий интерфейс, не ломая классы, которые его реализуют
+(классический пример --- методы `forEach`, `stream()`, добавленные в
+интерфейсы коллекций в Java 8).
+
 # Перечисления
 
 В простейшей форме *перечисление* --- это список именованных однотипных
@@ -1468,6 +1616,46 @@ public static void main(String[] args) {
 // fruit действительно является яблоком
 // fruit - яблоко
 ```
+
+## Современная Java (14+): switch expression
+
+Начиная с Java 14 switch можно использовать как **выражение**, возвращающее
+значение. Стрелочный синтаксис `->` не имеет fall-through (не нужен break), а
+компилятор для enum ещё и подскажет, если вы забыли обработать одну из
+констант:
+
+```java
+public static void main(String[] args) {
+    Fruit fruit = Fruit.APPLE;
+    String message = switch (fruit) {
+        case APPLE -> "fruit - яблоко";
+        case ORANGE -> "fruit - апельсин";
+        case CHERRY -> "fruit - вишня";
+        case BANANA -> "fruit - банан";
+    };
+    System.out.println(message);
+}
+
+// Результат:
+// fruit - яблоко
+```
+
+Если в ветке нужно выполнить несколько операторов, а не одно выражение,
+используется блок `{ ... yield значение; }`:
+
+```java
+String message = switch (fruit) {
+    case APPLE -> "fruit - яблоко";
+    case ORANGE, BANANA -> { // несколько констант в одной ветке через запятую
+        System.out.println("это цитрус или банан");
+        yield "fruit - апельсин или банан";
+    }
+    default -> "неизвестный фрукт";
+};
+```
+
+**Задание.** Перепишите классический switch-statement из примера выше
+(с case/break) на switch expression со стрелочным синтаксисом.
 
 Поскольку переменная fruit относится к типу Fruit, ей можно присваивать
 только те значения, которые определены для данного типа.

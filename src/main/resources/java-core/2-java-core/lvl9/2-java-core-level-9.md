@@ -89,6 +89,59 @@ public class StreamApp {
 Полный список таких операций доступен в **JavaDoc** к Java 8.
 Большинство операций стрима могут принимать лямбда-выражения.
 
+## Современная Java (17/21): record и лаконичный стрим
+
+Класс `Person` из примера выше — типичный value-object: только поля,
+конструктор и никакой мутации после создания. С Java 16 такие классы можно
+записать через `record` — компилятор сам сгенерирует конструктор,
+методы-аксессоры (`name()`, `age()`, `position()`), корректные `equals()`,
+`hashCode()` и `toString()`:
+
+```java
+public class StreamAppModern {
+    record Person(String name, int age, Position position) {
+        enum Position {
+            ENGINEER, DIRECTOR, MANAGER
+        }
+    }
+
+    private static void streamSimpleTaskModern() {
+        var persons = List.of(
+                new Person("Bob1", 35, Person.Position.MANAGER),
+                new Person("Bob2", 44, Person.Position.DIRECTOR),
+                new Person("Bob3", 25, Person.Position.ENGINEER),
+                new Person("Bob4", 42, Person.Position.ENGINEER),
+                new Person("Bob5", 55, Person.Position.MANAGER),
+                new Person("Bob6", 19, Person.Position.MANAGER),
+                new Person("Bob7", 33, Person.Position.ENGINEER),
+                new Person("Bob8", 37, Person.Position.MANAGER)
+        );
+
+        List<String> engineersNames = persons.stream()
+                .filter(person -> person.position() == Person.Position.ENGINEER)
+                .sorted(Comparator.comparingInt(Person::age))
+                .map(Person::name)   // method reference вместо лямбды с кастом к Function
+                .toList();           // короче Collectors.toList(), результат неизменяемый
+        System.out.println(engineersNames);
+    }
+}
+```
+
+Что изменилось и зачем:
+
+- `record Person(...)` — иммутабельный value-object без ручного бойлерплейта:
+  конструктор, аксессоры и `equals`/`hashCode`/`toString` — из коробки.
+- `List.of(...)` вместо `new ArrayList<>(Arrays.asList(...))` — коллекция и так
+  не меняется дальше по коду, зачем допускать мутацию.
+- `Person::name` — method reference вместо `(Function<Person, String>) person -> person.name`:
+  тип аргумента `map()` компилятор и так выводит сам, явный каст лишний.
+- `.toList()` вместо `.collect(Collectors.toList())` — см. подробнее в разделе
+  про `Collectors` ниже.
+
+**Задание:** перепишите метод `streamSimpleTask()` в современном виде
+самостоятельно — `record`, `var`, method reference, `Stream#toList()` — не
+подглядывая в пример выше.
+
 ## Способы создания и виды стримов
 
 Стримы создаются из различных источников данных, но в большинстве
@@ -170,6 +223,26 @@ public static void main(String[] args) {
 }
 ```
 
+### Современный способ: Stream#toList() (Java 16)
+
+С Java 16 у `Stream` появился короткий терминальный метод `toList()` —
+делает то же самое, что `.collect(Collectors.toList())`, но короче и сразу
+возвращает **неизменяемый** список (`list.add(...)` бросит
+`UnsupportedOperationException`):
+
+```java
+public static void main(String[] args) {
+    Stream<String> stream = Stream.of("A", "B", "C");
+    List<String> list = stream.toList();   // вместо .collect(Collectors.toList())
+}
+```
+
+Если явно нужен изменяемый список конкретной реализации — берите
+`Collectors.toCollection(ArrayList::new)`. А если неизменяемый результат нужен
+уже внутри существующего collector-пайплайна (например, после `groupingBy`) —
+подойдут `Collectors.toUnmodifiableList()` / `toUnmodifiableSet()` /
+`toUnmodifiableMap()` (Java 10).
+
 Кроме **toList()** и **toSet()** **Collectors** позволяют создавать
 подгруппы объектов из стрима для общей цели. Например, можно определить
 среднюю длину слова в стриме строк:
@@ -181,6 +254,28 @@ public static void main(String[] args) {
             .collect(Collectors.averagingInt(s -> s.length())));
 }
 // Результат: 3.3333333333333335
+```
+
+### Современная Java (12+): Collectors.teeing
+
+Если нужно за один проход по стриму получить сразу **два** агрегата
+(например, количество слов и их среднюю длину), не обязательно проходить
+стрим дважды — `Collectors.teeing()` (Java 12) объединяет результаты двух
+коллекторов в один через переданную функцию:
+
+```java
+public static void main(String[] args) {
+    record Stats(long count, double averageLength) {}
+
+    String[] array = {"Aaa", "Bbbbb", "Cc"};
+    Stats stats = Arrays.stream(array)
+            .collect(Collectors.teeing(
+                    Collectors.counting(),
+                    Collectors.averagingInt(String::length),
+                    Stats::new));
+    System.out.println(stats);
+}
+// Stats[count=3, averageLength=3.3333333333333335]
 ```
 
 Можно выбрать строки по определённому признаку и вывести строкой:
@@ -306,6 +401,26 @@ public static void main(String[] args) {
     stream.map(str -> str.length()).forEach(System.out::print);
 }
 // 443
+```
+
+### Современная Java (16): Stream#mapMulti
+
+Когда на каждый элемент нужно "развернуть" 0, 1 или несколько результатов,
+вместо `flatMap` (который требует обернуть результат в `Stream`) можно
+использовать `mapMulti` — он просто вызывает `consumer.accept(...)` столько
+раз, сколько нужно, без создания промежуточного стрима на каждый элемент:
+
+```java
+public static void main(String[] args) {
+    Stream.of("Java", "Core", "ABC")
+            .<Integer>mapMulti((str, consumer) -> {
+                if (str.length() > 3) {   // отдаём длину, только если строка длинная
+                    consumer.accept(str.length());
+                }
+            })
+            .forEach(System.out::println);
+}
+// 4
 ```
 
 Операция **limit(int n)** ограничивает набор элементов в стриме,
@@ -665,6 +780,7 @@ interface Course {
 1. Написать функцию, принимающую список Student и возвращающую список уникальных курсов, на которые подписаны студенты.
 2. Написать функцию, принимающую на вход список Student и возвращающую список из трех самых любознательных (любознательность определяется количеством курсов).
 3. Написать функцию, принимающую на вход список Student и экземпляр Course, возвращающую список студентов, которые посещают этот курс.
+4. **Бонус (современный синтаксис):** перепишите решения пунктов 1-3 с использованием `var` для локальных переменных, `Stream#toList()` вместо `.collect(Collectors.toList())` и `Comparator.comparing`/`comparingInt` вместо ручных компараторов там, где нужна сортировка.
 
 # Дополнительные материалы
 
