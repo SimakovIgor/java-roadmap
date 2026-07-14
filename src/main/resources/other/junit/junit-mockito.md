@@ -6,14 +6,11 @@
 
 Зависимость — это когда одна сущность не может работать без другой. Например, разработчик не может написать программу без компьютера.
 
-**Зависимость** **в программировании** (dependency) означает, что один программный компонент не работает без другого. Например, класс «программист» — без класса
-«компьютер».
+**Зависимость в программировании** (dependency) означает, что один программный компонент не работает без другого. Например, класс «программист» — без класса «компьютер».
 
-**Пример.** Представь холодильник. Когда его дверца открывается, внутри включается свет. Для этого в холодильнике есть лампочка. Если она не работает, свет в
-холодильнике не загорится. Получается, свет связан с лампочкой — это зависимость.
+**Пример.** Представь холодильник. Когда его дверца открывается, внутри включается свет. Для этого в холодильнике есть лампочка. Если она не работает, свет в холодильнике не загорится. Получается, свет связан с лампочкой — это зависимость.
 
-Этот пример легко переложить на язык Java. Пусть холодильнику в коде соответствует класс `Fridge`, а лампочке — `HorizontLamp`. Класс лампочки называется так,
-потому что её произвели на заводе «Горизонт».
+Этот пример легко переложить на язык Java. Пусть холодильнику в коде соответствует класс `Fridge`, а лампочке — `HorizontLamp`. Класс лампочки называется так, потому что её произвели на заводе «Горизонт».
 
 В классе холодильника есть метод `openDoor()`. Он открывает дверцу. А класс лампочки содержит метод `switchLightOn()`, который включает свет.
 
@@ -30,467 +27,227 @@ public class HorizontLamp {
 public class Fridge {
     // метод открывает двери
     public void openDoor() {
-        // объект класса HorizontLamp
+        // объект класса HorizontLamp создаётся прямо внутри Fridge
         HorizontLamp horizontLamp = new HorizontLamp();
         // включается свет
         horizontLamp.switchLightOn();
-
     }
 }
 ```
 
-Чтобы в одном классе использовать методы другого, нужно создать в нём объект этого другого класса. Чтобы «холодильник» включил свет, в методе `openDoor()`
-создали экземпляр «лампочки».
+Класс `Fridge` зависит от `HorizontLamp`, потому что не сможет без него работать. Поэтому класс `Fridge` называют **зависимым**, а класс `HorizontLamp` — **зависимостью**.
 
-```java
-// создали объект класса HorizontLamp
-HorizontLamp horizontLamp = new HorizontLamp();
-```
-
-Класс `Fridge` зависит от `HorizontLamp`, потому что не сможет без него работать. Поэтому класс `Fridge` называют **зависимым**, а класс `HorizontLamp` — *
-*зависимостью**.
-
-У кода с зависимостями есть недостатки. Представь: завод «Горизонт» нужно заменить на «СуперЛампочка». Объект класса `HorizontLamp` меняется на объект
-класса `SuperLamp`.
-
-Ещё может произойти так, что конструктор класса `HorizontLamp` изменится. Например, у него появится параметр — мощность лампочки.
-
-В обоих случаях нужно переписать код класса `Fridge`, ведь лампочка находится прямо в нём.
+У такого кода есть недостаток: зависимость «зашита» прямо внутрь. Если завод «Горизонт» нужно заменить на «СуперЛампочку» или у конструктора `HorizontLamp` появится новый параметр — придётся переписывать сам класс `Fridge`. К тому же такой класс **сложно тестировать**: нельзя подменить настоящую лампочку заглушкой, потому что `Fridge` создаёт её сам.
 
 ### Что такое инъекция зависимостей
 
-**Инъекция зависимостей** (англ. Dependency Injection, или DI) — это принцип построения кода.
+**Инъекция зависимостей** (англ. Dependency Injection, DI) — это принцип построения кода.
 
-В основе принципа лежит такая идея:
+В основе принципа лежит такая идея: когда ты создаёшь зависимость внутри зависимого объекта, появляются сложности → значит, нужно вынести создание зависимости наружу → тогда зависимость можно будет внедрить в объект в готовом виде.
 
-<aside>
-💡  Когда ты создаёшь зависимость внутри зависимого объекта, появляются сложности. → Значит, нужно вынести создание зависимости из объекта в другое место. → Тогда зависимость можно будет внедрить в объект в готовом виде.
-
-</aside>
-
-В примере с холодильником класс `Fridge` должен получать готовый объект класса `HorizontLamp` и просто использовать его. Это и есть инъекция зависимостей.
+В примере с холодильником класс `Fridge` должен получать готовый объект лампочки и просто использовать его. Это и есть инъекция зависимостей. Заодно это делает код тестируемым: в тесте вместо настоящей лампочки можно передать мок.
 
 ### Как написать инъекцию зависимости
 
-Чтобы ослабить связь между зависимым классом и зависимостью, создай интерфейс. Его будут реализовывать все объекты с нужным функционалом. Тогда зависимый класс
-будет связываться с общим интерфейсом.
+Чтобы ослабить связь между зависимым классом и зависимостью, создай интерфейс. Тогда зависимый класс будет работать с абстракцией, а не с конкретной реализацией.
 
-Для этого нужно:
-
-1. **Создать интерфейс для класса-зависимости.** Здесь их сразу два — `HorizontLamp` и `SuperLamp`. Поэтому пусть интерфейс называется `Lamp`.
-
-2. **Создать в зависимом классе поле того же типа, что и интерфейс.** По принципу инкапсуляции, его нужно сделать приватным. Например, `private Lamp lamp` в
-   классе `Fridge`.
-
-3. **Создать конструктор с параметром того же типа, что и интерфейс.** Например, `public Fridge(Lamp lamp)`. Внутри конструктора передать значение параметра в
-   созданное поле: `this.lamp = lamp`.
+1. **Создать интерфейс для зависимости.** Реализаций сразу две — `HorizontLamp` и `SuperLamp`. Пусть интерфейс называется `Lamp`.
+2. **Создать в зависимом классе поле типа интерфейса.** По принципу инкапсуляции — приватное и `final`: `private final Lamp lamp`.
+3. **Передавать зависимость через конструктор.** `public Fridge(Lamp lamp)`, внутри `this.lamp = lamp`.
 
 ```java
-// общий интерфейс ILamp, который будут имплементировать и HorizontLamp, и SuperLamp
-public interface ILamp {
+// общий интерфейс, который реализуют и HorizontLamp, и SuperLamp
+public interface Lamp {
     void switchLightOn();
 }
 
-public class HorizontLamp implements ILamp {
-    // метод включает свет лампочкой «Горизонт»
+public class HorizontLamp implements Lamp {
     @Override
     public void switchLightOn() {
-        System.out.println("I am switching Horizont lamp");
+        System.out.println("Включаю лампу «Горизонт»");
     }
 }
 
-public class SuperLamp implements ILamp {
-    // метод включает свет лампочкой «Суперлампа»
+public class SuperLamp implements Lamp {
     @Override
     public void switchLightOn() {
-        System.out.println("I am switching Super lamp and shining brightly!");
+        System.out.println("Включаю «СуперЛампу» — светит ярко!");
     }
 }
 
 public class Fridge {
-    // объект lamp — поле класса Fridge
-    private ILamp lamp;
+    // зависимость — поле класса, final, задаётся один раз в конструкторе
+    private final Lamp lamp;
 
-    // Объект horizontLamp передаётся в конструтор. Он создан извне
-    // объект попадает в переменную класса
-    public Fridge(ILamp lamp) {
+    // объект lamp создаётся снаружи и приходит готовым
+    public Fridge(Lamp lamp) {
         this.lamp = lamp;
     }
 
     public void openDoor() {
-        // объект класса horizontLamp используют, чтобы включить свет
         lamp.switchLightOn();
         // дальше может быть код, который выполняется после открытия дверцы
     }
 }
 ```
 
-Чтобы внедрить в класс `Fridge` зависимость, нужно создать объекты в другом классе — например, в классе `Example`:
+Теперь зависимости создаются в одном месте (например, в `main` или, в реальном проекте, в Spring-контейнере), а `Fridge` получает их готовыми:
 
 ```java
 public class Example {
     public static void main(String[] args) {
-// чтобы заменить лампочку, достаточно вызвать new SuperLamp(),
-// остальной код не изменится
-        ILamp horizontLamp = new HorizontLamp();
-        Fridge fridge = new Fridge(horizontLamp);
+        // чтобы заменить лампочку, достаточно передать new SuperLamp() —
+        // код класса Fridge менять не нужно
+        Lamp lamp = new HorizontLamp();
+        Fridge fridge = new Fridge(lamp);
         fridge.openDoor();
     }
 }
 ```
 
-### Зависимость в поле класса
-
-Зависимость может находится не только внутри метода, но и в поле класса. Например, вот так:
-
-```java
-public class HorizontLamp {
-    // метод, который включает лампочку
-    public void switchLightOn() {
-        System.out.println("Лампочка загорелась");
-    }
-}
-
-public class Fridge {
-    // объект класса HorizontLamp как поле класса Fridge
-    HorizontLamp horizontLamp = new HorizontLamp();
-
-    // метод открывает двери
-    public void openDoor() {
-        // включается свет
-        horizontLamp.switchLightOn();
-    }
-}
-```
-
-У этого кода будут те же слабые места. Код с инъекцией зависимости будет точно таким же.
-
 ### Главное
 
-Запомни:
+- Инъекция зависимости означает, что класс получает объект, созданный за его пределами.
+- Проще всего внедрять зависимость через конструктор: поле объявляем в одном классе, а значение передаём снаружи.
+- DI не только ослабляет связанность, но и делает код тестируемым — в тесте зависимость легко подменить заглушкой.
 
-- Инъекция зависимости означает, что класс получает объект, который создан за его пределами.
-- Внедрить инъекцию зависимостей можно при помощи конструктора. Нужно объявить переменную внутри одного класса, а присвоить значение — в другом. Значение ты
-  передашь в конструкторе как параметр.
+---
+
+# Пирамида тестирования
+
+Прежде чем говорить о моках, полезно держать в голове **пирамиду тестирования**:
+
+- **Юнит-тесты** (основание пирамиды) — много, быстрые, проверяют один класс/метод в изоляции. Внешние зависимости подменяются моками.
+- **Интеграционные тесты** (середина/верх) — меньше, медленнее, проверяют связку компонентов с реальными инфраструктурными вещами: базой данных, брокером сообщений. Именно здесь пригодится **Testcontainers**.
+- **E2E / UI-тесты** (вершина) — совсем мало, самые медленные.
+
+Мокирование — инструмент для юнит-тестов. Testcontainers — инструмент для интеграционных. Дальше разберём и то, и другое.
+
+---
 
 # Моки и стабы
 
 ## Что такое мок
 
-Мок (от англ. mock — «передразнивать») — это «дублёр» реальной сущности в коде. Он помогает протестировать модуль, не вызывая реальный код.
+Мок (от англ. mock — «передразнивать») — это «дублёр» реальной зависимости в тесте. Он помогает протестировать один класс, не запуская реальный код его зависимостей.
 
-В мок можно заложить часть действий — только те, которые нужны для тестирования. Мок — как дублёр в кино: он подменяет актёра, но ему необязательно так же
-хорошо играть.
+В мок можно заложить только те действия, которые нужны для теста. Мок — как дублёр в кино: подменяет актёра, но играть так же хорошо ему необязательно.
 
-**Пример**. Представь два объекта: `Sender` и `Mailbox`. `Sender` только отправляет письма, а у `Mailbox` есть разные функции: например, сортировка писем и
-поиск спама. Чтобы отправлять письма, `Mailbox` вызывает метод объекта `Sender`.
+**Пример.** Есть объекты `Sender` и `Mailbox`. `Sender` отправляет письма, а `Mailbox` умеет сортировать письма и искать спам. Чтобы отправить письмо, `Mailbox` вызывает метод `Sender`. Чтобы протестировать `Mailbox`, не нужно слать настоящие письма — достаточно убедиться, что метод `Sender` вызвался. Для этого `Sender` заменяют моком.
 
-Чтобы протестировать этот метод, не нужно отправлять настоящие письма. Достаточно убедиться, что метод в объекте `Sender` сработал. Для этого можно создать мок.
+## Когда мок оправдан, а когда лучше реальный объект
 
-Например, объект `Mailbox` может вызывать не настоящий метод объекта `Sender`, а метод из мока.
+Мок оправдан, когда зависимость:
 
-## Когда нужны моки
+- **обращается во внешний мир** — сеть, база, файловая система, другой сервис. В юнит-тесте это медленно и ненадёжно (сеть может отвалиться, база — быть недоступной).
+- **тяжело или дорого создать/настроить** — например, объект требует десятков заполненных полей, а тесту нужен всего один метод.
+- **ещё не готова** — часть системы пишет другая команда, а тестировать нужно уже сейчас.
+- **нужна, чтобы проверить сам факт взаимодействия** — что метод был вызван (нужное число раз, с нужными аргументами).
 
-### **Реальный код сложно настроить**
+Реальный объект лучше мока, когда:
 
-Иногда с реальным кодом приходится выполнять дополнительные действия.
+- это **простая структура данных или value-object** без побочных эффектов (`record`, DTO, enum) — мокать его бессмысленно и только зашумляет тест;
+- **чистая логика без внешних зависимостей** (калькулятор, валидатор, маппер) — тестируем на реальном объекте с настоящими данными;
+- вы **переусердствовали с моками**: если тест целиком состоит из `when(...).thenReturn(...)`, он проверяет не поведение, а свою же настройку. Такой тест ломается при любом рефакторинге и не ловит реальные баги.
 
-**Пример**. Например, тебе нужно протестировать метод `sellTicket()`. Он помогает купить билеты в кино и проверяет возраст пользователя.
+Правило простое: **мокаем границы (I/O, внешние сервисы), а доменную логику тестируем на реальных объектах.**
 
-Чтобы получить возраст, `sellTicket()` вызывает метод `getAge()` класса `Person`. `getAge()` возвращает возраст пользователя, который зарегистрирован в
-приложении.
+## Мок vs стаб
 
-Тест для метода `sellTicket()` займёт несколько строк. Но чтобы создать реальный объект класса `Person`, нужно задать 30 полей и вызвать дополнительные методы.
+Часто говорят про два вида «дублёров»:
 
-Вместо этого можно создать мок класса `Person`, в котором будут только те поля и методы, которые нужны для тестирования метода `sellTicket()`.
+- **Стаб** (stub — «заглушка») отвечает за **состояние**: на вызов метода возвращает заранее заданные данные (`when(...).thenReturn(...)`).
+- **Мок** отвечает за **поведение**: мы проверяем, что метод действительно был вызван (`verify(...)`).
 
-### Приложение использует внешние связи
+В Mockito и то и другое делается одним и тем же мок-объектом, поэтому на практике термины часто смешивают.
 
-Например, приложение может получать данные из базы или от других серверов.
+## Как подключить Mockito
 
-**Пример**. Представь, что метод `getAge()` работает через базу данных. Во время тестирования может произойти сетевая ошибка, или база данных может быть
-неактивна из-за технических работ.
-
-Чтобы разорвать внешние связи и обеспечить атомарность тестов, нужно создать мок.
-
-### Нужно протестировать часть системы в изоляции
-
-Иногда одну и ту же систему одновременно разрабатывают разные команды. Одна часть системы может быть готова, а другая — ещё в разработке.
-
-Чтобы протестировать систему, можно создать моки. Они будут эмулировать ещё не готовые части.
-
-**Пример**. В классе доставки еды `Delivery` есть метод `getOrder()`. Он возвращает номер заказа по имени пользователя через метод `getOrderId()`
-класса `Order`. Цель тестирования — убедиться, что метод `getOrderId()` вызван, а метод `getOrder()` отработал; неважно, с каким результатом.
-
-Можно создать мок-объект класса `Order` и проверить, что метод вызвали определённое количество раз.
-
-## Как подключить библиотеку Mockito
-
-Специальная библиотека Mockito нужна, чтобы подключить моки.
-
-Чтобы подключить Mockito к проекту, нужно добавить зависимость в `pom.xml`:
+Mockito подключается как тестовая зависимость. Для интеграции с JUnit 5 нужен ещё артефакт `mockito-junit-jupiter`. Актуальные версии на момент написания (проверяй в Maven Central на свежесть):
 
 ```xml
-
 <dependency>
     <groupId>org.mockito</groupId>
     <artifactId>mockito-core</artifactId>
-    <version>3.12.4</version>
+    <version>5.14.2</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <version>5.14.2</version>
     <scope>test</scope>
 </dependency>
 ```
 
-Чтобы Mockito работала корректно, понадобится ещё одна библиотека — Byte Buddy. Её тоже нужно подключить:
+> Отдельно подключать Byte Buddy не нужно — Mockito тянет его транзитивно.
 
-```xml
+## Как включить Mockito в тесте (JUnit 5)
 
-<dependency>
-    <groupId>net.bytebuddy</groupId>
-    <artifactId>byte-buddy</artifactId>
-    <version>1.11.16</version>
-</dependency>
-```
+Старый `@RunWith(MockitoJUnitRunner.class)` — это JUnit 4, в JUnit 5 он не работает. Есть два актуальных способа.
 
-Теперь можно подключить Mockito к тестовому классу. Есть два способа:
-
-1. Добавить аннотацию `@RunWith` с раннером `MockitoJUnitRunner`:
+**Способ 1 — расширение `MockitoExtension` (рекомендуется).** Оно само инициализирует поля `@Mock`/`@InjectMocks` и проверяет корректность использования моков:
 
 ```java
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-    ...
+@ExtendWith(MockitoExtension.class)
+class CarTest {
+    // ...
 }
 ```
 
-1. Добавить в тестовый класс метод `init()`. Чтобы он запускался перед каждым тестом, нужна аннотация `@Before`:
+**Способ 2 — `MockitoAnnotations.openMocks(this)` в `@BeforeEach`.** Пригодится, когда управлять расширениями вручную неудобно. Обрати внимание: метод называется `openMocks`, а старый `initMocks` — **deprecated**, использовать его не нужно.
 
 ```java
-public class Praktikum {
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.MockitoAnnotations;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+class CarTest {
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
-    ...
+    // ...
 }
 ```
 
 ## Как создать мок
 
-Чтобы создать мок, можно использовать:
-
-- метод `mock()`:
+Мок создают либо методом `Mockito.mock()`, либо аннотацией `@Mock`:
 
 ```java
 Car car = Mockito.mock(Car.class);
 ```
 
-- аннотацию `@Mock`:
-
 ```java
-
 @Mock
 Car car;
 ```
 
-Второй вариант лаконичнее, поэтому его используют чаще.
+Второй вариант лаконичнее, поэтому его используют чаще (вместе с `MockitoExtension`).
 
-Когда ты создаёшь мок, все возвращаемые значения меняются на значения по умолчанию. Если метод возвращал ссылочный тип, мок вернёт `null`, если примитив —
-значение примитива по умолчанию.
+Когда ты создаёшь мок, все его методы по умолчанию возвращают «пустые» значения: `null` для ссылочных типов, `0`/`false` для примитивов, пустую коллекцию для коллекций.
 
-Можно создать мок любого класса или интерфейса, если он не `private` или `final`. Например, не получится создать мок строкового объекта, потому что
-класс `String` объявлен как `final`.
+Мок можно создать почти для любого класса или интерфейса. Начиная с Mockito 5 по умолчанию используется `inline`-движок, поэтому мокаются даже `final`-классы и `final`-методы. Исключение — некоторые платформенные типы вроде `String`: их мокать нельзя и не нужно (это просто данные).
 
-Если написать такой код:
+## `@InjectMocks` — внедрить моки в тестируемый объект
 
-```java
+`@InjectMocks` создаёт реальный экземпляр тестируемого класса и **автоматически подставляет** в него все объявленные рядом `@Mock`. Это избавляет от ручного вызова конструктора.
 
-@Mock
-String mockedString;
-```
-
-Получится ошибка:
-
-```java
-org.mockito.exceptions.base.MockitoException:
-Cannot mock/spy
-
-class java.lang.String
-Mockito cannot
-mock/
-spy because :
-        -final class
-```
-
-### Метод `verify()`
-
-Моки помогают убедиться, что метод объекта вызвали с определёнными аргументами. В Mockito для этого есть метод `verify()`.
-
-Например, есть класс `Car` с методом `setCarBrand()`.
-
-```java
-public class Car {
-
-    private String carBrand;
-
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
-    }
-
-}
-```
-
-Через мок-объект `car` можно вызвать метод и проверить, что всё сработало:
-
-```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-
-    @Mock
-    Car car; // создали мок
-
-    @Test
-    public void test() {
-        car.setCarBrand("Lamborghini"); // вызвали метод объекта с аргументом
-        Mockito.verify(car).setCarBrand("Lamborghini"); // проверили, что метод вызван с этим параметром
-    }
-}
-```
-
-Если после `verify()` указать не тот аргумент, с которым метод вызван, произойдёт ошибка:
-
-```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-
-    @Mock
-    Car car;
-
-    @Test
-    public void test() {
-        car.setCarBrand("Lamborghini"); // вызвали метод объекта с аргументом
-        Mockito.verify(car).setCarBrand("Lada"); // в проверке передали другой аргумент
-    }
-}
-```
-
-### Метод `times()`
-
-Можно проверить, что метод вызвали несколько раз. Внутри `verify()` нужно вызвать ещё один метод — `times()`:
-
-```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-
-    @Mock
-    Car car;
-
-    @Test
-    public void test() {
-        car.setCarBrand("Lamborghini");
-        car.setCarBrand("Lamborghini");
-        car.setCarBrand("Lamborghini"); // вызвали метод с одним аргументом три раза
-        Mockito.verify(car, Mockito.times(3)).setCarBrand("Lamborghini");
-        // проверили, что метод вызван три раза с этим аргументом
-    }
-}
-```
-
-### Методы семейства `any`
-
-Если нужно проверить, что метод вызван с любым аргументом, понадобятся методы семейства `any`:
-
-- метод `any()` проверяет, что в метод передан любой аргумент ссылочного типа;
-- методы `anyString()`, `anyList()`, `anyInt()` применяют для аргументов определённого типа: строка, список, целое число.
-
-Например, можно проверить, что в качестве аргумента в метод `setCarBrand()` передали любую строку:
-
-```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-
-    @Mock
-    Car car;
-
-    @Test
-    public void test() {
-        car.setCarBrand("Lamborghini"); // вызвали метод объекта с аргументом
-        Mockito.verify(car).setCarBrand(Mockito.anyString());
-        // проверили, что метод вызван с любой строкой в качестве аргумента
-        Mockito.verify(car).setCarBrand(Mockito.any()); // тоже сработает: String - ссылочный тип данных
-    }
-}
-```
-
-## Что такое стабы
-
-Стабы — ещё один вид «дублёров» реального кода.
-
-Моки отвечают за поведение объектов: например, помогают проверить, что тестируемый метод отработал.
-
-Стабы (от англ. stub — «заглушка») — это объекты с заданным состоянием. Если вызвать методы стаба, вернутся заранее определённые данные.
-
-## Когда нужны стабы
-
-Представь: реальные данные из метода сложно получить. При этом нужно проверить, что он возвращает значения.
-
-Например, нужно написать юнит-тесты для метода `getOrderId()` в классе доставки еды `Order`. Он возвращает номер заказа по имени пользователя. Метод ищет
-пользователя в базе данных.
-
-Чтобы не ждать ответы на запросы от базы данных, можно создать стаб: он всегда будет возвращать один и тот же номер заказа — 2.
-
-## Как создать стабы
-
-Стабы создают так же, как моки, — через аннотацию `@Mock` из Mockito.
-
-Стабам нужны методы:
-
-- `when()` — «когда вызван метод»;
-- `thenReturn()` — «вернуть значение».
-
-Например, в классе `Engine` есть метод `getPower()`, который возвращает значение 125.
+Пусть `Car` зависит от `Engine`:
 
 ```java
 public class Engine {
-
     public int getPower() {
         return 125;
     }
-
 }
-```
 
-Класс `Car` использует `getPower()` в своём методе `getEnginePower()`.
-
-```java
 public class Car {
-
-    Engine engine;
+    private final Engine engine;
 
     public Car(Engine engine) {
         this.engine = engine;
@@ -499,290 +256,512 @@ public class Car {
     public int getEnginePower() {
         return engine.getPower();
     }
-
 }
 ```
 
-Если нужно, чтобы при тестировании метод `getPower()` возвращал другое значение — например, 500 — можно создать стаб:
+Тест: мок `Engine` внедряется в реальный `Car`.
 
 ```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class CarTest {
 
     @Mock
-    Engine engine;
+    Engine engine;          // зависимость-мок
+
+    @InjectMocks
+    Car car;                // реальный Car, в который внедрили мок engine
 
     @Test
-    public void test() {
-        Car car = new Car(engine);
-        System.out.println(car.getEnginePower()); // аннотация @Mock стирает возвращаемые значения, поэтому выведется 0
-        Mockito.when(engine.getPower()).thenReturn(500);
-        // теперь при вызове getPower() всегда будет возвращаться 500
-        System.out.println(car.getEnginePower()); // выведется 500
+    void shouldReturnStubbedPower() {
+        when(engine.getPower()).thenReturn(500);
+
+        assertThat(car.getEnginePower()).isEqualTo(500);
     }
 }
 ```
 
-### Как создать стабы для методов с параметрами
+## Стабинг: `when().thenReturn()`
 
-Можно создать стабы и для методов с параметрами. Например, метод `getWheelsCount()` принимает на вход количество передних и задних колёс и возвращает их сумму:
+`when(...).thenReturn(...)` задаёт, что мок вернёт на конкретный вызов:
+
+```java
+when(engine.getPower()).thenReturn(500);
+// теперь engine.getPower() всегда возвращает 500
+```
+
+Для методов с параметрами можно указать конкретные аргументы или матчеры семейства `any`:
 
 ```java
 public class Wheel {
-
     public int countWheels(int frontWheels, int backWheels) {
         return frontWheels + backWheels;
     }
-
 }
 ```
+
+```java
+// сработает только при аргументах (2, 2)
+when(wheel.countWheels(2, 2)).thenReturn(5);
+
+// сработает при любых целочисленных аргументах
+when(wheel.countWheels(anyInt(), anyInt())).thenReturn(5);
+```
+
+> Важно: матчеры (`anyInt()`, `any()`, `eq(...)`) нельзя смешивать с «живыми» значениями. Если хотя бы один аргумент задан матчером, остальные тоже должны быть матчерами: `countWheels(eq(2), anyInt())`.
+
+## Стабинг исключений: `thenThrow()`
+
+Чтобы проверить, как код ведёт себя при сбое зависимости, мок можно заставить бросить исключение:
+
+```java
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+@Test
+void shouldPropagateEngineFailure() {
+    when(engine.getPower()).thenThrow(new IllegalStateException("двигатель заглох"));
+
+    assertThatThrownBy(() -> car.getEnginePower())
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessage("двигатель заглох");
+}
+```
+
+Это удобный способ сымитировать недоступность внешнего ресурса (базы, стороннего сервиса), не поднимая его на самом деле.
+
+## Проверка вызовов: `verify()`, `times()`, `never()`
+
+Мок помогает убедиться, что метод был вызван — с нужными аргументами и нужное число раз.
 
 ```java
 public class Car {
+    private String carBrand;
 
-    Wheel wheel;
-
-    public Car(Wheel wheel) {
-        this.wheel = wheel;
+    public void setCarBrand(String carBrand) {
+        this.carBrand = carBrand;
     }
-
-    public int getWheelsCount(int frontWheels, int backWheels) {
-        return wheel.countWheels(frontWheels, backWheels);
-    }
-
 }
 ```
 
-В коде стаба нужно указать, при каких аргументах метод должен возвращать значение:
-
 ```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
+class CarVerifyTest {
 
     @Mock
-    Wheel wheel;
+    Car car;
 
     @Test
-    public void test() {
-        Car car = new Car(wheel);
-        Mockito.when(wheel.countWheels(2, 2)).thenReturn(5);
-				/* Теперь стаб будет выводить 5, только если переданы аргументы 2 и 2.
-				Иначе - 0 */
-        System.out.println(car.getWheelsCount(2, 2)); // выведется 5
+    void shouldVerifyInteractions() {
+        car.setCarBrand("Lamborghini");
+
+        // метод вызван ровно с этим аргументом
+        verify(car).setCarBrand("Lamborghini");
+
+        // ... или с любой строкой
+        verify(car).setCarBrand(anyString());
+    }
+
+    @Test
+    void shouldVerifyCallCount() {
+        car.setCarBrand("Lamborghini");
+        car.setCarBrand("Lamborghini");
+        car.setCarBrand("Lamborghini");
+
+        // метод вызван ровно 3 раза
+        verify(car, times(3)).setCarBrand("Lamborghini");
+
+        // а с этим аргументом — ни разу
+        verify(car, never()).setCarBrand("Lada");
     }
 }
 ```
 
-### Стабы и методы семейства `any`
+Если в `verify()` указать аргумент, с которым метод на самом деле не вызывался, тест упадёт.
 
-Со стабами тоже можно использовать методы семейства `any`. Например, нужно, чтобы стаб выводил значение, только когда в него передают целые числа:
+## `ArgumentCaptor` — «поймать» аргумент вызова
+
+Иногда мало проверить факт вызова — нужно заглянуть внутрь объекта, который передали в мок. Для этого есть `ArgumentCaptor`: он «захватывает» фактический аргумент, и его можно проверить через AssertJ.
 
 ```java
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+public record Email(String to, String subject) {}
 
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
+public interface Sender {
+    void send(Email email);
+}
+
+public class Mailbox {
+    private final Sender sender;
+
+    public Mailbox(Sender sender) {
+        this.sender = sender;
+    }
+
+    public void notifyUser(String userEmail) {
+        sender.send(new Email(userEmail, "Добро пожаловать"));
+    }
+}
+```
+
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
+class MailboxTest {
 
     @Mock
-    Wheel wheel;
+    Sender sender;
+
+    @InjectMocks
+    Mailbox mailbox;
+
+    @Captor
+    ArgumentCaptor<Email> emailCaptor;
 
     @Test
-    public void test() {
-        Car car = new Car(wheel);
-        Mockito.when(wheel.countWheels(Mockito.anyInt(), Mockito.anyInt())).thenReturn(5);
-        /* Теперь стаб выведет 5, если передать в него любое целое число.
-				Иначе - 0 */
-        System.out.println(car.getWheelsCount(2, 2)); // выведется 5
-        System.out.println(car.getWheelsCount(3, 7)); // выведется 5
+    void shouldSendWelcomeEmailToUser() {
+        mailbox.notifyUser("user@example.com");
+
+        verify(sender).send(emailCaptor.capture());
+
+        assertThat(emailCaptor.getValue())
+            .extracting(Email::to, Email::subject)
+            .containsExactly("user@example.com", "Добро пожаловать");
     }
 }
 ```
 
-# Разрыв зависимостей
+## `@Spy` — частичный мок реального объекта
 
-**Изолированный тест** не зависит от других тестов или окружения. Он работает сам по себе.
+`@Mock` создаёт «пустышку», у которой не работает ни один реальный метод. Иногда же нужен **реальный объект**, у которого подменён только один-два метода. Для этого есть `@Spy` (шпион).
 
-**Пример.** Есть два теста. Первый проверяет, что в базу данных добавилось значение. Второй — что это значение выводится на экран.
-
-Второй тест не изолирован, потому что зависит от первого. Если первый тест упадёт, значение не появится в базе данных. Второй не сможет работать.
-
-### Свойства изолированных тестов
-
-Изолированные тесты можно запускать как угодно:
-
-- по одному;
-- в наборе тестов;
-- в порядке по умолчанию — том, который задан во фреймворке. Например, тесты запускаются по алфавиту;
-- в случайном порядке.
-
-Они дадут одинаковый результат в любом случае.
-
-Если тест не изолирован, это значит:
-
-- Тест падает, если запустить только его, но вместе с другими тестами проходит. Как в примере со строками.
-- Запускать тесты можно только в определённом порядке. Например, первый тест вводит данные в поле ввода, а второй с ним работает. Если сначала запустить второй
-  тест, он не найдёт данные и упадёт.
-
-### Атомарность
-
-Хороший тест нельзя декомпозировать на несколько маленьких тестов.
-
-**Пример.** Ты тестируешь интрнет-магазин. Он состоит из нескольких экранов: стартовая страница, страница выбора товаров, личный кабинет.
-
-Нужно проверить, что товар добавляется в корзину. Для этого не стоит проходить весь путь от стартовой страницы: можно сразу перейти к странице выбора товара.
-Тестировщик отсекает всё ненужное и проверяет только конкретную функциональность.
-
-### Изоляция и атомарность
-
-Изоляция тесно связана с атомарностью. Атомарный тест должен быть изолирован.
-
-**Пример.** Кажется, что в базе данных можно объединить два теста: сначала добавить данные, а потом вывести на экран. Но тогда тесты не атомарны.
-
-Чтобы сделать тесты и атомарными, и изолированными, во второй тест можно передать постоянные значения. То есть не брать их из базы, а зашить значения в сам
-тест.
-
-### Когда нужно разорвать зависимость
-
-Хороший тест должен быть изолирован. Но бывает, программе нужны данные извне. Например, нужно получить объект из внешней базы данных.
-
-Нужно проверить, что будет, если внешний ресурс не сработает. Чаще всего не получится вызвать настоящий сбой во вешней системе, но с помощью Mockito его можно
-сымитировать.
-
-### Как разорвать зависимость
-
-С помощью Mockito можно разорвать зависимость тестов от внешних данных. Библиотека сымитирует ответы внешних систем. Ты сможешь проверить, как программа ведет
-себя в разных ситуациях.
-
-**Пример.** Представь, что класс соединяется с удалённым сервером и получает от него данные. Это внешняя связь. Программа зависит от сервера: если он не
-работает, код не получит нужную информацию.
-
-Класс `ServiceClass` получает код ответа:
+У spy по умолчанию вызываются настоящие методы, а застабленные — возвращают заданное значение.
 
 ```java
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class ServiceClass {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
 
-    public int sendGet(String requestUrl) throws IOException {
-        /*
-        Строка преобразуется в объект URL. Его используют, чтобы установить
-        http/https соединение с удалённым сервером */
-        URL url = new URL(requestUrl);
-        // Открывается соединение между программой и удалённым сервером
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        /* http-метод отпраляется на сервер
-        GET запрашивает информацию */
-        connection.setRequestMethod("GET");
-        // Приходит код ответа от сервера
-        return connection.getResponseCode();
+@ExtendWith(MockitoExtension.class)
+class SpyTest {
+
+    @Spy
+    Engine engine; // реальный Engine, а не пустышка
+
+    @Test
+    void shouldUseRealMethodByDefault() {
+        // реальный метод вернёт 125
+        assertThat(engine.getPower()).isEqualTo(125);
     }
 
+    @Test
+    void shouldOverrideOnlyStubbedMethod() {
+        // для spy безопаснее doReturn(...).when(...), чтобы не вызвать реальный метод при настройке
+        doReturn(500).when(engine).getPower();
+
+        assertThat(engine.getPower()).isEqualTo(500);
+    }
 }
 ```
 
-Класс `Server` проверяет, что сервер доступен:
+Spy используют экономно: если объект приходится «шпионить», часто это сигнал, что класс стоит разбить на части.
+
+## Пример: разрыв зависимости от внешнего ресурса
+
+Соберём всё вместе на типичном сценарии — класс зависит от внешнего клиента, который ходит в сеть. В юнит-тесте сеть трогать нельзя, поэтому клиента мокаем.
 
 ```java
-public class Server {
+// клиент внешнего сервиса — в проде реально ходит по сети
+public interface RemoteApiClient {
+    int fetchStatusCode(String url);
+}
 
-    public String checkServer(int responseCode) {
-        if (200 == responseCode) {
-            return "Сервер доступен";
-        } else {
-            return "Сервер недоступен";
+public class HealthService {
+    private final RemoteApiClient client;
+
+    public HealthService(RemoteApiClient client) {
+        this.client = client;
+    }
+
+    public String checkServer(String url) {
+        int code = client.fetchStatusCode(url);
+        return code == 200 ? "Сервер доступен" : "Сервер недоступен";
+    }
+}
+```
+
+```java
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class HealthServiceTest {
+
+    @Mock
+    RemoteApiClient client;
+
+    @InjectMocks
+    HealthService healthService;
+
+    @Test
+    void shouldReturnAvailable_whenServerAnswers200() {
+        when(client.fetchStatusCode(anyString())).thenReturn(200);
+
+        assertThat(healthService.checkServer("http://example.com"))
+            .isEqualTo("Сервер доступен");
+    }
+
+    @Test
+    void shouldReturnUnavailable_whenServerAnswers404() {
+        when(client.fetchStatusCode(anyString())).thenReturn(404);
+
+        assertThat(healthService.checkServer("http://example.com"))
+            .isEqualTo("Сервер недоступен");
+    }
+}
+```
+
+Мы проверили обе ветки логики, ни разу не выходя в сеть. Это и есть **изолированный** юнит-тест: он даёт одинаковый результат при любом порядке запуска и не зависит от окружения.
+
+---
+
+# Интеграционные тесты и Testcontainers
+
+## Зачем нужен Testcontainers
+
+Моки хороши для юнит-тестов, но у них есть предел: замокав DAO/репозиторий, ты проверяешь свой код, но **не проверяешь настоящий SQL, схему БД, транзакции и маппинг** — всё то, что чаще всего и ломается. Мок репозитория с радостью «вернёт» что угодно, а на реальной базе запрос может упасть.
+
+Тут два неудачных подхода, которых стоит избегать:
+
+- **мокать базу** — тест ничего не говорит о реальном поведении;
+- поднимать **встроенную H2** «вместо PostgreSQL» — диалекты и типы отличаются, тест зелёный, а в проде падает.
+
+Правильный путь для интеграционного теста — гонять его **против той же СУБД, что в проде**. [Testcontainers](https://testcontainers.com/) поднимает настоящий PostgreSQL (или Kafka, Redis и т.д.) в Docker-контейнере прямо на время теста, а после — гасит его. Тест видит реальную базу, а окружение остаётся чистым.
+
+Это уже **интеграционный тест** — верхняя часть пирамиды: их пишут меньше, чем юнитов, они медленнее (нужен Docker и старт контейнера), зато ловят реальные интеграционные баги.
+
+## Подключение зависимостей
+
+Testcontainers использует BOM для согласования версий модулей. Нужны модуль интеграции с JUnit 5 (`junit-jupiter`), модуль `postgresql` и JDBC-драйвер PostgreSQL:
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-bom</artifactId>
+            <version>1.20.4</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<dependencies>
+    <!-- интеграция Testcontainers с JUnit 5 -->
+    <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <!-- модуль для PostgreSQL-контейнера -->
+    <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>postgresql</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <!-- JDBC-драйвер PostgreSQL -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.4</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+> Для запуска нужен установленный и работающий Docker.
+
+## Тест репозитория на реальном PostgreSQL
+
+Возьмём простой репозиторий, который сохраняет и читает пользователя. Здесь он написан на «голом» JDBC, чтобы показать суть без Spring; в реальном проекте это был бы Spring Data JPA-репозиторий.
+
+```java
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
+import javax.sql.DataSource;
+
+public record User(long id, String name) {}
+
+public class UserRepository {
+    private final DataSource dataSource;
+
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public void save(User user) {
+        String sql = "INSERT INTO users (id, name) VALUES (?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, user.id());
+            ps.setString(2, user.name());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Не удалось сохранить пользователя", e);
         }
     }
 
-}
-```
-
-Сервер должен обработать запрос и вернуть данные:
-
-```java
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.io.IOException;
-
-public class Praktikum {
-
-    @Test
-    public void test() throws IOException {
-        ServiceClass serviceClass = new ServiceClass();
-        Server server = new Server();
-        int responseCode = serviceClass.sendGet("http://www.example.com/junk");
-        System.out.println("Код ответа от сервера: " + responseCode);
-        String status = server.checkServer(responseCode);
-        Assert.assertEquals("Сервер доступен", status);
-    }
-
-}
-```
-
-Что-то пошло не так. Метод `sendGet()` вернул ошибку 404 — Not Found. Тест не прошёл.
-
-Это означает, что программа не нашла сервер. Так может получиться, если его только разрабатывают, а тестировать нужно уже сейчас. Или если проблемы с сетью.
-
-Чтобы протестировать код, нужно разорвать зависимость с внешним ресурсом. Поможет библиотека Mockito: она сымитирует работу сервера. Понадобится создать мок и
-вернуть ответ:
-
-```java
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import java.io.IOException;
-
-@RunWith(MockitoJUnitRunner.class)
-public class Praktikum {
-
-    // мок класса, чтобы перехватывать вызовы его методов
-    @Mock
-    ServiceClass serviceClass;
-
-    @Test
-    public void test() throws IOException {
-        Server server = new Server();
-        /* Вернётся код 200,
-        ты имитируешь корректную работу нужного ресурса */
-        Mockito.when(serviceClass.sendGet(Mockito.anyString())).thenReturn(200);
-        int responseCode = serviceClass.sendGet("http://www.example.com/junk");
-        System.out.println("Код ответа от сервера: " + responseCode);
-        String status = server.checkServer(responseCode);
-        Assert.assertEquals("Сервер доступен", status);
+    public Optional<User> findById(long id) {
+        String sql = "SELECT id, name FROM users WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(new User(rs.getLong("id"), rs.getString("name")));
+                }
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Не удалось прочитать пользователя", e);
+        }
     }
 }
 ```
 
-В этот раз тест получит ответ сервера.
+Интеграционный тест поднимает настоящий PostgreSQL в контейнере и работает с ним:
+
+```java
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.postgresql.ds.PGSimpleDataSource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+import javax.sql.DataSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Testcontainers // включает управление жизненным циклом контейнеров
+class UserRepositoryIT {
+
+    // один контейнер на весь класс (static) — быстрее, чем поднимать на каждый тест
+    @Container
+    static final PostgreSQLContainer<?> POSTGRES =
+        new PostgreSQLContainer<>("postgres:16-alpine")
+            .withDatabaseName("testdb")
+            .withUsername("test")
+            .withPassword("test");
+
+    UserRepository repository;
+
+    static DataSource dataSource() {
+        PGSimpleDataSource ds = new PGSimpleDataSource();
+        ds.setUrl(POSTGRES.getJdbcUrl());   // адрес и порт контейнера подставляются автоматически
+        ds.setUser(POSTGRES.getUsername());
+        ds.setPassword(POSTGRES.getPassword());
+        return ds;
+    }
+
+    @BeforeAll
+    static void createSchema() throws SQLException {
+        try (Connection conn = dataSource().getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute("CREATE TABLE users (id BIGINT PRIMARY KEY, name VARCHAR(255))");
+        }
+    }
+
+    @BeforeEach
+    void setUp() throws SQLException {
+        // чистим таблицу перед каждым тестом — изоляция
+        try (Connection conn = dataSource().getConnection();
+             Statement st = conn.createStatement()) {
+            st.execute("TRUNCATE TABLE users");
+        }
+        repository = new UserRepository(dataSource());
+    }
+
+    @Test
+    void shouldSaveAndFindUser() {
+        repository.save(new User(1L, "Alice"));
+
+        assertThat(repository.findById(1L))
+            .isPresent()
+            .get()
+            .extracting(User::id, User::name)
+            .containsExactly(1L, "Alice");
+    }
+
+    @Test
+    void shouldReturnEmpty_whenUserNotFound() {
+        assertThat(repository.findById(42L)).isEmpty();
+    }
+}
+```
+
+Что здесь происходит:
+
+- `@Testcontainers` + `@Container` — Testcontainers сам запускает контейнер перед тестами и останавливает после.
+- `static` у контейнера означает «один контейнер на весь класс». Так тесты идут быстрее, а изоляцию обеспечиваем через `TRUNCATE` в `@BeforeEach`.
+- `getJdbcUrl()` / `getUsername()` / `getPassword()` возвращают реальные координаты запущенного контейнера — порт выбирается случайно, руками его прописывать не нужно.
+- Суффикс `IT` (Integration Test) — общепринятая конвенция для интеграционных тестов; часто их отделяют от юнитов и запускают отдельной фазой сборки.
+
+По той же схеме поднимаются `KafkaContainer`, `GenericContainer` для Redis и другие модули — Testcontainers покрывает почти любую инфраструктуру.
+
+---
 
 # Оценка покрытия
 
-Покрытие кода ****(code coverage) говорит, какой процент программы выполняется во время тестов. Можно смотреть на процент покрытых строк кода, условных
-операторов и методов.
+Покрытие кода (code coverage) показывает, какой процент программы выполняется во время тестов. Смотрят на процент покрытых строк, ветвей (условий) и методов.
 
-**Пример.** Сервис вычисляет зарплату менеджера по продажам. Сотрудник получает 5% со всех продаж за месяц, но не больше пятидесяти тысяч:
+**Пример.** Сервис считает зарплату менеджера: 5% со всех продаж за месяц, но не больше 50 000:
 
 ```java
 public class SalaryService {
@@ -799,239 +778,149 @@ public class SalaryService {
 }
 ```
 
-Тестировщик написал юнит-тест для этого сервиса:
+Юнит-тест на JUnit 5 + AssertJ:
 
 ```java
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SalaryServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SalaryServiceTest {
+
+    private final SalaryService salaryService = new SalaryService();
 
     @Test
-    public void shouldCalculateSalaryWhenUnderLimit() {
-        SalaryService salaryService = new SalaryService();
-        int actual = salaryService.calculateSalary(50_000);
-        int expected = 2_500;
-
-        Assert.assertEquals(expected, actual);
+    void shouldCalculateSalary_whenUnderLimit() {
+        assertThat(salaryService.calculateSalary(50_000)).isEqualTo(2_500);
     }
 }
 ```
 
-Нужно понять, хорошо ли метод `calculateSalary` покрыт тестами. Для этого понадобится оценить покрытие.
+> Обрати внимание: `SalaryService` — чистая логика без внешних зависимостей, поэтому тестируем его **на реальном объекте, без всяких моков**. Мокать тут было бы бессмысленно.
 
-### Процент строк кода
+### Виды покрытия
 
-Строка кода считается покрытой, если она хотя бы раз выполнилась во время теста.
+- **Покрытие строк.** Строка покрыта, если хотя бы раз выполнилась. `int salary = sales * percent / 100;` выполняется всегда — покрыта. А `salary = salaryLimit;` внутри `if` — только когда зарплата превышает лимит.
+- **Покрытие ветвей (условий).** Условие покрыто, если сработали **обе** ветки. `if (salary > salaryLimit)` при единственном тесте покрыт лишь наполовину — проверен только случай «ниже лимита».
+- **Покрытие методов.** Метод покрыт, если вызван хотя бы раз. `calculateSalary` вызывается — покрыт.
 
-Например, строка `int salary = sales * percent / 100;` покрыта. Она всегда выполняется, когда ты вызываешь метод `calculateSalary`. Её вызов не зависит от
-параметров.
+### Как считать покрытие: JaCoCo
 
-А вот строка `salary = salaryLimit;` выполняется не всегда. Если зарплата не превышает лимит, код внутри `if` не выполняется. Эта строка не покрыта.
+Вручную считать покрытие неудобно — помогает плагин **JaCoCo**. Он подключается в секцию `build/plugins` в `pom.xml`. Нужны две цели: `prepare-agent` (навешивает агент на JVM во время тестов) и `report` (генерирует HTML-отчёт).
 
-### Процент покрытых условий
-
-Условие считается покрытым, если каждая ветвь решения выполнилась.
-
-Например, условие `if (salary > salaryLimit)` покрыто частично: тест проверяет только вариант с зарплатой ниже лимита. Превышение не проверяется.
-
-### Процент покрытых методов
-
-Метод считается покрытым, если он выполнился при тестировании хотя бы один раз.
-
-Например, метод `calculateSalary` вызывается в тесте. Значит, он покрыт.
-
-### Как считать покрытие
-
-Вручную считать покрытие неудобно и долго. Помогают специальные инструменты. Один из самых популярных — **плагин Jacoco**.
-
-Плагин — это модуль, который расширяет возможности программы. Его нужно подключать отдельно. Это похоже на расширения в браузере: например, блокировщик рекламы.
-
-**Подключить плагин.** Нужно добавить секцию `build` в `pom.xml`. В неё и записываются плагины — с помощью тега `plugin`:
-
-```java
-<? xml version = "1.0"
-encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>ru.example</groupId>
-    <artifactId>coverage</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <!--
-здесь настройки-->
-    </properties>
-
-    <dependencies>
-        <!--
-здесь зависимости-->
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <!--
-здесь плагин
-jacoco-->
-            </plugin>
-        </plugins>
-    </build>
-
-</project>
-```
-
-Затем нужно указать `groupId`, `artifactId`, `version` — так же, как для `dependency`:
-
-```java
-        <build>
-        <plugins>
-            <plugin>
-								<groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-            </plugin>
-        </plugins>
-    </build>
-```
-
-Остаётся добавить конфигурацию для плагина — в теге `executions`.
-
-**Проанализировать покрытие и создать отчёт с этими данными.** Понадобится две цели Jacoco.
-
-**Цель плагина** — это задача, которую он выполняет. Например, цель `mvn compiler:compile` — скомпилировать код.
-
-Первая цель — `prepare-agent`. Она нужна для корректной работы плагина. Вторая — `report`: она генерирует отчёт.
-
-```java
+```xml
 <build>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <execution>
-                        <!--
-id выбираешь
-самостоятельно-->
-                        <id>prepare-agent</id>
-                        <!--
-в какой
-фазе maven
-будет выполняться
-цель-->
-                        <phase>initialize</phase>
-                        <!--
-        цель jacoco, которую
-нужно выполнить-->
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <plugins>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+            <executions>
+                <execution>
+                    <id>prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
-**Посмотреть отчёт.** Самый простой способ посмотреть отчёт — открыть его в браузере. Выполни команду `mvn verify`: для этого в IDEA нажми Ctrl дважды.
-Откроется окно: напиши в нём эту команду.
+Запусти `mvn verify` и открой отчёт `target/site/jacoco/index.html` в браузере. В нём столбцы **Missed Instructions** (строки) и **Missed Branches** (ветви) показывают, что покрыто. Цвета в исходнике: зелёный — покрыто, жёлтый — покрыто частично, красный — не покрыто.
 
-Найди в папке `target/site/jacoco/` файл index.html, нажми на него правой кнопкой мыши и выбери Open In — Browser — твой браузер.
-
-![mock-1.png](img/mock-1.png)
-
-В отчёте отображается процент покрытых строк кода — столбец Missed Instructions. В примере покрыто 90% строк.
-
-Процент покрытых ветвей — столбец Missed Branches. В примере покрыто 50% ветвей.
-
-Чтобы увидеть подробнее, какие именно строки и ветви не покрыты, зайди в пакет, класс и метод внутри него:
-
-![mock-2.png](img/mock-2.png)
-
-Цвета строк означают, насколько полно тест покрыт. Зелёный — покрыто тестами, жёлтый — покрыто частично, красный — не покрыто совсем.
-
-Отчёт можно посмотреть и прямо в IDEA: для этого открой Run — Show Coverage Data. Нажми + (Add) и выбери файл jacoco.exec.
-
-![mock-3.png](img/mock-3.png)
-
-После этого нажми Show Selected. У цветов слева те же значения:
-
-![mock-4.png](img/mock-4.png)
-
-Чтобы жёлтые и красные строки стали зелёными, достаточно добавить всего один тест. Он проверит случай с зарплатой, которая превышает лимит:
+Чтобы закрыть непокрытую ветку `if`, добавим тест на превышение лимита:
 
 ```java
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class SalaryServiceTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SalaryServiceTest {
+
+    private final SalaryService salaryService = new SalaryService();
 
     @Test
-    public void testSalaryUnderLimit() {
-        SalaryService salaryService = new SalaryService();
-        int actual = salaryService.calculateSalary(50_000);
-        int expected = 2_500;
-
-        Assert.assertEquals(expected, actual);
+    void shouldCalculateSalary_whenUnderLimit() {
+        assertThat(salaryService.calculateSalary(50_000)).isEqualTo(2_500);
     }
 
     @Test
-    public void testSalaryOverLimit() {
-        SalaryService salaryService = new SalaryService();
-        int actual = salaryService.calculateSalary(1_000_000);
-        int expected = 50_000;
-
-        Assert.assertEquals(expected, actual);
+    void shouldCapSalary_whenOverLimit() {
+        assertThat(salaryService.calculateSalary(1_000_000)).isEqualTo(50_000);
     }
 }
 ```
 
-Теперь отчёт о покрытии сообщает о 100%:
+Теперь покрыты обе ветки — отчёт покажет 100%.
 
-![mock-5.png](img/mock-5.png)
+### Сколько покрытия нужно и почему цифры мало
 
-![mock-6.png](img/mock-6.png)
+На практике 100% почти недостижимо и не самоцель. Обычно фиксируют минимальный порог (например, 80%) и не дают ему падать.
 
-### Какой процент покрытия нужен
-
-В реальных задачах сложно достичь покрытия 100%. Обычно на проектах выбирают другой минимально необходимый процент покрытия — например, 80%.
-
-### Тонкости
-
-Важно помнить: покрытие 100% не означает, что протестированы все возможные сценарии. Инструменты оценки покрытия не учитывают, какие тестовые данные ты
-используешь.
-
-Представь, что кто-то по ошибке изменил код метода, который вычисляет зарплату. Условие `if (salary > salaryLimit)` превратилось в `if (salary > test)`:
+Важно: **100% покрытия не значит, что протестированы все сценарии.** Покрытие говорит лишь, что строка выполнилась, но не проверяет, правильные ли данные ты подобрал. Если случайно испортить условие:
 
 ```java
-public class SalaryService {
+int test = 40_000;
+if (salary > test) {   // было: if (salary > salaryLimit)
+    salary = salaryLimit;
+}
+```
 
-    public int calculateSalary(int sales) {
-        int percent = 5;
-        int salary = sales * percent / 100;
-        int salaryLimit = 50_000;
-        int test = 40_000;
-        if (salary > test) {
-            salary = salaryLimit;
+тесты могут остаться зелёными, а покрытие — 100%, хотя логика уже сломана. Поэтому кроме количественного покрытия нужно и качественное: осмысленные тестовые данные и техники тест-дизайна (граничные значения, классы эквивалентности).
+
+---
+
+# Домашнее задание
+
+**Задача 1. Юнит-тест с моком (Mockito).**
+
+Есть сервис уведомлений, зависящий от внешнего клиента:
+
+```java
+public interface SmsClient {
+    boolean send(String phone, String text);
+}
+
+public class NotificationService {
+    private final SmsClient smsClient;
+
+    public NotificationService(SmsClient smsClient) {
+        this.smsClient = smsClient;
+    }
+
+    public boolean notifyUser(String phone, String text) {
+        if (phone == null || phone.isBlank()) {
+            throw new IllegalArgumentException("phone обязателен");
         }
-        return salary;
+        return smsClient.send(phone, text);
     }
 }
 ```
 
-В код закралась ошибка, а тесты всё ещё проходят и покрытие равно 100%. Кроме количественного покрытия должно быть и качественное. Поэтому когда пишешь тесты и
-подбираешь тестовые данные, важно использовать техники тест-дизайна.
+Напиши юнит-тесты на JUnit 5 + Mockito + AssertJ:
+
+1. Подключи Mockito через `@ExtendWith(MockitoExtension.class)`, `SmsClient` создай как `@Mock`, `NotificationService` — как `@InjectMocks`.
+2. Застабь `smsClient.send(...)` через `when().thenReturn(true)` и проверь, что `notifyUser` вернул `true`.
+3. Через `verify(...)` убедись, что `send` был вызван ровно один раз с нужными аргументами; при желании используй `ArgumentCaptor`.
+4. Проверь, что при пустом `phone` бросается `IllegalArgumentException`, а `send` **не вызывается** (`verify(..., never())`).
+5. Через `thenThrow(...)` сымитируй сбой клиента и проверь, что исключение пробрасывается наружу.
+
+**Задача 2. Интеграционный тест на Testcontainers (реальный PostgreSQL).**
+
+Возьми `UserRepository` из урока (или напиши свой на Spring Data JPA). Напиши интеграционный тест:
+
+1. Подними реальный PostgreSQL через `@Testcontainers` + `@Container PostgreSQLContainer`.
+2. Создай схему, сохрани нескольких пользователей и проверь через AssertJ, что `findById` возвращает сохранённого, а для несуществующего id — `Optional.empty()`.
+3. Обеспечь изоляцию тестов (очистка таблицы в `@BeforeEach`).
+4. Ответь в комментарии к тесту: почему для этой проверки Testcontainers лучше, чем мок репозитория или встроенная H2?
 
 ### [Назад к оглавлению](../../../../../README.md)
