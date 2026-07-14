@@ -234,7 +234,7 @@ public class ThrottlingMiddleware extends Middleware {
 
         if (request > requestPerMinute) {
             System.out.println("Request limit exceeded!");
-            Thread.currentThread().stop();
+            return false;
         }
         return checkNext(email, password);
     }
@@ -978,7 +978,7 @@ Payment has been successful.
 - Издатели не зависят от конкретных классов подписчиков и наоборот.
 - Вы можете подписывать и отписывать получателей на лету.
 - Реализует_принцип открытости/закрытости_.
-- Подписчики оповещаются в случайном порядке.
+- Порядок оповещения подписчиков не гарантирован контрактом паттерна.
 
 ## Примеры реализации паттерна
 
@@ -1072,7 +1072,7 @@ public class Editor {
 ####  **listeners/EventListener.java:** Интерфейс подписчиков
 
 ```java
-package refactoring_guru.observer.example.listeners;
+package ru.observer.example.listeners;
 
 import java.io.File;
 

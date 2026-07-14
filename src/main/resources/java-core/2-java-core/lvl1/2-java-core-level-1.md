@@ -1176,7 +1176,7 @@ public class Cat {
         if (this == obj) { // <-- this – это cat1, т.к. он участвует в конструкции                                                                System.out.println(cat1.equals(cat2)); а obj – это cat2
             return true;
         }
-        if (obj == null || getClass() != o.getClass()) { // <-- условие проверяет, что объект, переданный в качестве аргумента, не существует (равно Null) или  не является объектом типа Cat
+        if (obj == null || getClass() != obj.getClass()) { // <-- условие проверяет, что объект, переданный в качестве аргумента, не существует (равно Null) или  не является объектом типа Cat
             return false;
         }
         Cat another = (Cat) obj;

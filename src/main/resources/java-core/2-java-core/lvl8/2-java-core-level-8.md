@@ -15,7 +15,7 @@
 >>
 >> [DELETE](#delete)
 >
->[JDBC](#jdbc)
+>[JDBC](#работа-с-jdbc)
 >
 >> [Установка соединения](#установка-соединения)
 >>
@@ -49,7 +49,7 @@
 
 - хранит всю базу в одном файле;
 - не требует установки;
-- не поддерживает тип данных Data.
+- не поддерживает тип данных Date.
 
 Поддерживаемые типы данных:
 
@@ -166,7 +166,7 @@ DELETE FROM ACCOUNTS
 WHERE ID='0';
 ```
 
-# JDBC
+# Работа с JDBC
 
 Каждая СУБД разрабатывается конкретной компанией. Чтобы
 взаимодействовать с базой данных, производитель выпускает специальный
@@ -194,7 +194,7 @@ DriverManager -- это синглтон, который содержит инф
 // Для SQLite регистрация выглядит следующим образом
 Class.forName("org.sqlite.JDBC");
 // Для H2 Database - org.h2.Driver
-// Для MySQL - com.mysql.jdbc.Driver
+// Для MySQL - com.mysql.cj.jdbc.Driver
 ```
 
 Исходный код реализации любого драйвера будет содержать статический блок
@@ -244,7 +244,7 @@ SQL-команды. В базу можно отправить запрос на 
 Statement stmt = conn.createStatement();
 ResultSet rs = stmt.executeQuery("SELECT * FROM users");
 Statement updateStmt = conn.createStatement();
-int result = stmt.executeUpdate("INSERT INTO Students (Name, GroupName, Score) VALUES ("Bob", "Tbz11", 80);");
+int result = updateStmt.executeUpdate("INSERT INTO Students (Name, GroupName, Score) VALUES (\"Bob\", \"Tbz11\", 80)");
 ```
 
 ### Подготовленный запрос
@@ -261,8 +261,7 @@ SQL-выражения.
 
 ```
 PreparedStatement ps = conn.prepareStatement("SELECT * FROM students WHERE id = ?");
-ps.
-setInt(1,2);
+ps.setInt(1, 2);
 ResultSet rs = ps.executeQuery();
 ```
 
@@ -292,10 +291,9 @@ private static void prepareStatementBatchExecution() {
 
 ```java
 private static void statementBatchExecution() {
-    try {
+    try (Statement stmt = connection.createStatement()) {
         for (int i = 1; i <= 10; i++) {
-            Statement stmt = connection.createStatement();
-            stmt.addBatch(String.format("INSERT INTO students (name, score) VALUES (%s, %d)", "Bob" + i, i * 10 % 100));
+            stmt.addBatch(String.format("INSERT INTO students (name, score) VALUES ('%s', %d)", "Bob" + i, i * 10 % 100));
         }
         int[] result = stmt.executeBatch();
     } catch (SQLException e) {
@@ -326,7 +324,11 @@ private static void statementBatchExecution() {
 значения, а **Param** -- номер колонки (int) или имя колонки (String).
 
 ```
-ResultSet rs = stmt.executeQuery();
+// Statement/PreparedStatement по умолчанию создают ResultSet типа TYPE_FORWARD_ONLY,
+// на котором first()/last()/previous() бросят SQLException.
+// Для навигации назад/к первой-последней строке нужен прокручиваемый ResultSet:
+Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+ResultSet rs = stmt.executeQuery("SELECT * FROM Students");
 while (rs.next()) {                     // Пока есть строки
   String name = rs.getString(2);        // Или rs.getString("Name");
 }
@@ -371,7 +373,7 @@ try {
 <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
-    <version>42.2.5</version>
+    <version>42.7.4</version>
 </dependency>
 ```
 

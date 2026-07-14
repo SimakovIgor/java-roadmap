@@ -163,7 +163,7 @@ public static void aiTurn() {
    написать уже не 8, а 24 условия).
 
 ```java
-public static boolean checkWin0(char symb) {
+public static boolean checkWin(char symb) {
     if (map[0][0] == symb && map[0][1] == symb && map[0][2] == symb) return true;
     if (map[1][0] == symb && map[1][1] == symb && map[1][2] == symb) return true;
     if (map[2][0] == symb && map[2][1] == symb && map[2][2] == symb) return true;

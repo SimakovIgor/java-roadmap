@@ -54,7 +54,7 @@ Telnet, порт 25 --- для электронной почты, порт 80 --
 НТТР и т.д. Каждый сетевой протокол определяет порядок взаимодействия
 клиента с портом.
 
-Например, протокол НТТР[^1] используется серверами и веб-браузерами для
+Например, протокол НТТР используется серверами и веб-браузерами для
 передачи гипертекста и графических изображений. Это довольно простой
 протокол для базового постраничного просмотра информации,
 предоставляемой веб-серверами. Рассмотрим принцип его действия. Когда
@@ -698,8 +698,8 @@ HttpUrl url = new HttpUrl.Builder()
         .addPathSegment(API_VERSION) // v2
         .addPathSegment(COMPANIES_API) // companies
         .addPathSegment(COMPANY_ID) // 2
-        .addQueryParameter("only_manufactures", true)
-        .addQueryParameter("in_top_100", true)
+        .addQueryParameter("only_manufactures", "true")
+        .addQueryParameter("in_top_100", "true")
         .build();
 ```
 
