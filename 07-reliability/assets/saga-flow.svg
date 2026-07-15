@@ -1,0 +1,61 @@
+<svg width="880" height="320" viewBox="0 0 880 320" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="sgbg" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="sgOk" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#2C7A65" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="sgErr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#8A3A4C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="320" rx="20" fill="url(#sgbg)"/>
+
+  <!-- START -->
+  <circle cx="30" cy="94" r="9" fill="#4F8DFB"/>
+  <circle cx="30" cy="94" r="16" fill="none" stroke="#2E4C82"/>
+
+  <!-- forward steps -->
+  <line x1="46" y1="94" x2="54" y2="94" stroke="#2C7A65" stroke-width="1.8" marker-end="url(#sgOk)"/>
+  <rect x="56" y="66" width="168" height="56" rx="13" fill="#12203B" stroke="#2E4C82"/>
+  <text x="140" y="90" fill="#EAF1FB" font-size="14" font-weight="700" text-anchor="middle">T1 · charge</text>
+  <text x="140" y="108" fill="#7FA9FB" font-size="11" text-anchor="middle">payment</text>
+
+  <line x1="224" y1="94" x2="274" y2="94" stroke="#2C7A65" stroke-width="1.8" marker-end="url(#sgOk)"/>
+  <text x="249" y="86" fill="#6FBFA6" font-size="10.5" text-anchor="middle">ok</text>
+  <rect x="276" y="66" width="168" height="56" rx="13" fill="#12203B" stroke="#2E4C82"/>
+  <text x="360" y="90" fill="#EAF1FB" font-size="14" font-weight="700" text-anchor="middle">T2 · reserve</text>
+  <text x="360" y="108" fill="#7FA9FB" font-size="11" text-anchor="middle">inventory</text>
+
+  <line x1="444" y1="94" x2="494" y2="94" stroke="#2C7A65" stroke-width="1.8" marker-end="url(#sgOk)"/>
+  <text x="469" y="86" fill="#6FBFA6" font-size="10.5" text-anchor="middle">ok</text>
+  <rect x="496" y="66" width="168" height="56" rx="13" fill="#12203B" stroke="#2E4C82"/>
+  <text x="580" y="90" fill="#EAF1FB" font-size="14" font-weight="700" text-anchor="middle">T3 · create</text>
+  <text x="580" y="108" fill="#7FA9FB" font-size="11" text-anchor="middle">order</text>
+
+  <line x1="664" y1="94" x2="698" y2="94" stroke="#2C7A65" stroke-width="1.8" marker-end="url(#sgOk)"/>
+  <rect x="700" y="68" width="152" height="52" rx="26" fill="#123D33" stroke="#34D399"/>
+  <text x="776" y="99" fill="#5BE3AE" font-size="14" font-weight="800" text-anchor="middle">COMPLETED</text>
+
+  <!-- fail drop from T3 to compensation -->
+  <path d="M560 122 C 540 160 520 185 508 202" stroke="#8A3A4C" stroke-width="1.8" fill="none" marker-end="url(#sgErr)"/>
+  <text x="556" y="168" fill="#FB7185" font-size="11.5" font-weight="600">fail</text>
+
+  <!-- compensation row (reverse) -->
+  <rect x="420" y="204" width="168" height="56" rx="13" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="504" y="228" fill="#FB7185" font-size="14" font-weight="700" text-anchor="middle">C2 · release</text>
+  <text x="504" y="246" fill="#C87684" font-size="11" text-anchor="middle">inventory</text>
+
+  <line x1="418" y1="232" x2="368" y2="232" stroke="#8A3A4C" stroke-width="1.8" marker-end="url(#sgErr)"/>
+  <rect x="196" y="204" width="168" height="56" rx="13" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="280" y="228" fill="#FB7185" font-size="14" font-weight="700" text-anchor="middle">C1 · refund</text>
+  <text x="280" y="246" fill="#C87684" font-size="11" text-anchor="middle">payment</text>
+
+  <line x1="194" y1="232" x2="170" y2="232" stroke="#8A3A4C" stroke-width="1.8" marker-end="url(#sgErr)"/>
+  <rect x="30" y="206" width="138" height="52" rx="26" fill="#3A1620" stroke="#FB7185"/>
+  <text x="99" y="237" fill="#FB7185" font-size="13" font-weight="800" text-anchor="middle">COMPENSATED</text>
+
+  <!-- caption -->
+  <text x="440" y="298" fill="#8194B0" font-size="12" text-anchor="middle">при сбое компенсируем выполненные шаги в обратном порядке · каждая компенсация идемпотентна и ретраится до успеха</text>
+</svg>

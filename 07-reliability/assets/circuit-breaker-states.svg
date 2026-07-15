@@ -1,0 +1,46 @@
+<svg width="880" height="360" viewBox="0 0 880 360" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="cbbg" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="cba" markerWidth="9" markerHeight="9" refX="6.5" refY="4" orient="auto">
+      <path d="M1 1 L6.5 4 L1 7" fill="none" stroke="#6C8CC0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="360" rx="20" fill="url(#cbbg)"/>
+
+  <!-- transitions (draw under nodes) -->
+  <!-- CLOSED -> OPEN -->
+  <path d="M281 140 C 400 92 480 92 597 140" stroke="#6C8CC0" stroke-width="1.8" fill="none" marker-end="url(#cba)"/>
+  <text x="440" y="86" fill="#E39AA6" font-size="12.5" font-weight="600" text-anchor="middle">доля ошибок &gt; порога</text>
+
+  <!-- OPEN -> HALF_OPEN -->
+  <path d="M648 212 C 612 246 574 250 524 254" stroke="#6C8CC0" stroke-width="1.8" fill="none" marker-end="url(#cba)"/>
+  <text x="606" y="238" fill="#C9A64E" font-size="11.5" text-anchor="middle">wait-duration истёк</text>
+
+  <!-- HALF_OPEN -> CLOSED -->
+  <path d="M358 252 C 300 246 250 240 214 212" stroke="#6C8CC0" stroke-width="1.8" fill="none" marker-end="url(#cba)"/>
+  <text x="280" y="236" fill="#6FBFA6" font-size="11.5" text-anchor="middle">проба ок</text>
+
+  <!-- HALF_OPEN -> OPEN -->
+  <path d="M546 302 C 664 302 726 260 744 214" stroke="#6C8CC0" stroke-width="1.8" fill="none" marker-end="url(#cba)"/>
+  <text x="652" y="322" fill="#E39AA6" font-size="11.5" text-anchor="middle">проба упала</text>
+
+  <!-- CLOSED -->
+  <rect x="70" y="118" width="212" height="92" rx="16" fill="#0F3129" stroke="#34D399"/>
+  <circle cx="100" cy="150" r="7" fill="#34D399"/>
+  <text x="118" y="156" fill="#5BE3AE" font-size="18" font-weight="800">CLOSED</text>
+  <text x="90" y="186" fill="#6FBFA6" font-size="12.5">норма · вызовы проходят</text>
+
+  <!-- OPEN -->
+  <rect x="598" y="118" width="212" height="92" rx="16" fill="#2A0F17" stroke="#FB7185"/>
+  <circle cx="628" cy="150" r="7" fill="#FB7185"/>
+  <text x="646" y="156" fill="#FB7185" font-size="18" font-weight="800">OPEN</text>
+  <text x="618" y="186" fill="#C87684" font-size="12.5">fail fast · downstream не трогаем</text>
+
+  <!-- HALF_OPEN -->
+  <rect x="334" y="250" width="212" height="92" rx="16" fill="#241C08" stroke="#FBBF24"/>
+  <circle cx="364" cy="282" r="7" fill="#FBBF24"/>
+  <text x="382" y="288" fill="#F7C948" font-size="18" font-weight="800">HALF_OPEN</text>
+  <text x="354" y="318" fill="#C9A64E" font-size="12.5">пропускаем пробные вызовы</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg width="880" height="392" viewBox="0 0 880 392" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="cwbg" x1="0" y1="0" x2="0" y2="392" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="cwA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#3E6FBF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="cwB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#6C5F9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="392" rx="20" fill="url(#cwbg)"/>
+
+  <!-- Worker A -->
+  <rect x="40" y="40" width="170" height="66" rx="14" fill="#12203B" stroke="#2E4C82"/>
+  <circle cx="70" cy="66" r="8" fill="#4F8DFB"/>
+  <text x="86" y="71" fill="#EAF1FB" font-size="15" font-weight="700">Воркер A</text>
+  <text x="60" y="94" fill="#7FA9FB" font-size="11.5">LIMIT 2 · SKIP LOCKED</text>
+
+  <!-- Worker B -->
+  <rect x="670" y="40" width="170" height="66" rx="14" fill="#161231" stroke="#4A3E86"/>
+  <circle cx="700" cy="66" r="8" fill="#A78BFA"/>
+  <text x="716" y="71" fill="#EDE9FB" font-size="15" font-weight="700">Воркер B</text>
+  <text x="690" y="94" fill="#B49BFB" font-size="11.5">LIMIT 2 · SKIP LOCKED</text>
+
+  <!-- Table label -->
+  <text x="440" y="58" fill="#8FA1BF" font-size="12" font-weight="700" letter-spacing="1.5" text-anchor="middle">ТАБЛИЦА ЗАДАЧ</text>
+
+  <!-- rows -->
+  <!-- row 1 · A -->
+  <rect x="340" y="72" width="200" height="40" rx="11" fill="#0E1B33" stroke="#2E4C82"/>
+  <circle cx="364" cy="92" r="4" fill="#4F8DFB"/><text x="378" y="96" fill="#C9D8F0" font-size="13" font-weight="600">task #1</text>
+  <text x="524" y="96" fill="#4F8DFB" font-size="10.5" font-weight="700" text-anchor="end">🔒 A</text>
+  <!-- row 2 · A -->
+  <rect x="340" y="120" width="200" height="40" rx="11" fill="#0E1B33" stroke="#2E4C82"/>
+  <circle cx="364" cy="140" r="4" fill="#4F8DFB"/><text x="378" y="144" fill="#C9D8F0" font-size="13" font-weight="600">task #2</text>
+  <text x="524" y="144" fill="#4F8DFB" font-size="10.5" font-weight="700" text-anchor="end">🔒 A</text>
+  <!-- row 3 · B -->
+  <rect x="340" y="168" width="200" height="40" rx="11" fill="#161231" stroke="#4A3E86"/>
+  <circle cx="364" cy="188" r="4" fill="#A78BFA"/><text x="378" y="192" fill="#E0D8F6" font-size="13" font-weight="600">task #3</text>
+  <text x="524" y="192" fill="#A78BFA" font-size="10.5" font-weight="700" text-anchor="end">🔒 B</text>
+  <!-- row 4 · B -->
+  <rect x="340" y="216" width="200" height="40" rx="11" fill="#161231" stroke="#4A3E86"/>
+  <circle cx="364" cy="236" r="4" fill="#A78BFA"/><text x="378" y="240" fill="#E0D8F6" font-size="13" font-weight="600">task #4</text>
+  <text x="524" y="240" fill="#A78BFA" font-size="10.5" font-weight="700" text-anchor="end">🔒 B</text>
+  <!-- row 5 · free -->
+  <rect x="340" y="264" width="200" height="40" rx="11" fill="#0C1526" stroke="#26324B"/>
+  <circle cx="364" cy="284" r="4" fill="#4A5B78"/><text x="378" y="288" fill="#8194B0" font-size="13" font-weight="600">task #5</text>
+  <text x="524" y="288" fill="#64758F" font-size="10.5" text-anchor="end">свободна</text>
+  <!-- row 6 · free -->
+  <rect x="340" y="312" width="200" height="40" rx="11" fill="#0C1526" stroke="#26324B"/>
+  <circle cx="364" cy="332" r="4" fill="#4A5B78"/><text x="378" y="336" fill="#8194B0" font-size="13" font-weight="600">task #6</text>
+  <text x="524" y="336" fill="#64758F" font-size="10.5" text-anchor="end">свободна</text>
+
+  <!-- arrows A -> rows 1,2 -->
+  <path d="M210 78 C 280 82, 300 90, 336 92" stroke="#3E6FBF" stroke-width="1.6" fill="none" marker-end="url(#cwA)"/>
+  <path d="M210 92 C 270 120, 300 138, 336 140" stroke="#3E6FBF" stroke-width="1.6" fill="none" marker-end="url(#cwA)"/>
+
+  <!-- arrows B -> rows 3,4 -->
+  <path d="M670 78 C 600 110, 580 184, 544 188" stroke="#6C5F9E" stroke-width="1.6" fill="none" marker-end="url(#cwB)"/>
+  <path d="M670 92 C 610 150, 580 232, 544 236" stroke="#6C5F9E" stroke-width="1.6" fill="none" marker-end="url(#cwB)"/>
+
+  <!-- caption -->
+  <text x="440" y="378" fill="#8194B0" font-size="12.5" text-anchor="middle">Каждый воркер берёт свои строки. Залоченные другим воркером пропускает, а не ждёт</text>
+</svg>

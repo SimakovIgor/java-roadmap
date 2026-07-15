@@ -29,7 +29,7 @@
 13. [Net Promoter Score (NPS)](https://leadstartup.ru/product-manager/net-promoter-score)
 14. https://pritula.academy/tpost/de63ybo891-plan-povisheniya-proizvoditelnosti-perfo
 17. https://habr.com/ru/companies/yandex_cloud_and_infra/articles/767696/
-18. [ИПР](src/main/resources/other/lead/IPR.md)
+18. [ИПР](ipr.md)
 
 ### Что посмотреть
 
@@ -62,8 +62,8 @@
 
 ## Interview
 
-1. [Подготовка к собеседованию Java Dev](src/main/resources/interview/java-interview.md)
-2. [Подготовка к собеседованию Team Lead](src/main/resources/interview/team-lead-interview.md)
+1. [Подготовка к собеседованию Java Dev](../09-interview/java.md)
+2. [Подготовка к собеседованию Team Lead](../09-interview/team-lead.md)
 
 ## Содействие
 
