@@ -1,0 +1,37 @@
+<svg width="880" height="300" viewBox="0 0 880 300" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="rsbg" x1="0" y1="0" x2="0" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="300" rx="20" fill="url(#rsbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">REST: ГЛАГОЛЫ HTTP НАД РЕСУРСОМ</text>
+
+  <!-- resource -->
+  <rect x="330" y="70" width="220" height="46" rx="13" fill="#161231" stroke="#A78BFA"/>
+  <text x="440" y="98" fill="#EDE9FB" font-size="15" font-weight="800" text-anchor="middle" font-family="'JetBrains Mono',monospace">/orders</text>
+  <text x="440" y="140" fill="#64758F" font-size="12" text-anchor="middle">ресурс = существительное, действие = HTTP-метод</text>
+
+  <!-- verbs grid -->
+  <g font-family="'JetBrains Mono',monospace">
+    <rect x="60" y="168" width="360" height="46" rx="11" fill="#0F3129" stroke="#34D399"/>
+    <text x="82" y="196" fill="#43D9A3" font-size="14" font-weight="700">GET</text>
+    <text x="150" y="196" fill="#E4F6EE" font-size="12.5">/orders/42</text>
+    <text x="400" y="196" fill="#6FBFA6" font-size="12" text-anchor="end" font-family="'Inter',sans-serif">прочитать</text>
+
+    <rect x="460" y="168" width="360" height="46" rx="11" fill="#12203B" stroke="#4F8DFB"/>
+    <text x="482" y="196" fill="#7FA9FB" font-size="14" font-weight="700">POST</text>
+    <text x="560" y="196" fill="#EAF1FB" font-size="12.5">/orders</text>
+    <text x="800" y="196" fill="#9FB6DB" font-size="12" text-anchor="end" font-family="'Inter',sans-serif">создать</text>
+
+    <rect x="60" y="224" width="360" height="46" rx="11" fill="#241C08" stroke="#FBBF24"/>
+    <text x="82" y="252" fill="#F7C948" font-size="13.5" font-weight="700">PUT/PATCH</text>
+    <text x="200" y="252" fill="#F6EBC8" font-size="12.5">/orders/42</text>
+    <text x="400" y="252" fill="#C9A64E" font-size="12" text-anchor="end" font-family="'Inter',sans-serif">изменить</text>
+
+    <rect x="460" y="224" width="360" height="46" rx="11" fill="#2A0F17" stroke="#FB7185"/>
+    <text x="482" y="252" fill="#FB7185" font-size="14" font-weight="700">DELETE</text>
+    <text x="580" y="252" fill="#F7D6DC" font-size="12.5">/orders/42</text>
+    <text x="800" y="252" fill="#C87684" font-size="12" text-anchor="end" font-family="'Inter',sans-serif">удалить</text>
+  </g>
+</svg>
