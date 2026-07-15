@@ -2,7 +2,15 @@
 
 # Работа с JSON
 
+![Урок](https://img.shields.io/badge/урок-7%20из%209-3b82f6)
+![Уровень](https://img.shields.io/badge/уровень-junior-16a34a)
+![Тема](https://img.shields.io/badge/тема-JSON%20·%20Jackson%20·%20Gson-8b5cf6)
+
 Обзор библиотеки Jackson
+
+<p align="center">
+  <img src="../assets/json-serialization.svg" width="860" alt="JSON: Java-объект сериализуется в JSON-строку через toJson и обратно десериализуется через fromJson, Jackson делает это по полям класса">
+</p>
 
 >
 >[Подключение библиотеки](#подключение-библиотеки)
@@ -66,14 +74,14 @@ record Car(String color, String type) {
 ```
 
 Компилятор сам генерирует канонический конструктор, аксессоры (`color()`,
-`type()` — без префикса `get`), корректные `equals`/`hashCode` и читаемый
+`type()`, без префикса `get`), корректные `equals`/`hashCode` и читаемый
 `toString()` (`Car[color=red, type=BMW]`).
 
 **Важно для Jackson:** начиная с jackson-databind 2.12, `ObjectMapper` умеет
-сериализовать и десериализовать record'ы "из коробки" — имена компонентов
+сериализовать и десериализовать record'ы "из коробки", имена компонентов
 Jackson читает через `java.lang.reflect.RecordComponent`, поэтому (в отличие
 от обычных классов) флаг компилятора `-parameters` для этого не требуется.
-Если нужно переименовать поле в JSON — аннотация ставится прямо на компонент
+Если нужно переименовать поле в JSON, аннотация ставится прямо на компонент
 записи:
 
 ```java
@@ -97,7 +105,7 @@ public static void main(String[] args) throws IOException {
 ```
 
 **Современный способ:** тип `ObjectMapper` и `Car` очевиден из правой части
-присваивания — начиная с Java 10 для таких локальных переменных идиоматично
+присваивания, начиная с Java 10 для таких локальных переменных идиоматично
 использовать `var` вместо явного типа:
 
 ```java
@@ -172,7 +180,7 @@ public static void main(String[] args) throws IOException {
 
 Собирать многострочный JSON через конкатенацию экранированных строк
 неудобно и легко ошибиться в кавычках. Начиная с Java 15 для этого
-используются text blocks (`"""`) — кавычки внутри не экранируются,
+используются text blocks (`"""`), кавычки внутри не экранируются,
 компилятор сам разбирается с отступами и переносами строк:
 
 ```java
@@ -240,7 +248,7 @@ public static void main(String[] args) throws IOException {
 
 **Современный способ конфигурирования:** вместо создания `ObjectMapper`
 через `new` и последующей мутации через `configure()`, актуальные версии
-Jackson предлагают неизменяемый builder-стиль — `JsonMapper.builder()`,
+Jackson предлагают неизменяемый builder-стиль, `JsonMapper.builder()`,
 который сразу возвращает полностью настроенный (и потокобезопасный)
 маппер:
 
@@ -454,10 +462,10 @@ System.out.println(jsonStudent);
 В практическом задании ниже нужно вывести дату (`DATE`) для прогноза на
 5 дней. Для работы с датами в современном Java-коде используется не
 `Date`/`Calendar`, а пакет `java.time` (`LocalDate`, `LocalDateTime`,
-`OffsetDateTime` и т.д.) — он неизменяем, потокобезопасен и удобнее в
+`OffsetDateTime` и т.д.), он неизменяем, потокобезопасен и удобнее в
 использовании.
 
-"Из коробки" `ObjectMapper` не умеет (де)сериализовать типы `java.time` —
+"Из коробки" `ObjectMapper` не умеет (де)сериализовать типы `java.time`,
 нужно подключить модуль:
 
 ```xml
@@ -486,7 +494,7 @@ System.out.println(json);
 ```
 
 Без модуля `JavaTimeModule` попытка сериализовать/десериализовать
-`LocalDate` бросит `InvalidDefinitionException` — модуль как раз и
+`LocalDate` бросит `InvalidDefinitionException`, модуль как раз и
 регистрирует нужные сериализаторы/десериализаторы для типов `java.time`.
 
 # Практическое задание
@@ -519,4 +527,6 @@ System.out.println(json);
 
 3. [https://github.com/FasterXML/jackson](https://github.com/FasterXML/jackson)
 
-### [Назад к оглавлению](../../../../../../README.md)
+---
+
+[← Работа с сетью (Урок 6)](../lvl6/2-java-core-level-6.md) · [Оглавление](../../../../../../README.md) · [JDBC (Урок 8) →](../lvl8/2-java-core-level-8.md)
