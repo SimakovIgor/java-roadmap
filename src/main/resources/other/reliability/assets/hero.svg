@@ -32,7 +32,7 @@
   <!-- title -->
   <text x="43" y="104" fill="#F8FAFC" font-size="36" font-weight="800">Надёжность и архитектура</text>
   <!-- subtitle -->
-  <text x="44" y="140" fill="#B7C4DB" font-size="16">13 приёмов, которые держат прод, когда всё идёт не так</text>
+  <text x="44" y="140" fill="#B7C4DB" font-size="16">14 приёмов, которые держат прод, когда всё идёт не так</text>
 
   <!-- cluster pills -->
   <g font-size="12.5" font-weight="600">
@@ -51,7 +51,7 @@
     <rect x="700" y="118" width="150" height="96" rx="16" fill="#0F3129" stroke="#1E5C4C"/>
     <rect x="682" y="98" width="150" height="96" rx="16" fill="#241F45" stroke="#4A3E86"/>
     <rect x="664" y="78" width="150" height="96" rx="16" fill="url(#cardBlue)" stroke="#2E4C82"/>
-    <text x="686" y="134" fill="#F8FAFC" font-size="44" font-weight="800">13</text>
+    <text x="686" y="134" fill="#F8FAFC" font-size="44" font-weight="800">14</text>
     <text x="687" y="156" fill="#7FA9FB" font-size="13" font-weight="600" letter-spacing="1">ПРИЁМОВ</text>
   </g>
 </svg>

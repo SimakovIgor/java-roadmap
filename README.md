@@ -84,6 +84,7 @@
 11. [Реконциляция](src/main/resources/other/reliability/11-reconciliation.md) — фоновая сверка и починка расхождений
 12. [Saga](src/main/resources/other/reliability/12-saga.md) — распределённые транзакции через компенсации
 13. [Кэширование и инвалидация](src/main/resources/other/reliability/13-caching.md) — быстро, без stale и cache stampede
+14. [Claim и lease](src/main/resources/other/reliability/14-claim-lease.md) — несколько воркеров разбирают таблицу задач без долгих локов
 
 ## Database
 
