@@ -1,0 +1,53 @@
+<svg width="880" height="340" viewBox="0 0 880 340" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="rcbg" x1="0" y1="0" x2="0" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="340" rx="20" fill="url(#rcbg)"/>
+
+  <!-- titles -->
+  <circle cx="48" cy="46" r="6" fill="#4F8DFB"/>
+  <text x="62" y="51" fill="#F1F5FB" font-size="13.5" font-weight="700">НАША БД</text>
+  <circle cx="488" cy="46" r="6" fill="#34D399"/>
+  <text x="502" y="51" fill="#F1F5FB" font-size="13.5" font-weight="700">WMS · ИСТОЧНИК ИСТИНЫ</text>
+
+  <!-- row 1 : mismatch -->
+  <rect x="40" y="66" width="330" height="42" rx="11" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="62" y="92" fill="#C9D8F0" font-size="13.5" font-weight="600">1001</text>
+  <text x="350" y="92" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="end">PACKING</text>
+  <text x="425" y="93" fill="#FB7185" font-size="18" font-weight="800" text-anchor="middle">≠</text>
+  <rect x="480" y="66" width="330" height="42" rx="11" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="502" y="92" fill="#C9D8F0" font-size="13.5" font-weight="600">1001</text>
+  <text x="790" y="92" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="end">DELIVERED</text>
+
+  <!-- row 2 : ok -->
+  <rect x="40" y="118" width="330" height="42" rx="11" fill="#0F2A20" stroke="#1E5C4C"/>
+  <text x="62" y="144" fill="#C9D8F0" font-size="13.5" font-weight="600">1002</text>
+  <text x="350" y="144" fill="#43D9A3" font-size="13.5" font-weight="700" text-anchor="end">SHIPPED</text>
+  <text x="425" y="145" fill="#43D9A3" font-size="17" font-weight="800" text-anchor="middle">=</text>
+  <rect x="480" y="118" width="330" height="42" rx="11" fill="#0F2A20" stroke="#1E5C4C"/>
+  <text x="502" y="144" fill="#C9D8F0" font-size="13.5" font-weight="600">1002</text>
+  <text x="790" y="144" fill="#43D9A3" font-size="13.5" font-weight="700" text-anchor="end">SHIPPED</text>
+
+  <!-- row 3 : missing there -->
+  <rect x="40" y="170" width="330" height="42" rx="11" fill="#241C08" stroke="#6E561A"/>
+  <text x="62" y="196" fill="#C9D8F0" font-size="13.5" font-weight="600">1003</text>
+  <text x="350" y="196" fill="#F7C948" font-size="13.5" font-weight="700" text-anchor="end">PACKING</text>
+  <text x="425" y="197" fill="#F7C948" font-size="17" font-weight="800" text-anchor="middle">∅</text>
+  <rect x="480" y="170" width="330" height="42" rx="11" fill="#0E1B33" stroke="#6E561A" stroke-dasharray="5 4"/>
+  <text x="502" y="196" fill="#8FA1BF" font-size="13.5" font-weight="600">1003</text>
+  <text x="790" y="196" fill="#C9A64E" font-size="12.5" text-anchor="end">нет записи</text>
+
+  <!-- legend / actions -->
+  <text x="440" y="250" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1" text-anchor="middle">DIFF ПО orderId → КЛАССИФИКАЦИЯ И ДЕЙСТВИЕ</text>
+
+  <g font-size="12">
+    <circle cx="86" cy="288" r="6" fill="#FB7185"/>
+    <text x="100" y="292" fill="#C9D8F0">MISMATCH → починить по источнику истины</text>
+    <circle cx="452" cy="288" r="6" fill="#34D399"/>
+    <text x="466" y="292" fill="#C9D8F0">OK → ничего</text>
+    <circle cx="592" cy="288" r="6" fill="#FBBF24"/>
+    <text x="606" y="292" fill="#C9D8F0">MISSING → создать или алерт</text>
+  </g>
+</svg>
