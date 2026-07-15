@@ -104,26 +104,15 @@ public class PaymentController {
 
 Поток запроса:
 
-```mermaid
-flowchart TD
-    Start([POST /pay<br/>Idempotency-Key: abc-123]) --> Check{Ключ abc-123<br/>уже в дедуп-таблице?}
-    Check -->|Новый, INSERT прошёл| Charge[charge · реальное движение денег]
-    Charge --> Save[Сохранить результат под ключом]
-    Save --> Ok([200 · ответ])
-    Check -->|Найден, COMPLETED| Replay[Вернуть сохранённый ответ<br/>без повторного списания]
-    Replay --> Ok
-    Check -->|Найден, IN_PROGRESS| Conflict([409 Conflict<br/>пусть клиент ретрайнет])
-```
+<p align="center">
+  <img src="assets/idempotency-flow.svg" width="860" alt="Поток запроса: новый ключ списывает, COMPLETED возвращает сохранённый ответ, IN_PROGRESS отдаёт 409">
+</p>
 
 Жизненный цикл записи ключа:
 
-```mermaid
-stateDiagram-v2
-    [*] --> IN_PROGRESS: INSERT ключа
-    IN_PROGRESS --> COMPLETED: операция успешна,<br/>сохранён ответ
-    IN_PROGRESS --> [*]: ошибка или таймаут,<br/>запись удаляется,<br/>клиент ретраит заново
-    COMPLETED --> COMPLETED: повтор возвращает<br/>сохранённый ответ
-```
+<p align="center">
+  <img src="assets/idempotency-lifecycle.svg" width="860" alt="Жизненный цикл ключа: INSERT → IN_PROGRESS → COMPLETED, при ошибке запись удаляется">
+</p>
 
 ### Где ломаются реализации
 
