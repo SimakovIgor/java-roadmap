@@ -1,0 +1,53 @@
+<svg width="880" height="290" viewBox="0 0 880 290" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="jvbg" x1="0" y1="0" x2="0" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="jva" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="290" rx="20" fill="url(#jvbg)"/>
+
+  <text x="40" y="44" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">НАПИСАНО ОДНАЖДЫ, РАБОТАЕТ ВЕЗДЕ</text>
+
+  <!-- .java -->
+  <rect x="40" y="106" width="150" height="72" rx="14" fill="#12203B" stroke="#2E4C82"/>
+  <text x="115" y="138" fill="#EAF1FB" font-size="14.5" font-weight="700" text-anchor="middle">Ваш код</text>
+  <text x="115" y="158" fill="#7FA9FB" font-size="12.5" text-anchor="middle">.java</text>
+
+  <line x1="190" y1="142" x2="256" y2="142" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#jva)"/>
+  <text x="223" y="132" fill="#8FA1BF" font-size="11" text-anchor="middle">javac</text>
+
+  <!-- .class -->
+  <rect x="258" y="106" width="160" height="72" rx="14" fill="#161231" stroke="#4A3E86"/>
+  <text x="338" y="138" fill="#B49BFB" font-size="14.5" font-weight="700" text-anchor="middle">.class</text>
+  <text x="338" y="158" fill="#8A7BC8" font-size="12.5" text-anchor="middle">байткод</text>
+
+  <line x1="418" y1="142" x2="484" y2="142" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#jva)"/>
+
+  <!-- JVM -->
+  <rect x="486" y="106" width="120" height="72" rx="14" fill="#0F3129" stroke="#34D399"/>
+  <text x="546" y="140" fill="#43D9A3" font-size="18" font-weight="800" text-anchor="middle">JVM</text>
+  <text x="546" y="160" fill="#6FBFA6" font-size="10.5" text-anchor="middle">на каждой ОС</text>
+
+  <!-- fan-out to OS -->
+  <g stroke="#2C7A65" stroke-width="1.6">
+    <path d="M606 128 C 646 96 660 60 700 60" fill="none" marker-end="url(#jva)"/>
+    <path d="M606 138 C 650 128 660 112 700 112" fill="none" marker-end="url(#jva)"/>
+    <path d="M606 146 C 650 156 660 172 700 172" fill="none" marker-end="url(#jva)"/>
+    <path d="M606 156 C 646 188 660 224 700 224" fill="none" marker-end="url(#jva)"/>
+  </g>
+  <g font-size="13" font-weight="600">
+    <rect x="702" y="42" width="150" height="36" rx="10" fill="#0E1B33" stroke="#24334D"/>
+    <text x="722" y="65" fill="#C9D8F0">Windows</text>
+    <rect x="702" y="94" width="150" height="36" rx="10" fill="#0E1B33" stroke="#24334D"/>
+    <text x="722" y="117" fill="#C9D8F0">Linux</text>
+    <rect x="702" y="154" width="150" height="36" rx="10" fill="#0E1B33" stroke="#24334D"/>
+    <text x="722" y="177" fill="#C9D8F0">macOS</text>
+    <rect x="702" y="206" width="150" height="36" rx="10" fill="#0E1B33" stroke="#24334D"/>
+    <text x="722" y="229" fill="#C9D8F0">Android</text>
+  </g>
+
+  <text x="340" y="266" fill="#8194B0" font-size="12.5" text-anchor="middle">один байткод исполняется на любой ОС, где установлена JVM</text>
+</svg>
