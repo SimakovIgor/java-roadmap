@@ -1,0 +1,51 @@
+<svg width="900" height="230" viewBox="0 0 900 230" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="jbg" x1="0" y1="0" x2="0" y2="230" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <linearGradient id="jline" x1="70" y1="0" x2="830" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F8DFB"/><stop offset="0.5" stop-color="#A78BFA"/><stop offset="1" stop-color="#FB7185"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="900" height="230" rx="20" fill="url(#jbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">МАРШРУТ ОБУЧЕНИЯ</text>
+
+  <!-- path line -->
+  <path d="M78 118 H822" stroke="url(#jline)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- stations -->
+  <g>
+    <!-- 1 Fundamentals -->
+    <circle cx="90" cy="118" r="15" fill="#12203B" stroke="#4F8DFB" stroke-width="2.5"/>
+    <text x="90" y="123" fill="#7FA9FB" font-size="14" font-weight="800" text-anchor="middle">1</text>
+    <text x="90" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Fundamentals</text>
+    <text x="90" y="162" fill="#7FA9FB" font-size="11.5" text-anchor="middle">7 уроков</text>
+    <!-- 2 Core -->
+    <circle cx="238" cy="118" r="15" fill="#12203B" stroke="#4F8DFB" stroke-width="2.5"/>
+    <text x="238" y="123" fill="#7FA9FB" font-size="14" font-weight="800" text-anchor="middle">2</text>
+    <text x="238" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Java Core</text>
+    <text x="238" y="162" fill="#7FA9FB" font-size="11.5" text-anchor="middle">9 уроков</text>
+    <!-- 3 Hibernate -->
+    <circle cx="386" cy="118" r="15" fill="#0F3129" stroke="#34D399" stroke-width="2.5"/>
+    <text x="386" y="123" fill="#43D9A3" font-size="14" font-weight="800" text-anchor="middle">3</text>
+    <text x="386" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Hibernate</text>
+    <text x="386" y="162" fill="#43D9A3" font-size="11.5" text-anchor="middle">2 урока</text>
+    <!-- 4 Spring -->
+    <circle cx="534" cy="118" r="15" fill="#161231" stroke="#A78BFA" stroke-width="2.5"/>
+    <text x="534" y="123" fill="#B49BFB" font-size="14" font-weight="800" text-anchor="middle">4</text>
+    <text x="534" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Spring</text>
+    <text x="534" y="162" fill="#B49BFB" font-size="11.5" text-anchor="middle">5 уроков</text>
+    <!-- 5 Other -->
+    <circle cx="682" cy="118" r="15" fill="#241C08" stroke="#FBBF24" stroke-width="2.5"/>
+    <text x="682" y="123" fill="#F7C948" font-size="14" font-weight="800" text-anchor="middle">5</text>
+    <text x="682" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Инструменты</text>
+    <text x="682" y="162" fill="#F7C948" font-size="11.5" text-anchor="middle">git · тесты · REST</text>
+    <!-- 6 Reliability -->
+    <circle cx="822" cy="118" r="15" fill="#2A0F17" stroke="#FB7185" stroke-width="2.5"/>
+    <text x="822" y="123" fill="#FB7185" font-size="14" font-weight="800" text-anchor="middle">6</text>
+    <text x="822" y="80" fill="#EAF1FB" font-size="13" font-weight="700" text-anchor="middle">Reliability</text>
+    <text x="822" y="162" fill="#FB7185" font-size="11.5" text-anchor="middle">14 уроков</text>
+  </g>
+
+  <text x="450" y="206" fill="#8194B0" font-size="12.5" text-anchor="middle">от синтаксиса и ООП через ORM и Spring до приёмов, которые держат продакшн под нагрузкой</text>
+</svg>
