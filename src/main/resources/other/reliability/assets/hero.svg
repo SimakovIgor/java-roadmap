@@ -1,0 +1,57 @@
+<svg width="880" height="260" viewBox="0 0 880 260" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="880" y2="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0A1120"/>
+      <stop offset="1" stop-color="#15213B"/>
+    </linearGradient>
+    <radialGradient id="glowBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(700 20) rotate(90) scale(300)">
+      <stop stop-color="#4F8DFB" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4F8DFB" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 300) rotate(-60) scale(280)">
+      <stop stop-color="#A78BFA" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cardBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#1B2C4E"/><stop offset="1" stop-color="#12203B"/>
+    </linearGradient>
+    <clipPath id="panel"><rect x="2" y="2" width="876" height="256" rx="22"/></clipPath>
+  </defs>
+
+  <rect x="2" y="2" width="876" height="256" rx="22" fill="url(#bg)" stroke="#22314B"/>
+  <g clip-path="url(#panel)">
+    <rect x="2" y="2" width="876" height="256" fill="url(#glowBlue)"/>
+    <rect x="2" y="2" width="876" height="256" fill="url(#glowViolet)"/>
+    <g opacity="0.05" stroke="#ffffff">
+      <path d="M2 66 H878 M2 130 H878 M2 194 H878"/>
+    </g>
+  </g>
+
+  <!-- eyebrow -->
+  <text x="44" y="56" fill="#7C8FB0" font-size="12.5" font-weight="700" letter-spacing="3">JAVA ROADMAP · РАЗДЕЛ</text>
+  <!-- title -->
+  <text x="43" y="104" fill="#F8FAFC" font-size="36" font-weight="800">Надёжность и архитектура</text>
+  <!-- subtitle -->
+  <text x="44" y="140" fill="#B7C4DB" font-size="16">13 приёмов, которые держат прод, когда всё идёт не так</text>
+
+  <!-- cluster pills -->
+  <g font-size="12.5" font-weight="600">
+    <rect x="44" y="176" width="112" height="30" rx="15" fill="#16294B" stroke="#2E4C82"/>
+    <text x="100" y="196" fill="#7FA9FB" text-anchor="middle">Повторы</text>
+
+    <rect x="166" y="176" width="182" height="30" rx="15" fill="#241F45" stroke="#4A3E86"/>
+    <text x="257" y="196" fill="#B49BFB" text-anchor="middle">Перегруз и каскад</text>
+
+    <rect x="358" y="176" width="248" height="30" rx="15" fill="#0F3129" stroke="#1E5C4C"/>
+    <text x="482" y="196" fill="#43D9A3" text-anchor="middle">Доставка и консистентность</text>
+  </g>
+
+  <!-- emblem: stacked cluster cards -->
+  <g>
+    <rect x="700" y="118" width="150" height="96" rx="16" fill="#0F3129" stroke="#1E5C4C"/>
+    <rect x="682" y="98" width="150" height="96" rx="16" fill="#241F45" stroke="#4A3E86"/>
+    <rect x="664" y="78" width="150" height="96" rx="16" fill="url(#cardBlue)" stroke="#2E4C82"/>
+    <text x="686" y="134" fill="#F8FAFC" font-size="44" font-weight="800">13</text>
+    <text x="687" y="156" fill="#7FA9FB" font-size="13" font-weight="600" letter-spacing="1">ПРИЁМОВ</text>
+  </g>
+</svg>
