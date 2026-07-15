@@ -1,0 +1,49 @@
+<svg width="880" height="340" viewBox="0 0 880 340" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bhbg" x1="0" y1="0" x2="0" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="340" rx="20" fill="url(#bhbg)"/>
+
+  <!-- ===== Left: без переборок ===== -->
+  <rect x="20" y="20" width="416" height="300" rx="16" fill="#0C1526" stroke="#213551"/>
+  <circle cx="46" cy="52" r="7" fill="#FB7185"/>
+  <text x="62" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Без переборок</text>
+  <text x="62" y="76" fill="#C87684" font-size="12">один общий пул на всё</text>
+
+  <text x="48" y="118" fill="#8FA1BF" font-size="12">пул Tomcat · 200 потоков</text>
+  <rect x="48" y="128" width="360" height="58" rx="12" fill="#3A1620" stroke="#FB7185"/>
+  <text x="228" y="162" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="middle">100% занято медленным reco</text>
+
+  <g font-size="12" font-weight="600">
+    <rect x="48" y="212" width="112" height="32" rx="9" fill="#2A0F17" stroke="#6E2C3B"/>
+    <text x="104" y="233" fill="#FB7185" text-anchor="middle">Заказы ✗</text>
+    <rect x="168" y="212" width="112" height="32" rx="9" fill="#2A0F17" stroke="#6E2C3B"/>
+    <text x="224" y="233" fill="#FB7185" text-anchor="middle">Чтение ✗</text>
+    <rect x="288" y="212" width="120" height="32" rx="9" fill="#2A0F17" stroke="#6E2C3B"/>
+    <text x="348" y="233" fill="#FB7185" text-anchor="middle">Health ✗</text>
+  </g>
+  <text x="228" y="290" fill="#8194B0" font-size="12" text-anchor="middle">одна зависимость выела весь пул → каскад</text>
+
+  <!-- ===== Right: с переборками ===== -->
+  <rect x="444" y="20" width="416" height="300" rx="16" fill="#0C1526" stroke="#213551"/>
+  <circle cx="470" cy="52" r="7" fill="#34D399"/>
+  <text x="486" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">С переборками</text>
+  <text x="486" y="76" fill="#6FBFA6" font-size="12">пул разбит на изолированные секции</text>
+
+  <!-- section: Заказы -->
+  <text x="476" y="114" fill="#B7C4DB" font-size="12" font-weight="600">Заказы · 120</text>
+  <rect x="476" y="122" width="352" height="28" rx="8" fill="#0E1B33" stroke="#24334D"/>
+  <rect x="476" y="122" width="150" height="28" rx="8" fill="#123D33" stroke="#34D399"/>
+  <!-- section: Чтение -->
+  <text x="476" y="170" fill="#B7C4DB" font-size="12" font-weight="600">Чтение · 40</text>
+  <rect x="476" y="178" width="352" height="28" rx="8" fill="#0E1B33" stroke="#24334D"/>
+  <rect x="476" y="178" width="104" height="28" rx="8" fill="#123D33" stroke="#34D399"/>
+  <!-- section: Лояльность (full) -->
+  <text x="476" y="226" fill="#B7C4DB" font-size="12" font-weight="600">Лояльность · 40</text>
+  <rect x="476" y="234" width="352" height="28" rx="8" fill="#3A1620" stroke="#FB7185"/>
+  <text x="810" y="253" fill="#FB7185" font-size="11" font-weight="700" text-anchor="end">полна</text>
+
+  <text x="652" y="290" fill="#8194B0" font-size="12" text-anchor="middle">переполнилась только секция лояльности, критичное работает</text>
+</svg>
