@@ -1,13 +1,13 @@
-<svg width="880" height="540" viewBox="0 0 880 540" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+<svg width="880" height="600" viewBox="0 0 880 600" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
   <defs>
-    <linearGradient id="mbg" x1="0" y1="0" x2="0" y2="540" gradientUnits="userSpaceOnUse">
+    <linearGradient id="mbg" x1="0" y1="0" x2="0" y2="600" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="880" height="540" rx="20" fill="url(#mbg)"/>
+  <rect x="0" y="0" width="880" height="600" rx="20" fill="url(#mbg)"/>
 
   <!-- ============ Column 1 · Повторы (blue) ============ -->
-  <rect x="16" y="20" width="272" height="500" rx="16" fill="#0C1526" stroke="#213551"/>
+  <rect x="16" y="20" width="272" height="560" rx="16" fill="#0C1526" stroke="#213551"/>
   <circle cx="44" cy="52" r="7" fill="#4F8DFB"/>
   <text x="60" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Повторы и шторм</text>
   <rect x="216" y="41" width="56" height="22" rx="11" fill="#16294B" stroke="#2E4C82"/>
@@ -33,7 +33,7 @@
   </g>
 
   <!-- ============ Column 2 · Перегруз (violet) ============ -->
-  <rect x="304" y="20" width="272" height="500" rx="16" fill="#0C1526" stroke="#213551"/>
+  <rect x="304" y="20" width="272" height="560" rx="16" fill="#0C1526" stroke="#213551"/>
   <circle cx="332" cy="52" r="7" fill="#A78BFA"/>
   <text x="348" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Перегруз и каскад</text>
   <rect x="504" y="41" width="56" height="22" rx="11" fill="#241F45" stroke="#4A3E86"/>
@@ -63,11 +63,11 @@
   </g>
 
   <!-- ============ Column 3 · Доставка (emerald) ============ -->
-  <rect x="592" y="20" width="272" height="500" rx="16" fill="#0C1526" stroke="#213551"/>
+  <rect x="592" y="20" width="272" height="560" rx="16" fill="#0C1526" stroke="#213551"/>
   <circle cx="620" cy="52" r="7" fill="#34D399"/>
   <text x="636" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Надёжная доставка</text>
   <rect x="792" y="41" width="56" height="22" rx="11" fill="#0F3129" stroke="#1E5C4C"/>
-  <text x="820" y="56" fill="#43D9A3" font-size="11.5" font-weight="700" text-anchor="middle">08–13</text>
+  <text x="820" y="56" fill="#43D9A3" font-size="11.5" font-weight="700" text-anchor="middle">08–14</text>
   <line x1="608" y1="76" x2="848" y2="76" stroke="#213551"/>
 
   <g>
@@ -96,5 +96,9 @@
     <rect x="608" y="426" width="240" height="46" rx="12" fill="#0B2117" stroke="#1E5C4C"/>
     <circle cx="634" cy="449" r="15" fill="#123D33"/><text x="634" y="453" fill="#43D9A3" font-size="12" font-weight="700" text-anchor="middle">13</text>
     <text x="660" y="454" fill="#E4F6EE" font-size="15" font-weight="600">Кэш и инвалидация</text>
+
+    <rect x="608" y="492" width="240" height="46" rx="12" fill="#0B2117" stroke="#1E5C4C"/>
+    <circle cx="634" cy="515" r="15" fill="#123D33"/><text x="634" y="519" fill="#43D9A3" font-size="12" font-weight="700" text-anchor="middle">14</text>
+    <text x="660" y="520" fill="#E4F6EE" font-size="15" font-weight="600">Claim и lease</text>
   </g>
 </svg>
