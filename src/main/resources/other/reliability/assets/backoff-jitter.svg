@@ -1,0 +1,55 @@
+<svg width="880" height="360" viewBox="0 0 880 360" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="bjbg" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="360" rx="20" fill="url(#bjbg)"/>
+
+  <!-- ===== Left panel: no jitter (storm) ===== -->
+  <rect x="20" y="20" width="416" height="320" rx="16" fill="#0C1526" stroke="#213551"/>
+  <circle cx="46" cy="52" r="7" fill="#FB7185"/>
+  <text x="62" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Без jitter</text>
+  <text x="62" y="76" fill="#C87684" font-size="12">retry storm · все повторяют синхронно</text>
+
+  <!-- capacity line -->
+  <line x1="44" y1="150" x2="412" y2="150" stroke="#8A6D28" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="48" y="144" fill="#C9A64E" font-size="10.5">предел</text>
+  <!-- axis -->
+  <line x1="44" y1="300" x2="412" y2="300" stroke="#26324B" stroke-width="1.4"/>
+
+  <!-- tall synchronized spikes crossing the line -->
+  <rect x="120" y="96" width="46" height="204" rx="6" fill="#3A1620" stroke="#FB7185"/>
+  <rect x="210" y="84" width="46" height="216" rx="6" fill="#3A1620" stroke="#FB7185"/>
+  <rect x="300" y="108" width="46" height="192" rx="6" fill="#3A1620" stroke="#FB7185"/>
+  <text x="228" y="325" fill="#8194B0" font-size="11.5" text-anchor="middle">повторы бьют волнами в те же моменты</text>
+
+  <!-- ===== Right panel: full jitter (spread) ===== -->
+  <rect x="444" y="20" width="416" height="320" rx="16" fill="#0C1526" stroke="#213551"/>
+  <circle cx="470" cy="52" r="7" fill="#34D399"/>
+  <text x="486" y="57" fill="#F1F5FB" font-size="14.5" font-weight="700">Full jitter</text>
+  <text x="486" y="76" fill="#6FBFA6" font-size="12">повторы размазаны по времени</text>
+
+  <!-- capacity line -->
+  <line x1="468" y1="150" x2="836" y2="150" stroke="#8A6D28" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="830" y="144" fill="#C9A64E" font-size="10.5" text-anchor="end">предел сервиса</text>
+  <!-- axis -->
+  <line x1="468" y1="300" x2="836" y2="300" stroke="#26324B" stroke-width="1.4"/>
+
+  <!-- many short bars, all under the line -->
+  <g fill="#0F3129" stroke="#34D399">
+    <rect x="480" y="210" width="20" height="90" rx="4"/>
+    <rect x="508" y="188" width="20" height="112" rx="4"/>
+    <rect x="536" y="224" width="20" height="76" rx="4"/>
+    <rect x="564" y="176" width="20" height="124" rx="4"/>
+    <rect x="592" y="206" width="20" height="94" rx="4"/>
+    <rect x="620" y="230" width="20" height="70" rx="4"/>
+    <rect x="648" y="182" width="20" height="118" rx="4"/>
+    <rect x="676" y="214" width="20" height="86" rx="4"/>
+    <rect x="704" y="196" width="20" height="104" rx="4"/>
+    <rect x="732" y="228" width="20" height="72" rx="4"/>
+    <rect x="760" y="200" width="20" height="100" rx="4"/>
+    <rect x="788" y="218" width="20" height="82" rx="4"/>
+  </g>
+  <text x="652" y="325" fill="#8194B0" font-size="11.5" text-anchor="middle">нагрузка ровная, сервис успевает встать</text>
+</svg>

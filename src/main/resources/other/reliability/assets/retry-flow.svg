@@ -1,0 +1,64 @@
+<svg width="880" height="420" viewBox="0 0 880 420" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="rfbg" x1="0" y1="0" x2="0" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="rfa" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="420" rx="20" fill="url(#rfbg)"/>
+
+  <!-- Start -->
+  <rect x="310" y="24" width="260" height="48" rx="13" fill="#12203B" stroke="#2E4C82"/>
+  <text x="440" y="53" fill="#EAF1FB" font-size="15" font-weight="700" text-anchor="middle">Вызов операции</text>
+  <line x1="440" y1="72" x2="440" y2="92" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+
+  <!-- D1 success? -->
+  <rect x="330" y="94" width="220" height="46" rx="13" fill="#161B2E" stroke="#3A4B6B"/>
+  <text x="440" y="122" fill="#DCE6F5" font-size="14.5" font-weight="700" text-anchor="middle">Успех?</text>
+  <!-- D1 -> result (right, да) -->
+  <line x1="550" y1="117" x2="628" y2="117" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="588" y="108" fill="#6FBFA6" font-size="11.5" text-anchor="middle">да</text>
+  <rect x="630" y="94" width="200" height="46" rx="13" fill="#123D33" stroke="#34D399"/>
+  <text x="730" y="122" fill="#5BE3AE" font-size="14.5" font-weight="700" text-anchor="middle">Результат</text>
+  <!-- D1 -> D2 (down, нет) -->
+  <line x1="440" y1="140" x2="440" y2="166" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="454" y="158" fill="#8194B0" font-size="11.5">нет</text>
+
+  <!-- D2 transient? -->
+  <rect x="310" y="168" width="260" height="56" rx="13" fill="#161B2E" stroke="#3A4B6B"/>
+  <text x="440" y="192" fill="#DCE6F5" font-size="14.5" font-weight="700" text-anchor="middle">Ошибка временная?</text>
+  <text x="440" y="211" fill="#8FA1BF" font-size="11.5" text-anchor="middle">503 · timeout · reset</text>
+  <!-- D2 -> fail fast (left, нет) -->
+  <line x1="310" y1="196" x2="262" y2="196" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="286" y="188" fill="#C87684" font-size="11.5" text-anchor="middle">нет</text>
+  <rect x="40" y="172" width="222" height="48" rx="13" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="151" y="195" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="middle">Пробросить</text>
+  <text x="151" y="211" fill="#C87684" font-size="11" text-anchor="middle">fail fast, не мучаем</text>
+  <!-- D2 -> D3 (down, да) -->
+  <line x1="440" y1="224" x2="440" y2="248" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="454" y="240" fill="#6FBFA6" font-size="11.5">да</text>
+
+  <!-- D3 attempts left? -->
+  <rect x="320" y="250" width="240" height="56" rx="13" fill="#161B2E" stroke="#3A4B6B"/>
+  <text x="440" y="274" fill="#DCE6F5" font-size="14.5" font-weight="700" text-anchor="middle">Попытки остались?</text>
+  <text x="440" y="293" fill="#8FA1BF" font-size="11.5" text-anchor="middle">attempt &lt; max</text>
+  <!-- D3 -> last error (left, нет) -->
+  <line x1="320" y1="278" x2="262" y2="278" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="291" y="270" fill="#C87684" font-size="11.5" text-anchor="middle">нет</text>
+  <rect x="40" y="254" width="222" height="48" rx="13" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="151" y="283" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="middle">Пробросить последнюю</text>
+  <!-- D3 -> backoff (down, да) -->
+  <line x1="440" y1="306" x2="440" y2="332" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#rfa)"/>
+  <text x="454" y="324" fill="#6FBFA6" font-size="11.5">да</text>
+
+  <!-- Backoff -->
+  <rect x="330" y="334" width="220" height="50" rx="13" fill="#3A2E0C" stroke="#FBBF24"/>
+  <text x="440" y="356" fill="#F7C948" font-size="14" font-weight="700" text-anchor="middle">Подождать</text>
+  <text x="440" y="373" fill="#C9A64E" font-size="11.5" text-anchor="middle">backoff + jitter</text>
+
+  <!-- loop back to start (right side) -->
+  <path d="M550 359 H620 V48 H572" stroke="#6C8CC0" stroke-width="1.6" fill="none" stroke-linecap="round" marker-end="url(#rfa)"/>
+  <text x="636" y="210" fill="#7FA9FB" font-size="12" font-weight="600" transform="rotate(90 636 210)" text-anchor="middle">повтор</text>
+</svg>

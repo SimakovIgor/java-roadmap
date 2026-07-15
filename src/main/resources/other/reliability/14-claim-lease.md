@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/claim-lease-hero.svg" width="860" alt="Claim и lease: несколько воркеров разбирают таблицу задач без долгих локов">
+</p>
+
 # Claim и lease
 
 ![Приём](https://img.shields.io/badge/приём-14%20из%2014-3b82f6)
@@ -275,16 +279,34 @@ RETURNING id, payload;
 <details>
 <summary>Где баг</summary>
 
-Главный баг в `claimed_until < now()`. У только что вставленной задачи `claimed_until = NULL`, а `NULL < now()` в SQL это `NULL`, то есть **не** `TRUE`. Такие строки не попадают в `WHERE` и не захватываются **никогда**. Обрабатываются только те, кого кто-то уже трогал, а свежие висят вечно.
+Тут два бага.
 
-Правильно:
+**1. `claimed_until < now()` теряет свежие строки.** У только что вставленной задачи `claimed_until = NULL`, а `NULL < now()` в SQL это `NULL`, то есть **не** `TRUE`. Такие строки не попадают в `WHERE` и не захватываются **никогда**. Обрабатываются только те, кого кто-то уже трогал, а свежие висят вечно.
+
+**2. `UPDATE ... ORDER BY ... LIMIT` без `FOR UPDATE SKIP LOCKED`** не защищён от гонки двух воркеров на самом захвате: под нагрузкой они начнут ждать друг друга на блокировках вместо того, чтобы разбирать разные строки.
+
+Правильно, целиком:
 
 ```sql
-WHERE status = 'PENDING'
-  AND (claimed_until IS NULL OR claimed_until < now())
+UPDATE outbound_task
+SET claimed_until = now() + interval '30 seconds',
+    claimed_by    = :workerId,
+    updated_at    = now()
+WHERE id IN (
+    SELECT id FROM outbound_task
+    WHERE status = 'PENDING'
+      AND (claimed_until IS NULL OR claimed_until < now())   -- свободна ИЛИ lease истёк
+    ORDER BY created_at
+    FOR UPDATE SKIP LOCKED                                    -- защита от гонки на захвате
+    LIMIT 100
+)
+RETURNING id, payload;
 ```
 
-Второй, менее заметный: `UPDATE ... ORDER BY ... LIMIT` без внутреннего `SELECT ... FOR UPDATE SKIP LOCKED` не защищён от гонки двух воркеров на самом захвате и под нагрузкой упрётся в блокировки. Захват честно делается подзапросом с `SKIP LOCKED`, как в основном примере.
+Что изменилось против бажной версии:
+
+- `(claimed_until IS NULL OR claimed_until < now())` вместо `claimed_until < now()`, иначе свежие строки с `NULL` не берутся никогда
+- захват идёт **подзапросом** с `FOR UPDATE SKIP LOCKED`, а не голым `UPDATE ... ORDER BY ... LIMIT`, иначе два воркера дерутся на блокировках вместо того, чтобы работать параллельно
 
 </details>
 
