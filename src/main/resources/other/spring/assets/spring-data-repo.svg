@@ -1,0 +1,34 @@
+<svg width="880" height="270" viewBox="0 0 880 270" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="sdbg" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="sda" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="270" rx="20" fill="url(#sdbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">SPRING DATA: ИНТЕРФЕЙС → ЗАПРОС</text>
+
+  <!-- interface -->
+  <rect x="40" y="76" width="330" height="120" rx="14" fill="#12203B" stroke="#4F8DFB"/>
+  <text x="62" y="104" fill="#7FA9FB" font-size="12" font-family="'JetBrains Mono',monospace">interface OrderRepository</text>
+  <text x="62" y="124" fill="#8FA1BF" font-size="11" font-family="'JetBrains Mono',monospace">extends JpaRepository</text>
+  <line x1="40" y1="136" x2="370" y2="136" stroke="#2E4C82"/>
+  <text x="62" y="164" fill="#EAF1FB" font-size="13" font-family="'JetBrains Mono',monospace">findByStatus(status)</text>
+  <text x="62" y="184" fill="#64758F" font-size="11" font-family="'JetBrains Mono',monospace">// ты только объявляешь метод</text>
+
+  <!-- arrow -->
+  <line x1="370" y1="136" x2="500" y2="136" stroke="#5A6E8E" stroke-width="1.7" marker-end="url(#sda)"/>
+  <text x="435" y="126" fill="#6FBFA6" font-size="11" text-anchor="middle">Spring генерирует</text>
+
+  <!-- generated SQL -->
+  <rect x="502" y="76" width="338" height="120" rx="14" fill="#0F3129" stroke="#34D399"/>
+  <text x="524" y="104" fill="#43D9A3" font-size="12" font-weight="700">сгенерированная реализация</text>
+  <line x1="502" y1="116" x2="840" y2="116" stroke="#1E5C4C"/>
+  <text x="524" y="146" fill="#E4F6EE" font-size="13" font-family="'JetBrains Mono',monospace">SELECT * FROM orders</text>
+  <text x="524" y="168" fill="#E4F6EE" font-size="13" font-family="'JetBrains Mono',monospace">WHERE status = ?</text>
+  <text x="524" y="186" fill="#6FBFA6" font-size="11" font-family="'JetBrains Mono',monospace">// по имени метода</text>
+
+  <text x="440" y="240" fill="#8194B0" font-size="12.5" text-anchor="middle">имя метода превращается в запрос: пишешь интерфейс, реализацию даёт Spring</text>
+</svg>
