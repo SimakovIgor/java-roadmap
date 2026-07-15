@@ -1,0 +1,45 @@
+<svg width="880" height="270" viewBox="0 0 880 270" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="jsbg" x1="0" y1="0" x2="0" y2="270" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="jsa" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="270" rx="20" fill="url(#jsbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">СЕРИАЛИЗАЦИЯ И ДЕСЕРИАЛИЗАЦИЯ</text>
+
+  <!-- Java object -->
+  <rect x="40" y="76" width="300" height="150" rx="14" fill="#12203B" stroke="#2E4C82"/>
+  <text x="190" y="106" fill="#EAF1FB" font-size="15" font-weight="800" text-anchor="middle">Java-объект</text>
+  <line x1="40" y1="118" x2="340" y2="118" stroke="#2E4C82"/>
+  <g font-family="'JetBrains Mono',monospace" font-size="13">
+    <text x="62" y="146" fill="#C9D8F0">User {</text>
+    <text x="82" y="170" fill="#9FB6DB">id = 1</text>
+    <text x="82" y="194" fill="#9FB6DB">name = "Bob"</text>
+    <text x="62" y="216" fill="#C9D8F0">}</text>
+  </g>
+
+  <!-- JSON -->
+  <rect x="540" y="76" width="300" height="150" rx="14" fill="#161231" stroke="#A78BFA"/>
+  <text x="690" y="106" fill="#B49BFB" font-size="15" font-weight="800" text-anchor="middle">JSON-строка</text>
+  <line x1="540" y1="118" x2="840" y2="118" stroke="#4A3E86"/>
+  <g font-family="'JetBrains Mono',monospace" font-size="13">
+    <text x="562" y="146" fill="#EDE9FB">{</text>
+    <text x="582" y="170" fill="#F7C948">"id"</text><text x="622" y="170" fill="#9FB6DB">: 1,</text>
+    <text x="582" y="194" fill="#F7C948">"name"</text><text x="646" y="194" fill="#6FBFA6">: "Bob"</text>
+    <text x="562" y="216" fill="#EDE9FB">}</text>
+  </g>
+
+  <!-- serialize -->
+  <path d="M340 128 H 538" stroke="#5A6E8E" stroke-width="1.7" marker-end="url(#jsa)"/>
+  <text x="440" y="118" fill="#6FBFA6" font-size="12" text-anchor="middle" font-family="'JetBrains Mono',monospace">toJson()</text>
+  <text x="440" y="146" fill="#8194B0" font-size="10.5" text-anchor="middle">сериализация</text>
+  <!-- deserialize -->
+  <path d="M540 176 H 342" stroke="#5A6E8E" stroke-width="1.7" marker-end="url(#jsa)"/>
+  <text x="440" y="196" fill="#6FBFA6" font-size="12" text-anchor="middle" font-family="'JetBrains Mono',monospace">fromJson()</text>
+  <text x="440" y="216" fill="#8194B0" font-size="10.5" text-anchor="middle">десериализация</text>
+
+  <text x="440" y="256" fill="#64758F" font-size="11.5" text-anchor="middle">Jackson / Gson делают это автоматически по полям класса</text>
+</svg>
