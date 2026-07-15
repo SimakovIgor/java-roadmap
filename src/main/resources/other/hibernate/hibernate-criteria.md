@@ -501,7 +501,7 @@ Spring Boot по умолчанию держит `EntityManager` открыты�
 
 ### 6. EAGER «на всякий случай»
 
-`@ManyToOne(fetch = EAGER)` / `@OneToMany(fetch = EAGER)` тянет связь в *каждом* запросе, даже когда она не нужна,, и порождает неубираемый N+1. Дефолт: связи, **LAZY**, а нужные грузим точечно fetch-join'ом или `@EntityGraph`.
+`@ManyToOne(fetch = EAGER)` / `@OneToMany(fetch = EAGER)` тянет связь в *каждом* запросе, даже когда она не нужна, и порождает неубираемый N+1. Дефолт: связи, **LAZY**, а нужные грузим точечно fetch-join'ом или `@EntityGraph`.
 
 ### 7. Забытый `query.select(root)` / неверный тип результата
 
