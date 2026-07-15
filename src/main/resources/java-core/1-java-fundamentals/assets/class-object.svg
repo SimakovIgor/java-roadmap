@@ -1,0 +1,59 @@
+<svg width="880" height="320" viewBox="0 0 880 320" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="cobg" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="coa" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="320" rx="20" fill="url(#cobg)"/>
+
+  <text x="40" y="42" fill="#7FA9FB" font-size="12.5" font-weight="700" letter-spacing="1.5">КЛАСС · ШАБЛОН</text>
+  <text x="490" y="42" fill="#43D9A3" font-size="12.5" font-weight="700" letter-spacing="1.5">ОБЪЕКТЫ · ЭКЗЕМПЛЯРЫ</text>
+
+  <!-- class card -->
+  <rect x="40" y="58" width="280" height="212" rx="14" fill="#12203B" stroke="#2E4C82"/>
+  <rect x="40" y="58" width="280" height="42" rx="14" fill="#16294B"/>
+  <rect x="40" y="86" width="280" height="14" fill="#16294B"/>
+  <text x="180" y="86" fill="#EAF1FB" font-size="16" font-weight="800" text-anchor="middle">Cat</text>
+  <line x1="40" y1="100" x2="320" y2="100" stroke="#2E4C82"/>
+  <g font-family="'JetBrains Mono','SF Mono',ui-monospace,monospace" font-size="13.5">
+    <text x="62" y="128" fill="#C87684">−</text><text x="82" y="128" fill="#C9D8F0">name : String</text>
+    <text x="62" y="154" fill="#C87684">−</text><text x="82" y="154" fill="#C9D8F0">age : int</text>
+  </g>
+  <line x1="40" y1="174" x2="320" y2="174" stroke="#2E4C82"/>
+  <g font-family="'JetBrains Mono','SF Mono',ui-monospace,monospace" font-size="13.5">
+    <text x="62" y="202" fill="#43D9A3">+</text><text x="82" y="202" fill="#C9D8F0">meow()</text>
+    <text x="62" y="228" fill="#43D9A3">+</text><text x="82" y="228" fill="#C9D8F0">birthday()</text>
+  </g>
+  <text x="180" y="256" fill="#7C8FB0" font-size="10.5" text-anchor="middle">− private поля · + public методы</text>
+
+  <!-- objects -->
+  <g>
+    <rect x="480" y="58" width="360" height="56" rx="13" fill="#0F2A20" stroke="#1E5C4C"/>
+    <circle cx="506" cy="86" r="8" fill="#34D399"/>
+    <text x="526" y="82" fill="#E4F6EE" font-size="14" font-weight="700">Барсик</text>
+    <text x="526" y="100" fill="#6FBFA6" font-size="11.5">age = 3</text>
+
+    <rect x="480" y="126" width="360" height="56" rx="13" fill="#0F2A20" stroke="#1E5C4C"/>
+    <circle cx="506" cy="154" r="8" fill="#34D399"/>
+    <text x="526" y="150" fill="#E4F6EE" font-size="14" font-weight="700">Мурка</text>
+    <text x="526" y="168" fill="#6FBFA6" font-size="11.5">age = 5</text>
+
+    <rect x="480" y="194" width="360" height="56" rx="13" fill="#0F2A20" stroke="#1E5C4C"/>
+    <circle cx="506" cy="222" r="8" fill="#34D399"/>
+    <text x="526" y="218" fill="#E4F6EE" font-size="14" font-weight="700">Том</text>
+    <text x="526" y="236" fill="#6FBFA6" font-size="11.5">age = 1</text>
+  </g>
+
+  <!-- arrows class -> objects -->
+  <g stroke="#5A6E8E" stroke-width="1.5">
+    <path d="M320 130 C 400 100 420 86 476 86" fill="none" marker-end="url(#coa)"/>
+    <path d="M320 160 C 400 156 420 154 476 154" fill="none" marker-end="url(#coa)"/>
+    <path d="M320 190 C 400 210 420 222 476 222" fill="none" marker-end="url(#coa)"/>
+  </g>
+  <text x="400" y="150" fill="#8FA1BF" font-size="11.5" text-anchor="middle" font-family="'JetBrains Mono',monospace">new Cat(...)</text>
+
+  <text x="440" y="298" fill="#8194B0" font-size="12.5" text-anchor="middle">один класс, сколько угодно объектов, у каждого свои значения полей</text>
+</svg>
