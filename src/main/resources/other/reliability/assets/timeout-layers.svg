@@ -1,0 +1,43 @@
+<svg width="880" height="300" viewBox="0 0 880 300" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="tlybg" x1="0" y1="0" x2="0" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="880" height="300" rx="20" fill="url(#tlybg)"/>
+
+  <text x="40" y="44" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">ФАЗЫ ОДНОГО HTTP-ВЫЗОВА И ИХ ТАЙМАУТЫ</text>
+
+  <!-- connectTimeout -->
+  <rect x="120" y="62" width="104" height="34" rx="9" fill="#16294B" stroke="#4F8DFB"/>
+  <text x="172" y="84" fill="#7FA9FB" font-size="12.5" font-weight="700" text-anchor="middle">connect</text>
+  <text x="236" y="84" fill="#9FB6DB" font-size="12.5">connectTimeout · установка TCP-соединения</text>
+
+  <!-- readTimeout -->
+  <rect x="286" y="108" width="302" height="34" rx="9" fill="#241F45" stroke="#A78BFA"/>
+  <text x="437" y="130" fill="#B49BFB" font-size="12.5" font-weight="700" text-anchor="middle">readTimeout · простой без данных между пакетами</text>
+
+  <!-- total / requestTimeout -->
+  <rect x="120" y="154" width="618" height="34" rx="9" fill="#0F3129" stroke="#34D399"/>
+  <text x="429" y="176" fill="#5BE3AE" font-size="12.5" font-weight="700" text-anchor="middle">requestTimeout · жёсткий потолок на весь вызов целиком</text>
+
+  <!-- axis -->
+  <line x1="120" y1="214" x2="738" y2="214" stroke="#26324B" stroke-width="1.4"/>
+  <g stroke="#3A4B6B">
+    <line x1="120" y1="210" x2="120" y2="218"/>
+    <line x1="224" y1="210" x2="224" y2="218"/>
+    <line x1="286" y1="210" x2="286" y2="218"/>
+    <line x1="588" y1="210" x2="588" y2="218"/>
+    <line x1="738" y1="210" x2="738" y2="218"/>
+  </g>
+
+  <!-- phase labels under axis -->
+  <g font-size="11.5" fill="#8194B0" text-anchor="middle">
+    <text x="172" y="236">установка</text>
+    <text x="255" y="236">запрос</text>
+    <text x="437" y="236">сервер думает</text>
+    <text x="663" y="236">ответ</text>
+  </g>
+
+  <text x="429" y="272" fill="#8194B0" font-size="12.5" text-anchor="middle">connectTimeout ловит «сеть лежит», readTimeout «сервер завис и молчит», requestTimeout «отдаёт слишком медленно»</text>
+</svg>
