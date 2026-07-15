@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/claim-lease-hero.svg" width="860" alt="Claim и lease: несколько воркеров разбирают таблицу задач без долгих локов">
+</p>
+
 # Claim и lease
 
 ![Приём](https://img.shields.io/badge/приём-14%20из%2014-3b82f6)
