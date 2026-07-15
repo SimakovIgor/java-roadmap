@@ -1,0 +1,55 @@
+<svg width="880" height="360" viewBox="0 0 880 360" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="chbg" x1="0" y1="0" x2="0" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="cha" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#0C1730" stroke="#5A6E8E" stroke-width="1.4" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="360" rx="20" fill="url(#chbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">ИЕРАРХИЯ КОЛЛЕКЦИЙ</text>
+
+  <!-- roots -->
+  <rect x="150" y="58" width="200" height="46" rx="12" fill="#12203B" stroke="#4F8DFB"/>
+  <text x="250" y="86" fill="#7FA9FB" font-size="14.5" font-weight="800" text-anchor="middle">Collection&lt;E&gt;</text>
+  <rect x="560" y="58" width="200" height="46" rx="12" fill="#161231" stroke="#A78BFA"/>
+  <text x="660" y="86" fill="#B49BFB" font-size="14.5" font-weight="800" text-anchor="middle">Map&lt;K,V&gt;</text>
+
+  <!-- Collection children -->
+  <path d="M100 158 V 128 H 250 V 106" stroke="#3A4B6B" stroke-width="1.5" fill="none" marker-end="url(#cha)"/>
+  <path d="M250 158 V 106" stroke="#3A4B6B" stroke-width="1.5" fill="none" marker-end="url(#cha)"/>
+  <path d="M400 158 V 128 H 250 V 106" stroke="#3A4B6B" stroke-width="1.5" fill="none" marker-end="url(#cha)"/>
+
+  <rect x="40" y="160" width="120" height="44" rx="11" fill="#0E1B33" stroke="#2E4C82"/>
+  <text x="100" y="187" fill="#C9D8F0" font-size="14" font-weight="700" text-anchor="middle">List</text>
+  <rect x="190" y="160" width="120" height="44" rx="11" fill="#0E1B33" stroke="#2E4C82"/>
+  <text x="250" y="187" fill="#C9D8F0" font-size="14" font-weight="700" text-anchor="middle">Set</text>
+  <rect x="340" y="160" width="120" height="44" rx="11" fill="#0E1B33" stroke="#2E4C82"/>
+  <text x="400" y="187" fill="#C9D8F0" font-size="14" font-weight="700" text-anchor="middle">Queue</text>
+
+  <!-- leaves -->
+  <g font-size="11.5" font-family="'JetBrains Mono',monospace">
+    <rect x="40" y="220" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="100" y="242" fill="#8FA1BF" text-anchor="middle">ArrayList</text>
+    <rect x="40" y="262" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="100" y="284" fill="#8FA1BF" text-anchor="middle">LinkedList</text>
+    <rect x="190" y="220" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="250" y="242" fill="#8FA1BF" text-anchor="middle">HashSet</text>
+    <rect x="190" y="262" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="250" y="284" fill="#8FA1BF" text-anchor="middle">TreeSet</text>
+    <rect x="340" y="220" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="400" y="242" fill="#8FA1BF" text-anchor="middle">ArrayDeque</text>
+    <rect x="340" y="262" width="120" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="400" y="284" fill="#8FA1BF" text-anchor="middle">PriorityQueue</text>
+  </g>
+
+  <!-- Map children -->
+  <path d="M600 158 V 128 H 660 V 106" stroke="#4A3E86" stroke-width="1.5" fill="none" marker-end="url(#cha)"/>
+  <path d="M720 158 V 128 H 660 V 106" stroke="#4A3E86" stroke-width="1.5" fill="none" marker-end="url(#cha)"/>
+  <g font-size="11.5" font-family="'JetBrains Mono',monospace">
+    <rect x="540" y="160" width="120" height="44" rx="11" fill="#161231" stroke="#4A3E86"/><text x="600" y="187" fill="#EDE9FB" font-size="14" font-weight="700" text-anchor="middle" font-family="'Inter',sans-serif">HashMap</text>
+    <rect x="670" y="160" width="120" height="44" rx="11" fill="#161231" stroke="#4A3E86"/><text x="730" y="187" fill="#EDE9FB" font-size="14" font-weight="700" text-anchor="middle" font-family="'Inter',sans-serif">TreeMap</text>
+    <rect x="540" y="220" width="250" height="34" rx="9" fill="#0C1526" stroke="#24334D"/><text x="665" y="242" fill="#8FA1BF" text-anchor="middle">ключ → значение · LinkedHashMap</text>
+  </g>
+
+  <!-- notes -->
+  <g font-size="11" fill="#64758F">
+    <text x="40" y="324">List: порядок и индексы · Set: без дублей · Queue: очередь</text>
+    <text x="540" y="324">Map стоит отдельно, это пары ключ-значение</text>
+  </g>
+</svg>

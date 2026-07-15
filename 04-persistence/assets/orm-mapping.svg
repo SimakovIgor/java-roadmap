@@ -1,0 +1,43 @@
+<svg width="880" height="290" viewBox="0 0 880 290" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="ormbg" x1="0" y1="0" x2="0" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="orma" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="290" rx="20" fill="url(#ormbg)"/>
+  <text x="40" y="40" fill="#8FA1BF" font-size="12.5" font-weight="700" letter-spacing="1.5">ORM: ОБЪЕКТ ↔ СТРОКА ТАБЛИЦЫ</text>
+
+  <!-- Java entity -->
+  <rect x="40" y="72" width="300" height="168" rx="14" fill="#12203B" stroke="#2E4C82"/>
+  <text x="62" y="100" fill="#6FBFA6" font-size="12" font-family="'JetBrains Mono',monospace">@Entity</text>
+  <text x="62" y="122" fill="#EAF1FB" font-size="15" font-weight="800">class Order</text>
+  <line x1="40" y1="134" x2="340" y2="134" stroke="#2E4C82"/>
+  <g font-family="'JetBrains Mono',monospace" font-size="13">
+    <text x="62" y="162" fill="#F7C948">@Id</text><text x="100" y="162" fill="#9FB6DB"> Long id</text>
+    <text x="62" y="188" fill="#9FB6DB">String status</text>
+    <text x="62" y="214" fill="#9FB6DB">BigDecimal total</text>
+  </g>
+
+  <!-- DB table -->
+  <rect x="540" y="72" width="300" height="168" rx="14" fill="#161231" stroke="#A78BFA"/>
+  <text x="562" y="100" fill="#8A7BC8" font-size="12" font-family="'JetBrains Mono',monospace">table</text>
+  <text x="562" y="122" fill="#EDE9FB" font-size="15" font-weight="800">orders</text>
+  <line x1="540" y1="134" x2="840" y2="134" stroke="#4A3E86"/>
+  <g font-family="'JetBrains Mono',monospace" font-size="12">
+    <text x="562" y="158" fill="#B49BFB">id</text><text x="640" y="158" fill="#8A7BC8">status</text><text x="762" y="158" fill="#8A7BC8">total</text>
+    <line x1="558" y1="166" x2="822" y2="166" stroke="#2A2350"/>
+    <text x="562" y="188" fill="#C9D8F0">42</text><text x="640" y="188" fill="#C9D8F0">PAID</text><text x="762" y="188" fill="#C9D8F0">1500</text>
+    <text x="562" y="212" fill="#C9D8F0">43</text><text x="640" y="212" fill="#C9D8F0">NEW</text><text x="762" y="212" fill="#C9D8F0">890</text>
+  </g>
+
+  <!-- mapping arrows -->
+  <path d="M340 140 H 538" stroke="#5A6E8E" stroke-width="1.7" marker-end="url(#orma)"/>
+  <text x="440" y="130" fill="#6FBFA6" font-size="11.5" text-anchor="middle">save() → INSERT</text>
+  <path d="M540 186 H 342" stroke="#5A6E8E" stroke-width="1.7" marker-end="url(#orma)"/>
+  <text x="440" y="204" fill="#6FBFA6" font-size="11.5" text-anchor="middle">find() → SELECT</text>
+
+  <text x="440" y="266" fill="#64758F" font-size="11.5" text-anchor="middle">Hibernate переводит объекты в SQL и обратно, ты не пишешь запросы руками</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg width="880" height="320" viewBox="0 0 880 320" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="flbg" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="fla" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="320" rx="20" fill="url(#flbg)"/>
+
+  <!-- anatomy line -->
+  <text x="40" y="52" font-size="16" font-weight="700" font-family="'JetBrains Mono','SF Mono',ui-monospace,monospace">
+    <tspan fill="#8FA1BF">for (</tspan><tspan fill="#7FA9FB"> int i = 0 </tspan><tspan fill="#8FA1BF">;</tspan><tspan fill="#DCE6F5"> i &lt; n </tspan><tspan fill="#8FA1BF">;</tspan><tspan fill="#F7C948"> i++ </tspan><tspan fill="#8FA1BF">)</tspan>
+  </text>
+  <g font-size="10.5" font-weight="700" letter-spacing="1">
+    <text x="120" y="72" fill="#7FA9FB" text-anchor="middle">инициализация</text>
+    <text x="300" y="72" fill="#9FB6DB" text-anchor="middle">условие</text>
+    <text x="430" y="72" fill="#F7C948" text-anchor="middle">шаг</text>
+  </g>
+
+  <!-- init -->
+  <rect x="60" y="104" width="180" height="52" rx="13" fill="#12203B" stroke="#2E4C82"/>
+  <text x="150" y="136" fill="#7FA9FB" font-size="14.5" font-weight="700" text-anchor="middle">int i = 0</text>
+  <line x1="150" y1="156" x2="150" y2="184" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#fla)"/>
+
+  <!-- condition -->
+  <rect x="60" y="186" width="180" height="56" rx="13" fill="#161B2E" stroke="#3A4B6B"/>
+  <text x="150" y="219" fill="#DCE6F5" font-size="14.5" font-weight="700" text-anchor="middle">i &lt; n ?</text>
+
+  <!-- true -> body -->
+  <line x1="240" y1="214" x2="308" y2="214" stroke="#2C7A65" stroke-width="1.6" marker-end="url(#fla)"/>
+  <text x="274" y="205" fill="#6FBFA6" font-size="11.5" text-anchor="middle">да</text>
+  <rect x="310" y="188" width="180" height="52" rx="13" fill="#0F3129" stroke="#34D399"/>
+  <text x="400" y="220" fill="#5BE3AE" font-size="14" font-weight="700" text-anchor="middle">тело цикла</text>
+
+  <!-- body -> step -->
+  <line x1="490" y1="214" x2="558" y2="214" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#fla)"/>
+  <rect x="560" y="188" width="150" height="52" rx="13" fill="#241C08" stroke="#FBBF24"/>
+  <text x="635" y="220" fill="#F7C948" font-size="14" font-weight="700" text-anchor="middle">i++</text>
+
+  <!-- step -> back to condition (loop up and over) -->
+  <path d="M635 188 V 150 H 150 V 186" stroke="#8A6D28" stroke-width="1.6" fill="none" marker-end="url(#fla)"/>
+  <text x="400" y="142" fill="#C9A64E" font-size="11.5" text-anchor="middle">повторяем, пока условие истинно</text>
+
+  <!-- false -> exit -->
+  <line x1="150" y1="242" x2="150" y2="270" stroke="#8A3A4C" stroke-width="1.6" marker-end="url(#fla)"/>
+  <text x="166" y="262" fill="#C87684" font-size="11.5">нет</text>
+  <rect x="60" y="272" width="180" height="40" rx="13" fill="#2A0F17" stroke="#6E2C3B"/>
+  <text x="150" y="297" fill="#FB7185" font-size="13.5" font-weight="700" text-anchor="middle">выход из цикла</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg width="880" height="430" viewBox="0 0 880 430" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <defs>
+    <linearGradient id="dqbg" x1="0" y1="0" x2="0" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1120"/><stop offset="1" stop-color="#0C1730"/>
+    </linearGradient>
+    <marker id="dqa" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#5A6E8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="430" rx="20" fill="url(#dqbg)"/>
+
+  <!-- loop back retryable -> process -->
+  <path d="M150 66 C 205 24 382 24 438 60" stroke="#8A6D28" stroke-width="1.6" fill="none" marker-end="url(#dqa)"/>
+  <text x="300" y="30" fill="#C9A64E" font-size="11.5" text-anchor="middle">повтор обработки</text>
+
+  <!-- process -->
+  <rect x="340" y="64" width="200" height="52" rx="13" fill="#161B2E" stroke="#3A4B6B"/>
+  <text x="440" y="88" fill="#DCE6F5" font-size="14.5" font-weight="700" text-anchor="middle">process(record)</text>
+  <text x="440" y="106" fill="#8FA1BF" font-size="11">из топика order</text>
+
+  <!-- process -> success -->
+  <line x1="540" y1="90" x2="628" y2="90" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#dqa)"/>
+  <text x="584" y="81" fill="#6FBFA6" font-size="11.5" text-anchor="middle">успех</text>
+  <rect x="630" y="66" width="210" height="48" rx="13" fill="#123D33" stroke="#34D399"/>
+  <text x="735" y="95" fill="#5BE3AE" font-size="13.5" font-weight="700" text-anchor="middle">commit offset · дальше</text>
+
+  <!-- process -> retryable -->
+  <line x1="340" y1="90" x2="264" y2="90" stroke="#5A6E8E" stroke-width="1.6" marker-end="url(#dqa)"/>
+  <text x="302" y="81" fill="#C9A64E" font-size="11.5" text-anchor="middle">временная</text>
+  <rect x="40" y="66" width="222" height="48" rx="13" fill="#241C08" stroke="#FBBF24"/>
+  <text x="151" y="89" fill="#F7C948" font-size="13" font-weight="700" text-anchor="middle">backoff + jitter</text>
+  <text x="151" y="106" fill="#C9A64E" font-size="10.5" text-anchor="middle">повтор, пока attempt &lt; N</text>
+
+  <!-- process -> DLT (fatal) -->
+  <line x1="440" y1="116" x2="440" y2="272" stroke="#8A3A4C" stroke-width="1.6" marker-end="url(#dqa)"/>
+  <text x="456" y="200" fill="#C87684" font-size="11.5">битые данные · сразу</text>
+
+  <!-- retryable -> DLT (exhausted) -->
+  <path d="M151 114 C 151 210 220 262 292 290" stroke="#8A3A4C" stroke-width="1.6" fill="none" marker-end="url(#dqa)"/>
+  <text x="150" y="210" fill="#C87684" font-size="11.5" text-anchor="middle">исчерпано N</text>
+
+  <!-- DLT -->
+  <rect x="290" y="272" width="300" height="60" rx="14" fill="#2A0F17" stroke="#FB7185"/>
+  <text x="440" y="298" fill="#FB7185" font-size="14.5" font-weight="800" text-anchor="middle">Dead Letter Topic · order.DLT</text>
+  <text x="440" y="318" fill="#C87684" font-size="11.5" text-anchor="middle">+ exception · offset · stacktrace</text>
+
+  <!-- DLT -> alert -->
+  <path d="M400 332 C 360 352 320 360 292 366" stroke="#5A6E8E" stroke-width="1.6" fill="none" marker-end="url(#dqa)"/>
+  <rect x="130" y="372" width="200" height="44" rx="12" fill="#0E1B33" stroke="#6E2C3B"/>
+  <text x="230" y="399" fill="#FB7185" font-size="12.5" font-weight="600" text-anchor="middle">алерт · DLQ растёт</text>
+
+  <!-- DLT -> reprocess -->
+  <path d="M480 332 C 520 352 560 360 588 366" stroke="#5A6E8E" stroke-width="1.6" fill="none" marker-end="url(#dqa)"/>
+  <rect x="550" y="372" width="220" height="44" rx="12" fill="#12203B" stroke="#2E4C82"/>
+  <text x="660" y="399" fill="#7FA9FB" font-size="12.5" font-weight="600" text-anchor="middle">reprocess после фикса</text>
+</svg>
